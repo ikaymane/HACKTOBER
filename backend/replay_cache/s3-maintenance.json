@@ -1,0 +1,86 @@
+[
+ {
+  "role": "assistant",
+  "content": "I'll start by pulling the telemetry and mission data, plus candidate parts for the DTC.",
+  "tool_calls": [
+   {
+    "id": "call_00_yLSU6Q817ExTfR3Iw2YF5383",
+    "type": "function",
+    "function": {
+     "name": "get_vehicle",
+     "arguments": "{\"vehicle_id\": \"T-12\"}"
+    }
+   },
+   {
+    "id": "call_01_D5qGXQhd8chFI7nJ4ZtD5643",
+    "type": "function",
+    "function": {
+     "name": "lookup_parts",
+     "arguments": "{\"dtc\": [\"C0040\"], \"symptoms_text\": \"Le camion freine un peu tout seul, la roue avant droite est très chaude à l'arrêt.\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "The étrier de frein (P-BCAL) matches best. Let me get its full record and the supplier ranking.",
+  "tool_calls": [
+   {
+    "id": "call_00_3joDYvXJssodrIJQoiCm5905",
+    "type": "function",
+    "function": {
+     "name": "get_part",
+     "arguments": "{\"part_id\": \"P-BCAL\"}"
+    }
+   },
+   {
+    "id": "call_01_h86248skFaVXa0fNBuMn4000",
+    "type": "function",
+    "function": {
+     "name": "score_suppliers",
+     "arguments": "{\"part_id\": \"P-BCAL\", \"urgency\": \"urgent\", \"vehicle_type\": \"truck\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "Now let me check replacement options and the SLA penalty.",
+  "tool_calls": [
+   {
+    "id": "call_00_2mTmpaIajNjTV2uTwfuj6737",
+    "type": "function",
+    "function": {
+     "name": "find_replacement",
+     "arguments": "{\"vehicle_id\": \"T-12\"}"
+    }
+   },
+   {
+    "id": "call_01_FUF8Z58XtznOELMsd2h01226",
+    "type": "function",
+    "function": {
+     "name": "find_load_takeover",
+     "arguments": "{\"vehicle_id\": \"T-12\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_0AiNLgJ6YxT5FfFHsP188320",
+    "type": "function",
+    "function": {
+     "name": "compute_penalty",
+     "arguments": "{\"mission_id\": \"M-112\", \"replacement_eta_min\": 80}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "**Analyse**\n\n- **Panne** : C0040 + roue avant droite très chaude + freinage résiduel = étrier de frein grippé (P-BCAL, match 4/4, safety_critical). Plaquettes (P-BPAD) possiblement en surchauffe secondaire, mais la cause racine est l'étrier.\n- **Réparer ou remplacer** : l'étrier est réparable (800 MAD, 3 h) mais le véhicule a 433 000 km, soit **au-delà de la durée de vie typique de 300 000 km** pour cette pièce de sécurité critique, avec plaquettes déjà à 84 % d'usure. Une pièce de sécurité usée au-delà de sa durée de vie se remplace → **remplacement** (2 h de MO, plus rapide que la réparation).\n- **Fournisseur** : SUP-ATLAS (score 77,2) — meilleur compromis délai 5,2 h / ponctualité 92 % / garantie 12 mois / note 4,3. SUP-SAHARA est 150 MAD moins cher mais moins ponctuel (88 %) ; l'OEM à 57,8 h de délai est incompatible avec l'immobilisation.\n- **Dépôt** : DEP-RABAT, 93 km, ETA 80 min, atelier + T-10 disponible → SLA 90 min respecté, **pénalité 0 MAD**.\n- **Reprise de charge** : aucun camion disponible (0 palette libre) → pas d'alternative, le remplacement est la seule voie.\n\n```json\n{\"part_id\": \"P-BCAL\", \"confidence\": 0.88, \"severity\": \"drive_to_depot\", \"evidence\": [\"DTC C0040 (circuit capteur/étrier de frein)\", \"Roue avant droite très chaude à l'arrêt\", \"Freinage résiduel non commandé (freine tout seul)\", \"Plaquettes à 84% d'usure (brake_wear_pct)\", \"Kilométrage 433000 km > durée de vie typique 300000 km de l'étrier\", \"Match pièce 4/4 sur DTC et symptôme 'roue chaude'\"], \"action\": \"replace\", \"action_reason\": \"Étrier grippé sur pièce de sécurité critique déjà au-delà de sa durée de vie (433k km vs 300k km) avec plaquettes à 84% d'usure : le remplacement (2h MO) est plus sûr et plus rapide que la réparation (3h) ; risque d'échauffement/incendie et de perte de freinage.\", \"urgency\": \"urgent\", \"chosen_supplier_id\": \"SUP-ATLAS\", \"supplier_reason\": \"Meilleur score global (77.2) : délai 5.2h compatible avec l'immobilisation, ponctualité 92%, garantie 12 mois, note 4.3. SUP-SAHARA moins ponctuel (88%) pour 150 MAD d'économie ; OEM à 57.8h de délai inacceptable.\", \"depot_id\": \"DEP-RABAT\", \"replacement_vehicle_id\": \"T-10\", \"driver_message\": \"Aziz, ton étrier de frein avant droit est grippé (roue qui chauffe, freinage résiduel). Ne continue pas vers Meknès : roule calmement, sans freinages appuyés, jusqu'au dépôt DEP-RABAT (93 km, ~80 min). Un Renault T 480 de remplacement (T-10) t'y attend pour reprendre la livraison Fès Textile. Signale toute vibration ou odeur de brûlé et arrête-toi immédiatement si la roue chauffe davantage.\", \"takeover_vehicle_id\": null, \"penalty_reason\": \"Remplacement à DEP-RABAT en 80 min, sous le SLA de 90 min : aucune pénalité (0 MAD). Aucun camion disponible pour une reprise de charge (0 palette libre).\", \"mitigation\": null, \"report_fr\": \"PANNE T-12 (Renault T 480, 433 000 km) : DTC C0040 confirmé par le chauffeur — freinage résiduel et roue avant droite très chaude. Diagnostic : étrier de frein avant droit grippé (confiance 88%), pièce critique de sécurité.\\nDÉCISION : remplacement, pas réparation. L'étrier est réparable (800 MAD) mais le véhicule dépasse la durée de vie de la pièce (433k vs 300k km) et les plaquettes sont à 84% d'usure ; le remplacement (2h MO) est aussi plus rapide que la réparation (3h).\\nFOURNISSEUR : AutoPièces Atlas (SUP-ATLAS), score 77.2 — 3 100 MAD, livraison 5.2h, garantie 12 mois, ponctualité 92%. Retenu devant Sahara Diesel (moins ponctuel) et l'OEM (57.8h de délai).\\nDÉPÔT : DEP-RABAT (93 km, ETA 80 min, atelier sur place), véhicule de remplacement T-10 du même type.\\nCOÛT : ~3 100 MAD pièce + 2h de main d'œuvre.\\nPÉNALITÉ SLA : nulle — remplacement en 80 min pour un SLA de 90 min. Aucun camion disponible pour reprendre la charge (0 palette libre), le remplacement est donc indispensable.\\nRISQUE : si le camion continue à rouler, échauffement de la roue pouvant aller jusqu'au blocage de roue ou à l'incendie — immobilisation immédiate au dépôt à respecter.\"}\n```"
+ }
+]

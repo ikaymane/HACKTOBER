@@ -67,6 +67,7 @@ async def handle_scenario(sc: dict, state: State) -> None:
     fuel_ran = False
     if sc.get("expected", {}).get("fuel_anomaly"):  # fuel-led scenario: fuel agent spots it first
         fuel_ran = await _call_optional("fuel", {"vehicle_id": vid, "tag": f"{tag}-fuel"}, state, vid)
+    if fuel_ran:
         state.emit("orchestrator", "handoff", "Carburant → Maintenance",
                    "Surconsommation avec signal mécanique: diagnostic demandé.", vehicle_id=vid)
 

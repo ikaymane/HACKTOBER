@@ -26,6 +26,24 @@ The showcase motion is computed, not hand-keyed:
 
 Copy the GLBs to `frontend/public/models/`.
 
+## Real engine
+Both vehicles carry a real inline-6 diesel with its gearbox instead of the old box placeholder:
+
+> **"Truck Engine"** by **andreviewport**: <https://sketchfab.com/3d-models/truck-engine-d7ff313ff1e64c4db803e39b600a0fbf>, licensed **CC BY 4.0**. This credit must stay in the README and the app.
+
+- Full-detail source: `source/truck_engine.glb`, 185k faces, used for the videos.
+- In the GLBs it's decimated to about 12% to keep them around 4 MB.
+- `assets/blender/engine.py` places it in each engine bay. It's 1:1 in the truck and 0.55× in the ambulance.
+- The same script cuts two failure zones out of the engine mesh as their own clickable nodes:
+
+| Node | `part_id` | `zone` | Where |
+|---|---|---|---|
+| `engine__diesel` | `""` | engine | rest of the engine + gearbox |
+| `engine__water_pump` | `P-WPUMP` | cooling | water-pump pulley + housing, front left |
+| `engine__alternator` | `P-ALT` | electrical | alternator body + pulley, front right |
+
+To show a failure, colour the node whose `part_id` equals `incident.diagnosis.part_id` red. That turns the actual spot on the real engine red, rather than a floating placeholder.
+
 ## Node metadata (three.js `object.userData`)
 Each part is one direct child node of the root (`Truck` / `Ambulance`). Read **`userData`**, not node names: names can get suffixes like `.001`.
 

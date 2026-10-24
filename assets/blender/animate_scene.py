@@ -23,6 +23,7 @@ import bpy
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import build_vehicles as bv  # noqa: E402  (resets the scene on import)
+import engine as real_engine  # noqa: E402
 
 ARGS = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 VEHICLE = next((a for a in ARGS if a in ("truck", "ambulance")), "truck")
@@ -32,9 +33,10 @@ FPS = 24
 scene = bpy.context.scene
 
 CFG = {
-    # view = close-up direction from the part, in the vehicle frame (+x front, -y right, +z up)
-    "truck": {"v0": 15.0, "part": "P-WPUMP", "cam": 1.0, "close": 5.2, "view": (1.0, -0.9, 0.85)},
-    "ambulance": {"v0": 18.0, "part": "P-ALT", "cam": 0.8, "close": 4.2, "view": (0.7, -1.2, 0.9)},
+    # side = which side the camera swings to (+1 left, -1 right): the side the broken part is on
+    # view = close-up direction from the part, in the vehicle frame (+x front, +y left, +z up)
+    "truck": {"v0": 15.0, "part": "P-WPUMP", "cam": 1.0, "side": 1, "close": 3.6, "view": (1.5, 0.75, 1.2)},
+    "ambulance": {"v0": 18.0, "part": "P-ALT", "cam": 0.8, "side": -1, "close": 3.0, "view": (0.8, -1.0, 1.4)},
 }[VEHICLE]
 
 # timeline (frames)
@@ -248,6 +250,9 @@ def build_world():
 # ---------------------------------------------------------------- vehicle rig
 def rig_vehicle():
     root = bv.build_truck() if VEHICLE == "truck" else bv.build_ambulance()
+    real_engine.install_engine(root, VEHICLE, bv.tag)
+    for o in [c for c in bv.children(root) if c.name.startswith("cooling__radiator")]:
+        bpy.data.objects.remove(o, do_unlink=True)  # placeholder panel would sit between camera and pump
     kids = bv.children(root)
     bpy.context.view_layer.update()
     tires = [o for o in kids if o["zone"] == "tires"]
@@ -339,8 +344,8 @@ def xray(kids):
     g_alpha.keyframe_insert("default_value", frame=F_XRAY0)
     g_alpha.default_value = 0.35  # mechanics turn semi-see-through so the red part shows through them
     g_alpha.keyframe_insert("default_value", frame=F_XRAY1)
-    for o in kids:
-        if o is failing or o in shell or o["zone"] in ("tires", "body"):
+    for o in kids:  # the real engine stays solid steel: it is what the viewer should read
+        if o is failing or o in shell or o["zone"] in ("tires", "body") or o.name.startswith("engine__"):
             continue
         for slot in o.material_slots:
             slot.material = grey
@@ -364,7 +369,8 @@ def xray(kids):
         alpha = bsdf.inputs["Alpha"]
         alpha.default_value = 1.0
         alpha.keyframe_insert("default_value", frame=F_XRAY0)
-        alpha.default_value = 0.12
+        # red paint / beacons vanish completely so the only red on screen is the broken part
+        alpha.default_value = 0.0 if any(k in m.name for k in ("red", "beacon", "headlight")) else 0.1
         alpha.keyframe_insert("default_value", frame=F_XRAY1)
         em = bsdf.inputs["Emission Strength"]  # lights/beacons dim with the body
         if em.default_value > 0:
@@ -398,7 +404,7 @@ def xray(kids):
     glow.data.shadow_soft_size = 0.3
     glow.data.energy = 0.0
     glow.data.keyframe_insert("energy", frame=F_XRAY0 + 10)
-    glow.data.energy = 120.0
+    glow.data.energy = 60.0 if VEHICLE == "truck" else 12.0  # smaller engine bay -> much less light
     glow.data.keyframe_insert("energy", frame=F_XRAY1 + 10)
     return failing
 
@@ -422,7 +428,8 @@ def camera(track, failing):
     k = CFG["cam"]
 
     # chase -> 3/4 front-right view: swing around the vehicle in polar coordinates of its frame
-    a_chase, a_side = math.atan2(5, -15), math.atan2(-10, 9) + 2 * math.pi
+    a_chase = math.atan2(5, -15)
+    a_side = math.atan2(10, 9) if CFG["side"] > 0 else math.atan2(-10, 9) + 2 * math.pi
     r_chase, r_side = math.hypot(5, 15), math.hypot(9, 10)
 
     bv._set_interp("LINEAR")

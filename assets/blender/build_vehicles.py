@@ -443,8 +443,13 @@ def explode(root, factor):
 
 
 def main():
+    sys.path.insert(0, HERE)
+    import engine  # noqa: PLC0415  (real Sketchfab engine, decimated for the web)
+
     truck = build_truck()
     amb = build_ambulance()
+    engine.install_engine(truck, "truck", tag, decimate=0.12)
+    engine.install_engine(amb, "ambulance", tag, decimate=0.12)
     road = build_road()
     add_clips(truck)
     add_clips(amb)

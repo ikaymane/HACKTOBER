@@ -84,7 +84,7 @@ def cyl(name, loc, r, depth, material, axis="Z", verts=40, bevel=0.01, parent=No
     bpy.ops.mesh.primitive_cylinder_add(vertices=verts, radius=r, depth=depth, location=loc, rotation=rot)
     o = bpy.context.active_object
     o.name = o.data.name = name
-    bpy.ops.object.transform_apply(rotation=True)
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=False)  # keep origin at the part centre
     o.parent = parent
     o = _finish(o, material, bevel)
     for p in o.data.polygons:
@@ -442,78 +442,6 @@ def explode(root, factor):
                       o.get("_base", o.location)[2] + y * factor)
 
 
-def render_video(root, other, road, floor, cam, name, dist):
-    """~4.5 s clip: drives along the road, body fades out, parts explode while the camera orbits."""
-    hidden = [other, *children(other), floor]
-    for o in hidden:
-        o.hide_render = True
-    road.hide_render = False
-    for o in children(road):
-        o.hide_render = False
-    kids = children(root)
-    base = {o.name: tuple(o.location) for o in kids}
-    wheels = [o for o in kids if o["zone"] == "tires" or o.name.startswith("brakes__disc")]
-    r = max(o.dimensions.z for o in kids if o["zone"] == "tires") / 2
-    shell = [o for o in kids if o["zone"] == "body" and "chassis" not in o.name]
-    drive_end, fade, boom_end, end = 60, 66, 90, 110
-
-    _set_interp("LINEAR")
-    for f in range(1, drive_end + 1, 6):  # wheels roll, road slides back at the matching speed
-        ang = (f - 1) / FPS * 2 * math.pi
-        for o in wheels:
-            o.rotation_euler = (0, ang, 0)
-            o.keyframe_insert("rotation_euler", frame=f)
-        road.location = (-r * ang, 0, 0)  # ground speed = wheel radius x angle
-        road.keyframe_insert("location", frame=f)
-    for o in shell:  # hide in render AND viewport so playback in Blender matches the video
-        o.hide_render = o.hide_viewport = False
-        o.keyframe_insert("hide_render", frame=fade - 1)
-        o.keyframe_insert("hide_viewport", frame=fade - 1)
-        o.hide_render = o.hide_viewport = True
-        o.keyframe_insert("hide_render", frame=fade)
-        o.keyframe_insert("hide_viewport", frame=fade)
-    _set_interp("BEZIER")
-    for o in kids:
-        x, y, z = o["explode_dir"]
-        bx, by, bz = base[o.name]
-        o.location = (bx, by, bz)
-        o.keyframe_insert("location", frame=fade)
-        o.location = (bx + x * 0.9, by - z * 0.9, bz + y * 0.9)
-        o.keyframe_insert("location", frame=boom_end)
-    for f in range(1, end + 1, 10):
-        grow = min(1, max(0, (f - fade) / (boom_end - fade)))
-        aim(cam, (0, 0, 1.2), dist * (1.25 + 0.35 * grow), az_deg=-50 + 30 * f / end, el_deg=24 + 8 * grow)
-        cam.keyframe_insert("location", frame=f)
-        cam.keyframe_insert("rotation_euler", frame=f)
-
-    scene.frame_start, scene.frame_end = 1, end
-    scene.render.resolution_x, scene.render.resolution_y = 960, 540
-    try:
-        scene.render.image_settings.media_type = "VIDEO"  # Blender >= 5.0
-    except (AttributeError, TypeError):
-        pass
-    scene.render.image_settings.file_format = "FFMPEG"
-    scene.render.ffmpeg.format, scene.render.ffmpeg.codec = "MPEG4", "H264"
-    scene.render.ffmpeg.constant_rate_factor = "HIGH"
-    scene.render.filepath = os.path.join(OUT, f"anim_{name}.mp4")
-    for o in hidden:  # the other vehicle and the floor stay out of the animated .blend too
-        o.hide_viewport = True
-    scene.frame_set(1)
-    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, f"anim_{name}.blend"), copy=True)
-    bpy.ops.render.render(animation=True)
-
-    for o in [*kids, road, cam]:
-        o.animation_data_clear()
-    for o in kids:
-        o.location, o.rotation_euler = base[o.name], (0, 0, 0)
-        o.hide_render = o.hide_viewport = False
-    road.location = (0, 0, 0)
-    for o in hidden:
-        o.hide_render = o.hide_viewport = False
-    for o in [road, *children(road)]:
-        o.hide_render = True
-
-
 def main():
     truck = build_truck()
     amb = build_ambulance()
@@ -559,16 +487,14 @@ def main():
         for o in children(other):
             o.hide_render = False
 
-    if "--no-video" not in sys.argv:
-        render_video(truck, amb, road, floor, cam, "truck", 13)
-        render_video(amb, truck, road, floor, cam, "ambulance", 10)
     print("DONE", OUT)
 
 
-try:
-    main()
-except Exception:
-    import traceback
+if __name__ == "__main__":  # importable by animate_scene.py without rebuilding everything
+    try:
+        main()
+    except Exception:
+        import traceback
 
-    traceback.print_exc()
-    sys.exit(1)
+        traceback.print_exc()
+        sys.exit(1)

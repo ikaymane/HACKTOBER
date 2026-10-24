@@ -5,7 +5,8 @@
 | `truck.glb` | Rigid truck, 3 axles (6 wheels), ~8.5 m, 46 nodes |
 | `ambulance.glb` | Ambulance van, 4 wheels, ~6.2 m, 45 nodes |
 | `road.glb` | Straight 2-lane road tile, 60 m along X, sand shoulders. Vehicles drive +X in the right lane at z=0, y=0. Tile it along X. |
-| `anim_truck.mp4`, `anim_ambulance.mp4` | 4.5 s showcase: drives on the road, the body disappears, the parts explode (good for the README / demo video) |
+| `anim_truck.mp4`, `anim_ambulance.mp4` | 14 s showcase (good for the README / demo video): drives a curved desert road with a chase camera, eases to a stop in its lane, the body turns to glass, the mechanics turn see-through grey, and the camera eases in on the broken part (water pump / alternator) glowing red |
+| `anim_truck.blend`, `anim_ambulance.blend` | The same scenes, to play or re-render in Blender (`assets/blender/animate_scene.py` builds them) |
 | `preview_*.png` | Renders: assembled + exploded (exploded previews hide the body shell) |
 | `vehicles.blend` | Blender source (both side by side) |
 
@@ -13,6 +14,15 @@ Rebuild after editing `assets/blender/build_vehicles.py`:
 ```bash
 "C:/Program Files/Blender Foundation/Blender 5.2/blender.exe" -b --factory-startup --python assets/blender/build_vehicles.py
 ```
+Re-render a showcase video (`--preview` renders 5 check frames instead):
+```bash
+"C:/Program Files/Blender Foundation/Blender 5.2/blender.exe" -b --factory-startup --python assets/blender/animate_scene.py -- truck
+```
+The showcase motion is computed, not hand-keyed:
+- the vehicle follows its lane with a cruise → eased braking → stop speed profile
+- heading comes from the path, and the front wheels steer from the path curvature
+- wheel spin matches the distance travelled
+- the sprung body pitches and rolls through a spring-damper driven by acceleration
 
 Copy the GLBs to `frontend/public/models/`.
 

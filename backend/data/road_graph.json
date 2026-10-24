@@ -2,7 +2,7 @@
   "meta": {
     "diesel_mad_per_l": 11.6,
     "driver_cost_mad_per_hour": 60,
-    "truck_toll_multiplier": 1.6,
+    "truck_toll_multiplier": 2.7,
     "speed_kmh": {
       "highway": {
         "truck": 85,

@@ -44,7 +44,8 @@ def test_cheapest_differs_from_shortest_when_tolls_dominate(state):
 def test_truck_pays_toll_multiplier_ambulance_does_not(state):
     truck = compare_routes(state, "casablanca", "rabat", "T-12")[0]
     amb = compare_routes(state, "casablanca", "rabat", "A-01")[0]
-    assert truck.toll_mad == round(23 * 1.6) and amb.toll_mad == 23
+    mult = state.road_graph["meta"]["truck_toll_multiplier"]
+    assert truck.toll_mad == round(23 * mult) and amb.toll_mad == 23
 
 
 def test_unknown_city_raises(state):

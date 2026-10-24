@@ -68,7 +68,7 @@ road_graph = {
     "meta": {
         "diesel_mad_per_l": 11.6,
         "driver_cost_mad_per_hour": 60,
-        "truck_toll_multiplier": 1.6,
+        "truck_toll_multiplier": 2.7,  # ADM class 3 (heavy trucks) pays ~2.5-3x the car toll
         "speed_kmh": SPEED,
         "note": "Tolls approximate ADM class-1 rates; speeds are average incl. traffic.",
     },

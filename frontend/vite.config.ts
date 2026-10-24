@@ -18,7 +18,7 @@ export default defineConfig({
     fs: { allow: [".."] },
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: process.env.API_TARGET ?? "http://localhost:8000", // override to run against another backend
         changeOrigin: true,
         rewrite: (p) => p.replace(/^\/api/, ""),
       },

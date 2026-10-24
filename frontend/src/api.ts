@@ -9,9 +9,9 @@ export type ZoneStatus = "ok" | "warn" | "fail";
 export interface ZoneHealth { status: ZoneStatus; reasons: string[]; part_id: string | null; incident_id: string | null }
 export interface VehicleHealth { vehicle_id: string; type: Vehicle["type"]; zones: Record<Zone, ZoneHealth> }
 
-export interface FuelLog { ts: string; litres: number; odometer_km: number; l_100km: number | null; station_city: string; cost_mad: number }
+export interface FuelLog { ts: string; litres: number; odometer_km: number; l_100km: number; station_city: string; cost_mad: number }
 export interface FuelReport {
-  vehicle_id: string; expected_l_100km: number; actual_l_100km: number | null; delta_pct: number | null;
+  vehicle_id: string; expected_l_100km: number; actual_l_100km: number; delta_pct: number;
   logs: FuelLog[]; anomalies: FuelAnomaly[]; mocked?: boolean;
 }
 export interface MissionPath { mission_id: string; path: string[]; coords: [number, number][]; progress_pct: number | null }
@@ -125,7 +125,7 @@ function mockFuel(v: Vehicle): FuelReport {
     });
   }
   const recent = logs.slice(-3);
-  const actual = +(recent.reduce((s, l) => s + (l.l_100km ?? 0), 0) / recent.length).toFixed(1);
+  const actual = +(recent.reduce((s, l) => s + l.l_100km, 0) / recent.length).toFixed(1);
   const delta = +(((actual - v.base_l_100km) / v.base_l_100km) * 100).toFixed(1);
   const anomalies: FuelAnomaly[] = [];
   if (delta > 12)

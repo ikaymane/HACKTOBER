@@ -74,10 +74,12 @@ export const useStore = create<State>((set, get) => ({
       missions.map(async (m) => {
         const v = vehicles.find((x) => x.id === m.vehicle_id);
         const mp = await api.missionPath(m, v);
-        // The backend's coords are city-to-city straight lines: draw the real roads through the same cities,
-        // and snap the vehicle by its GPS position (finer than the city-index progress_pct).
-        const pl = toPolyline(await roadGeometry(mp.path));
-        const frac = v ? nearestFraction(pl, [v.position.lng, v.position.lat]) : (mp.progress_pct ?? 0) / 100;
+        const coords = mp.coords.length > 1
+          ? mp.coords.map(([lat, lng]) => [lng, lat] as [number, number])
+          : await roadGeometry(mp.path);
+        const pl = toPolyline(coords);
+        const frac = mp.progress_pct != null ? mp.progress_pct / 100
+          : v ? nearestFraction(pl, [v.position.lng, v.position.lat]) : 0;
         set((s) => ({
           routes: { ...s.routes, [m.id]: pl },
           progress: v ? { ...s.progress, [v.id]: Math.min(frac, 0.92) } : s.progress,

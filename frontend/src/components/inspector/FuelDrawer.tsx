@@ -32,7 +32,6 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vehicle.id, mission?.id]);
 
-  const delta = fuel?.delta_pct ?? 0;
   const cheapest = routes ? Math.min(...routes.map((r) => r.total_cost_mad)) : 0;
   // Ties are common on a small graph: recommend one route only, preferring the "cheapest" label.
   const bestLabel = routes ? (routes.find((r) => r.label === "cheapest" && r.total_cost_mad === cheapest) ?? routes.find((r) => r.total_cost_mad === cheapest))?.label : null;
@@ -60,12 +59,12 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
           <motion.div variants={item} className="grid grid-cols-3 gap-px border-b border-line bg-line">
             {[
               ["Attendu", `${fuel.expected_l_100km}`, "L/100"],
-              ["Réel", fuel.actual_l_100km != null ? `${fuel.actual_l_100km}` : "—", "L/100"],
-              ["Écart", fuel.delta_pct != null ? `${delta > 0 ? "+" : ""}${delta}%` : "—", ""],
+              ["Réel", `${fuel.actual_l_100km}`, "L/100"],
+              ["Écart", `${fuel.delta_pct > 0 ? "+" : ""}${fuel.delta_pct}%`, ""],
             ].map(([k, v, u], i) => (
               <div key={k} className="bg-panel px-4 py-3">
                 <div className="tag">{k}</div>
-                <div className={`num mt-1 text-[20px] ${i === 2 ? (delta > 10 ? "text-fail" : delta > 5 ? "text-warn" : "text-ok") : ""}`}>
+                <div className={`num mt-1 text-[20px] ${i === 2 ? (fuel.delta_pct > 10 ? "text-fail" : fuel.delta_pct > 5 ? "text-warn" : "text-ok") : ""}`}>
                   {v}<span className="ml-1 text-[11px] text-dim">{u}</span>
                 </div>
               </div>
@@ -74,7 +73,7 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
 
           <motion.div variants={item} className="h-[190px] px-2 pt-4">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={fuel.logs.filter((l) => l.l_100km != null).map((l) => ({ ...l, d: l.ts.slice(5, 10) }))} margin={{ left: -18, right: 14, top: 6, bottom: 0 }}>
+              <LineChart data={fuel.logs.map((l) => ({ ...l, d: l.ts.slice(5, 10) }))} margin={{ left: -18, right: 14, top: 6, bottom: 0 }}>
                 <CartesianGrid stroke="#1F2A37" strokeDasharray="2 4" vertical={false} />
                 <XAxis dataKey="d" tick={{ fill: "#64748B", fontSize: 10, fontFamily: "JetBrains Mono" }} axisLine={{ stroke: "#1F2A37" }} tickLine={false} />
                 <YAxis domain={["dataMin - 2", "dataMax + 2"]} tick={{ fill: "#64748B", fontSize: 10, fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
@@ -84,7 +83,7 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
                   formatter={(v) => [`${v} L/100 km`, "Conso"]}
                 />
                 <ReferenceLine y={fuel.expected_l_100km} stroke="#94A3B8" strokeDasharray="4 4" label={{ value: "attendu", fill: "#94A3B8", fontSize: 10, position: "insideTopLeft" }} />
-                <Line type="monotone" dataKey="l_100km" stroke={delta > 10 ? "#EF4444" : "#22D3EE"} strokeWidth={2} dot={{ r: 2.5, strokeWidth: 0, fill: delta > 10 ? "#EF4444" : "#22D3EE" }} animationDuration={1400} animationEasing="ease-out" />
+                <Line type="monotone" dataKey="l_100km" stroke={fuel.delta_pct > 10 ? "#EF4444" : "#22D3EE"} strokeWidth={2} dot={{ r: 2.5, strokeWidth: 0, fill: fuel.delta_pct > 10 ? "#EF4444" : "#22D3EE" }} animationDuration={1400} animationEasing="ease-out" />
               </LineChart>
             </ResponsiveContainer>
           </motion.div>
@@ -140,13 +139,13 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
                 <tr><th className="pb-1.5 font-normal">Date</th><th className="font-normal">Ville</th><th className="text-right font-normal">L</th><th className="text-right font-normal">L/100</th><th className="text-right font-normal">MAD</th></tr>
               </thead>
               <tbody className="num">
-                {[...fuel.logs].reverse().map((l, i) => (
-                  <tr key={`${l.ts}-${i}`} className="border-t border-line/60">
+                {[...fuel.logs].reverse().map((l) => (
+                  <tr key={l.ts} className="border-t border-line/60">
                     <td className="py-1.5 text-muted">{l.ts.slice(5, 10)}</td>
                     <td className="font-sans">{cityName(l.station_city)}</td>
                     <td className="text-right">{l.litres}</td>
-                    <td className={`text-right ${(l.l_100km ?? 0) > fuel.expected_l_100km * 1.1 ? "text-fail" : ""}`}>{l.l_100km ?? "—"}</td>
-                    <td className="text-right text-muted">{Math.round(l.cost_mad).toLocaleString("fr-FR")}</td>
+                    <td className={`text-right ${l.l_100km > fuel.expected_l_100km * 1.1 ? "text-fail" : ""}`}>{l.l_100km}</td>
+                    <td className="text-right text-muted">{l.cost_mad.toLocaleString("fr-FR")}</td>
                   </tr>
                 ))}
               </tbody>

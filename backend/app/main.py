@@ -2,10 +2,12 @@
 from __future__ import annotations
 
 import asyncio
+from pathlib import Path
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from sse_starlette.sse import EventSourceResponse
 
 from .simulator import run_scenario
@@ -107,3 +109,25 @@ async def events():
             state.unsubscribe(q)
 
     return EventSourceResponse(gen())
+
+
+class StripApiPrefix:
+    """The frontend calls /api/...; on a single deploy the routes above live at /..."""
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] in ("http", "websocket"):
+            path = scope["path"]
+            if path == "/api" or path.startswith("/api/"):
+                scope = dict(scope, path=path[4:] or "/", raw_path=None)
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(StripApiPrefix)
+
+# Serve the built frontend (frontend/dist) from the same service when it exists.
+DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
+if DIST.is_dir():
+    app.mount("/", StaticFiles(directory=DIST, html=True), name="frontend")

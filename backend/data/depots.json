@@ -1,0 +1,70 @@
+[
+  {
+    "id": "DEP-CASA",
+    "city": "casablanca",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "spare_vehicles": [
+      "T-11"
+    ],
+    "has_workshop": true
+  },
+  {
+    "id": "DEP-RABAT",
+    "city": "rabat",
+    "position": {
+      "lat": 34.0209,
+      "lng": -6.8416
+    },
+    "spare_vehicles": [
+      "T-10"
+    ],
+    "has_workshop": true
+  },
+  {
+    "id": "DEP-SETTAT",
+    "city": "settat",
+    "position": {
+      "lat": 33.001,
+      "lng": -7.6166
+    },
+    "spare_vehicles": [
+      "A-04"
+    ],
+    "has_workshop": false
+  },
+  {
+    "id": "DEP-MARRAKECH",
+    "city": "marrakech",
+    "position": {
+      "lat": 31.6295,
+      "lng": -7.9811
+    },
+    "spare_vehicles": [],
+    "has_workshop": true
+  },
+  {
+    "id": "DEP-FES",
+    "city": "fes",
+    "position": {
+      "lat": 34.0181,
+      "lng": -5.0078
+    },
+    "spare_vehicles": [
+      "T-08"
+    ],
+    "has_workshop": true
+  },
+  {
+    "id": "DEP-AGADIR",
+    "city": "agadir",
+    "position": {
+      "lat": 30.4278,
+      "lng": -9.5981
+    },
+    "spare_vehicles": [],
+    "has_workshop": false
+  }
+]

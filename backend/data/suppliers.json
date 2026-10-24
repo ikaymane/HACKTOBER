@@ -1,0 +1,577 @@
+[
+  {
+    "id": "SUP-ATLAS",
+    "name": "AutoPièces Atlas",
+    "city": "casablanca",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "rating": 4.3,
+    "on_time_pct": 92,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 4040,
+        "delivery_hours": 6.3,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 2010,
+        "delivery_hours": 5.7,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-STARTER",
+        "price_mad": 3770,
+        "delivery_hours": 6.9,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 2450,
+        "delivery_hours": 6.4,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-THERM",
+        "price_mad": 560,
+        "delivery_hours": 5.1,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-RAD",
+        "price_mad": 5440,
+        "delivery_hours": 6.9,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 3100,
+        "delivery_hours": 5.2,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BPAD",
+        "price_mad": 1080,
+        "delivery_hours": 19.0,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-INJ",
+        "price_mad": 3280,
+        "delivery_hours": 6.1,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TURBO",
+        "price_mad": 10930,
+        "delivery_hours": 5.6,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-EGR",
+        "price_mad": 2490,
+        "delivery_hours": 20.4,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-OILP",
+        "price_mad": 3220,
+        "delivery_hours": 7.1,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-DPF",
+        "price_mad": 13880,
+        "delivery_hours": 6.6,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-CLUTCH",
+        "price_mad": 7380,
+        "delivery_hours": 6.1,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TIRE",
+        "price_mad": 3670,
+        "delivery_hours": 15.9,
+        "warranty_months": 12,
+        "in_stock": false
+      }
+    ]
+  },
+  {
+    "id": "SUP-MTP",
+    "name": "Maroc Truck Parts",
+    "city": "settat",
+    "position": {
+      "lat": 33.001,
+      "lng": -7.6166
+    },
+    "rating": 3.9,
+    "on_time_pct": 84,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 3780,
+        "delivery_hours": 8.8,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 1880,
+        "delivery_hours": 29.3,
+        "warranty_months": 6,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-STARTER",
+        "price_mad": 3080,
+        "delivery_hours": 9.4,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 2060,
+        "delivery_hours": 8.9,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-THERM",
+        "price_mad": 470,
+        "delivery_hours": 11.6,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 2660,
+        "delivery_hours": 10.7,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BPAD",
+        "price_mad": 1010,
+        "delivery_hours": 10.3,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-INJ",
+        "price_mad": 2900,
+        "delivery_hours": 8.8,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TURBO",
+        "price_mad": 10040,
+        "delivery_hours": 9.9,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-EGR",
+        "price_mad": 2210,
+        "delivery_hours": 8.4,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-OILP",
+        "price_mad": 2830,
+        "delivery_hours": 9.0,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-DPF",
+        "price_mad": 12660,
+        "delivery_hours": 9.1,
+        "warranty_months": 6,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-CLUTCH",
+        "price_mad": 6470,
+        "delivery_hours": 34.3,
+        "warranty_months": 6,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-TIRE",
+        "price_mad": 3420,
+        "delivery_hours": 11.3,
+        "warranty_months": 6,
+        "in_stock": true
+      }
+    ]
+  },
+  {
+    "id": "SUP-SAHARA",
+    "name": "Sahara Diesel Supply",
+    "city": "marrakech",
+    "position": {
+      "lat": 31.6295,
+      "lng": -7.9811
+    },
+    "rating": 4.0,
+    "on_time_pct": 88,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 4070,
+        "delivery_hours": 17.1,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 1900,
+        "delivery_hours": 4.8,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-STARTER",
+        "price_mad": 3510,
+        "delivery_hours": 4.5,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 2220,
+        "delivery_hours": 4.8,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 2950,
+        "delivery_hours": 4.3,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BPAD",
+        "price_mad": 1030,
+        "delivery_hours": 15.3,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-INJ",
+        "price_mad": 3000,
+        "delivery_hours": 5.0,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-EGR",
+        "price_mad": 2140,
+        "delivery_hours": 13.1,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-OILP",
+        "price_mad": 2810,
+        "delivery_hours": 4.2,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-CLUTCH",
+        "price_mad": 6960,
+        "delivery_hours": 4.8,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TIRE",
+        "price_mad": 3590,
+        "delivery_hours": 4.4,
+        "warranty_months": 12,
+        "in_stock": true
+      }
+    ]
+  },
+  {
+    "id": "SUP-OEM",
+    "name": "Distributeur Constructeur (OEM)",
+    "city": "rabat",
+    "position": {
+      "lat": 34.0209,
+      "lng": -6.8416
+    },
+    "rating": 4.8,
+    "on_time_pct": 97,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 5320,
+        "delivery_hours": 23.0,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 2680,
+        "delivery_hours": 26.4,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-STARTER",
+        "price_mad": 4910,
+        "delivery_hours": 28.8,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 3030,
+        "delivery_hours": 21.7,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-THERM",
+        "price_mad": 740,
+        "delivery_hours": 68.2,
+        "warranty_months": 24,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-RAD",
+        "price_mad": 6900,
+        "delivery_hours": 75.2,
+        "warranty_months": 24,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 4090,
+        "delivery_hours": 57.8,
+        "warranty_months": 24,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BPAD",
+        "price_mad": 1450,
+        "delivery_hours": 28.2,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-INJ",
+        "price_mad": 4000,
+        "delivery_hours": 24.5,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TURBO",
+        "price_mad": 15280,
+        "delivery_hours": 21.2,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-EGR",
+        "price_mad": 3120,
+        "delivery_hours": 27.9,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-OILP",
+        "price_mad": 4000,
+        "delivery_hours": 21.9,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-DPF",
+        "price_mad": 19110,
+        "delivery_hours": 21.7,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-CLUTCH",
+        "price_mad": 9550,
+        "delivery_hours": 19.3,
+        "warranty_months": 24,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-TIRE",
+        "price_mad": 5000,
+        "delivery_hours": 73.3,
+        "warranty_months": 24,
+        "in_stock": false
+      }
+    ]
+  },
+  {
+    "id": "SUP-SOUSS",
+    "name": "Souss Pièces Poids Lourds",
+    "city": "agadir",
+    "position": {
+      "lat": 30.4278,
+      "lng": -9.5981
+    },
+    "rating": 3.6,
+    "on_time_pct": 78,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 3390,
+        "delivery_hours": 46.4,
+        "warranty_months": 3,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 1750,
+        "delivery_hours": 20.1,
+        "warranty_months": 3,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 1860,
+        "delivery_hours": 48.6,
+        "warranty_months": 3,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-THERM",
+        "price_mad": 460,
+        "delivery_hours": 17.3,
+        "warranty_months": 3,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-RAD",
+        "price_mad": 4340,
+        "delivery_hours": 20.6,
+        "warranty_months": 3,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 2560,
+        "delivery_hours": 62.2,
+        "warranty_months": 3,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BPAD",
+        "price_mad": 870,
+        "delivery_hours": 21.1,
+        "warranty_months": 3,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-OILP",
+        "price_mad": 2380,
+        "delivery_hours": 20.7,
+        "warranty_months": 3,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-CLUTCH",
+        "price_mad": 5900,
+        "delivery_hours": 49.8,
+        "warranty_months": 3,
+        "in_stock": false
+      }
+    ]
+  },
+  {
+    "id": "SUP-MEDI",
+    "name": "Medi-Fleet Équipement",
+    "city": "casablanca",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "rating": 4.5,
+    "on_time_pct": 95,
+    "offers": [
+      {
+        "part_id": "P-ALT",
+        "price_mad": 4400,
+        "delivery_hours": 2.6,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-BATT",
+        "price_mad": 2420,
+        "delivery_hours": 8.2,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-WPUMP",
+        "price_mad": 2770,
+        "delivery_hours": 3.0,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-RAD",
+        "price_mad": 5540,
+        "delivery_hours": 10.7,
+        "warranty_months": 12,
+        "in_stock": false
+      },
+      {
+        "part_id": "P-BCAL",
+        "price_mad": 3280,
+        "delivery_hours": 2.9,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-INJ",
+        "price_mad": 3520,
+        "delivery_hours": 2.9,
+        "warranty_months": 12,
+        "in_stock": true
+      },
+      {
+        "part_id": "P-EGR",
+        "price_mad": 2510,
+        "delivery_hours": 3.5,
+        "warranty_months": 12,
+        "in_stock": true
+      }
+    ]
+  }
+]

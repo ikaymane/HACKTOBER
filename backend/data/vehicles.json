@@ -1,0 +1,450 @@
+[
+  {
+    "id": "T-01",
+    "type": "truck",
+    "model": "Volvo FH 460",
+    "plate": "12345-A-6",
+    "year": 2019,
+    "km": 412000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.79,
+      "lng": -7.16
+    },
+    "mission_id": "M-101",
+    "driver": "Youssef B.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 86.7,
+      "oil_bar": 4.2,
+      "battery_v": 13.92,
+      "brake_wear_pct": 21,
+      "idle_pct_7d": 5.7,
+      "speed_kmh": 80,
+      "last_service_km": 386048
+    }
+  },
+  {
+    "id": "T-02",
+    "type": "truck",
+    "model": "Renault T 480",
+    "plate": "23456-A-1",
+    "year": 2020,
+    "km": 356000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-RABAT",
+    "position": {
+      "lat": 35.19,
+      "lng": -6.15
+    },
+    "mission_id": "M-102",
+    "driver": "Hamid E.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 91.4,
+      "oil_bar": 3.7,
+      "battery_v": 14.01,
+      "brake_wear_pct": 16,
+      "idle_pct_7d": 6.5,
+      "speed_kmh": 80,
+      "last_service_km": 326730
+    }
+  },
+  {
+    "id": "T-03",
+    "type": "truck",
+    "model": "Mercedes Actros 1845",
+    "plate": "34567-A-6",
+    "year": 2021,
+    "km": 248000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 32.7,
+      "lng": -7.8
+    },
+    "mission_id": "M-103",
+    "driver": "Rachid K.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 89.6,
+      "oil_bar": 4.0,
+      "battery_v": 14.16,
+      "brake_wear_pct": 43,
+      "idle_pct_7d": 7.9,
+      "speed_kmh": 80,
+      "last_service_km": 226441
+    }
+  },
+  {
+    "id": "T-04",
+    "type": "truck",
+    "model": "Scania R450",
+    "plate": "45678-A-15",
+    "year": 2018,
+    "km": 498000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-FES",
+    "position": {
+      "lat": 34.22,
+      "lng": -3.99
+    },
+    "mission_id": "M-104",
+    "driver": "Said M.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 89.5,
+      "oil_bar": 4.2,
+      "battery_v": 13.8,
+      "brake_wear_pct": 47,
+      "idle_pct_7d": 9.9,
+      "speed_kmh": 80,
+      "last_service_km": 478281
+    }
+  },
+  {
+    "id": "T-05",
+    "type": "truck",
+    "model": "Volvo FM 420",
+    "plate": "56789-A-6",
+    "year": 2017,
+    "km": 561000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.1,
+      "lng": -8.6
+    },
+    "mission_id": "M-105",
+    "driver": "Khalid A.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 87.7,
+      "oil_bar": 3.8,
+      "battery_v": 14.18,
+      "brake_wear_pct": 19,
+      "idle_pct_7d": 7.7,
+      "speed_kmh": 80,
+      "last_service_km": 544851
+    }
+  },
+  {
+    "id": "T-06",
+    "type": "truck",
+    "model": "DAF XF 480",
+    "plate": "67890-A-6",
+    "year": 2016,
+    "km": 640000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "maintenance",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "mission_id": null,
+    "driver": "Omar T.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 91.1,
+      "oil_bar": 4.1,
+      "battery_v": 14.2,
+      "brake_wear_pct": 44,
+      "idle_pct_7d": 8.8,
+      "speed_kmh": 0,
+      "last_service_km": 623237
+    }
+  },
+  {
+    "id": "T-07",
+    "type": "truck",
+    "model": "Renault T 460",
+    "plate": "78901-A-6",
+    "year": 2018,
+    "km": 487000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 32.45,
+      "lng": -7.9
+    },
+    "mission_id": "M-107",
+    "driver": "Mustapha R.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 86.5,
+      "oil_bar": 3.8,
+      "battery_v": 14.11,
+      "brake_wear_pct": 50,
+      "idle_pct_7d": 7.5,
+      "speed_kmh": 80,
+      "last_service_km": 469597
+    }
+  },
+  {
+    "id": "T-08",
+    "type": "truck",
+    "model": "Mercedes Actros 1845",
+    "plate": "89012-A-15",
+    "year": 2022,
+    "km": 151000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "available",
+    "home_depot": "DEP-FES",
+    "position": {
+      "lat": 34.0181,
+      "lng": -5.0078
+    },
+    "mission_id": null,
+    "driver": "Nabil H.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 90.2,
+      "oil_bar": 3.6,
+      "battery_v": 13.91,
+      "brake_wear_pct": 27,
+      "idle_pct_7d": 5.6,
+      "speed_kmh": 0,
+      "last_service_km": 139700
+    }
+  },
+  {
+    "id": "T-09",
+    "type": "truck",
+    "model": "Iveco S-Way 460",
+    "plate": "90123-A-40",
+    "year": 2020,
+    "km": 330000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-MARRAKECH",
+    "position": {
+      "lat": 30.95,
+      "lng": -9.0
+    },
+    "mission_id": "M-109",
+    "driver": "Abdelali Z.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 91.2,
+      "oil_bar": 3.9,
+      "battery_v": 14.03,
+      "brake_wear_pct": 48,
+      "idle_pct_7d": 31.0,
+      "speed_kmh": 80,
+      "last_service_km": 317372
+    }
+  },
+  {
+    "id": "T-10",
+    "type": "truck",
+    "model": "Volvo FH 460",
+    "plate": "11223-A-1",
+    "year": 2021,
+    "km": 230000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "available",
+    "home_depot": "DEP-RABAT",
+    "position": {
+      "lat": 34.0209,
+      "lng": -6.8416
+    },
+    "mission_id": null,
+    "driver": "Hicham L.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 87.3,
+      "oil_bar": 3.8,
+      "battery_v": 14.27,
+      "brake_wear_pct": 41,
+      "idle_pct_7d": 9.3,
+      "speed_kmh": 0,
+      "last_service_km": 213359
+    }
+  },
+  {
+    "id": "T-11",
+    "type": "truck",
+    "model": "Scania R450",
+    "plate": "22334-A-6",
+    "year": 2022,
+    "km": 140000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "available",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "mission_id": null,
+    "driver": "Driss F.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 89.2,
+      "oil_bar": 3.8,
+      "battery_v": 14.03,
+      "brake_wear_pct": 26,
+      "idle_pct_7d": 11.5,
+      "speed_kmh": 0,
+      "last_service_km": 129393
+    }
+  },
+  {
+    "id": "T-12",
+    "type": "truck",
+    "model": "Renault T 480",
+    "plate": "33445-A-6",
+    "year": 2019,
+    "km": 433000,
+    "tank_l": 400,
+    "base_l_100km": 32.0,
+    "status": "on_mission",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.82,
+      "lng": -6.07
+    },
+    "mission_id": "M-112",
+    "driver": "Aziz O.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 89.3,
+      "oil_bar": 4.1,
+      "battery_v": 14.22,
+      "brake_wear_pct": 81,
+      "idle_pct_7d": 6.6,
+      "speed_kmh": 80,
+      "last_service_km": 405451
+    }
+  },
+  {
+    "id": "A-01",
+    "type": "ambulance",
+    "model": "Mercedes Sprinter 319",
+    "plate": "44556-A-1",
+    "year": 2021,
+    "km": 185000,
+    "tank_l": 80,
+    "base_l_100km": 12.5,
+    "status": "on_mission",
+    "home_depot": "DEP-RABAT",
+    "position": {
+      "lat": 33.9,
+      "lng": -7.0
+    },
+    "mission_id": "M-201",
+    "driver": "Karim S.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 90.8,
+      "oil_bar": 3.9,
+      "battery_v": 13.83,
+      "brake_wear_pct": 52,
+      "idle_pct_7d": 9.0,
+      "speed_kmh": 95,
+      "last_service_km": 181475
+    }
+  },
+  {
+    "id": "A-02",
+    "type": "ambulance",
+    "model": "Renault Master L3",
+    "plate": "55667-A-6",
+    "year": 2020,
+    "km": 212000,
+    "tank_l": 80,
+    "base_l_100km": 12.5,
+    "status": "available",
+    "home_depot": "DEP-CASA",
+    "position": {
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    "mission_id": null,
+    "driver": "Samir D.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 87.9,
+      "oil_bar": 4.1,
+      "battery_v": 14.0,
+      "brake_wear_pct": 52,
+      "idle_pct_7d": 8.2,
+      "speed_kmh": 0,
+      "last_service_km": 197238
+    }
+  },
+  {
+    "id": "A-03",
+    "type": "ambulance",
+    "model": "Mercedes Sprinter 319",
+    "plate": "66778-A-40",
+    "year": 2019,
+    "km": 268000,
+    "tank_l": 80,
+    "base_l_100km": 12.5,
+    "status": "on_mission",
+    "home_depot": "DEP-MARRAKECH",
+    "position": {
+      "lat": 32.55,
+      "lng": -7.85
+    },
+    "mission_id": "M-203",
+    "driver": "Yassine N.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 86.8,
+      "oil_bar": 4.2,
+      "battery_v": 14.07,
+      "brake_wear_pct": 45,
+      "idle_pct_7d": 8.0,
+      "speed_kmh": 95,
+      "last_service_km": 260661
+    }
+  },
+  {
+    "id": "A-04",
+    "type": "ambulance",
+    "model": "Volkswagen Crafter",
+    "plate": "77889-A-6",
+    "year": 2022,
+    "km": 98000,
+    "tank_l": 80,
+    "base_l_100km": 12.5,
+    "status": "available",
+    "home_depot": "DEP-SETTAT",
+    "position": {
+      "lat": 33.001,
+      "lng": -7.6166
+    },
+    "mission_id": null,
+    "driver": "Anas G.",
+    "telemetry": {
+      "dtc": [],
+      "coolant_c": 88.4,
+      "oil_bar": 3.8,
+      "battery_v": 14.3,
+      "brake_wear_pct": 35,
+      "idle_pct_7d": 5.6,
+      "speed_kmh": 0,
+      "last_service_km": 85440
+    }
+  }
+]

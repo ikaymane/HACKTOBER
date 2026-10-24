@@ -1,0 +1,293 @@
+{
+  "meta": {
+    "diesel_mad_per_l": 11.6,
+    "driver_cost_mad_per_hour": 60,
+    "truck_toll_multiplier": 1.6,
+    "speed_kmh": {
+      "highway": {
+        "truck": 85,
+        "ambulance": 110
+      },
+      "national": {
+        "truck": 65,
+        "ambulance": 85
+      }
+    },
+    "note": "Tolls approximate ADM class-1 rates; speeds are average incl. traffic."
+  },
+  "cities": [
+    {
+      "id": "casablanca",
+      "name": "Casablanca",
+      "lat": 33.5731,
+      "lng": -7.5898
+    },
+    {
+      "id": "rabat",
+      "name": "Rabat",
+      "lat": 34.0209,
+      "lng": -6.8416
+    },
+    {
+      "id": "kenitra",
+      "name": "Kénitra",
+      "lat": 34.261,
+      "lng": -6.5802
+    },
+    {
+      "id": "tanger",
+      "name": "Tanger",
+      "lat": 35.7595,
+      "lng": -5.834
+    },
+    {
+      "id": "meknes",
+      "name": "Meknès",
+      "lat": 33.8935,
+      "lng": -5.5473
+    },
+    {
+      "id": "fes",
+      "name": "Fès",
+      "lat": 34.0181,
+      "lng": -5.0078
+    },
+    {
+      "id": "oujda",
+      "name": "Oujda",
+      "lat": 34.6814,
+      "lng": -1.9086
+    },
+    {
+      "id": "settat",
+      "name": "Settat",
+      "lat": 33.001,
+      "lng": -7.6166
+    },
+    {
+      "id": "benguerir",
+      "name": "Benguerir",
+      "lat": 32.2359,
+      "lng": -7.9542
+    },
+    {
+      "id": "marrakech",
+      "name": "Marrakech",
+      "lat": 31.6295,
+      "lng": -7.9811
+    },
+    {
+      "id": "eljadida",
+      "name": "El Jadida",
+      "lat": 33.2316,
+      "lng": -8.5007
+    },
+    {
+      "id": "safi",
+      "name": "Safi",
+      "lat": 32.2994,
+      "lng": -9.2372
+    },
+    {
+      "id": "khouribga",
+      "name": "Khouribga",
+      "lat": 32.8811,
+      "lng": -6.9063
+    },
+    {
+      "id": "benimellal",
+      "name": "Béni Mellal",
+      "lat": 32.3373,
+      "lng": -6.3498
+    },
+    {
+      "id": "agadir",
+      "name": "Agadir",
+      "lat": 30.4278,
+      "lng": -9.5981
+    },
+    {
+      "id": "laayoune",
+      "name": "Laâyoune",
+      "lat": 27.1253,
+      "lng": -13.1625
+    }
+  ],
+  "edges": [
+    {
+      "from": "casablanca",
+      "to": "rabat",
+      "km": 87,
+      "toll_mad": 23,
+      "road": "highway"
+    },
+    {
+      "from": "casablanca",
+      "to": "rabat",
+      "km": 92,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "rabat",
+      "to": "kenitra",
+      "km": 40,
+      "toll_mad": 9,
+      "road": "highway"
+    },
+    {
+      "from": "kenitra",
+      "to": "tanger",
+      "km": 210,
+      "toll_mad": 63,
+      "road": "highway"
+    },
+    {
+      "from": "rabat",
+      "to": "meknes",
+      "km": 140,
+      "toll_mad": 39,
+      "road": "highway"
+    },
+    {
+      "from": "kenitra",
+      "to": "meknes",
+      "km": 125,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "meknes",
+      "to": "fes",
+      "km": 60,
+      "toll_mad": 15,
+      "road": "highway"
+    },
+    {
+      "from": "fes",
+      "to": "oujda",
+      "km": 330,
+      "toll_mad": 96,
+      "road": "highway"
+    },
+    {
+      "from": "casablanca",
+      "to": "settat",
+      "km": 70,
+      "toll_mad": 18,
+      "road": "highway"
+    },
+    {
+      "from": "casablanca",
+      "to": "settat",
+      "km": 75,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "settat",
+      "to": "benguerir",
+      "km": 100,
+      "toll_mad": 27,
+      "road": "highway"
+    },
+    {
+      "from": "benguerir",
+      "to": "marrakech",
+      "km": 70,
+      "toll_mad": 20,
+      "road": "highway"
+    },
+    {
+      "from": "settat",
+      "to": "marrakech",
+      "km": 160,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "casablanca",
+      "to": "eljadida",
+      "km": 100,
+      "toll_mad": 25,
+      "road": "highway"
+    },
+    {
+      "from": "eljadida",
+      "to": "safi",
+      "km": 145,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "safi",
+      "to": "marrakech",
+      "km": 160,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "marrakech",
+      "to": "agadir",
+      "km": 245,
+      "toll_mad": 75,
+      "road": "highway"
+    },
+    {
+      "from": "safi",
+      "to": "agadir",
+      "km": 290,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "agadir",
+      "to": "laayoune",
+      "km": 640,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "casablanca",
+      "to": "khouribga",
+      "km": 125,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "settat",
+      "to": "khouribga",
+      "km": 80,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "khouribga",
+      "to": "benimellal",
+      "km": 100,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "benimellal",
+      "to": "marrakech",
+      "km": 190,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "benimellal",
+      "to": "fes",
+      "km": 290,
+      "toll_mad": 0,
+      "road": "national"
+    },
+    {
+      "from": "khouribga",
+      "to": "rabat",
+      "km": 165,
+      "toll_mad": 0,
+      "road": "national"
+    }
+  ]
+}

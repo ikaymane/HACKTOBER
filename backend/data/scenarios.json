@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Ambulance A-03: panne alternateur près de Benguerir",
+    "vehicle_id": "A-03",
+    "telemetry": {
+      "dtc": [
+        "P0562",
+        "P0620"
+      ],
+      "battery_v": 11.2,
+      "speed_kmh": 60
+    },
+    "driver_report": "Voyant batterie allumé, le moniteur cardiaque est passé sur batterie interne et les phares baissent.",
+    "expected": {
+      "part_id": "P-ALT",
+      "depot": "DEP-SETTAT",
+      "replacement": "A-04",
+      "penalty": false
+    }
+  },
+  {
+    "id": 2,
+    "title": "Camion T-07: surchauffe moteur sur l'A7",
+    "vehicle_id": "T-07",
+    "telemetry": {
+      "dtc": [
+        "P0217"
+      ],
+      "coolant_c": 118,
+      "speed_kmh": 40
+    },
+    "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot.",
+    "expected": {
+      "part_id": "P-WPUMP",
+      "depot": null,
+      "replacement": null,
+      "penalty": true,
+      "mitigation_vehicle": "T-03"
+    }
+  },
+  {
+    "id": 3,
+    "title": "Camion T-12: surconsommation carburant + freins",
+    "vehicle_id": "T-12",
+    "telemetry": {
+      "dtc": [
+        "C0040"
+      ],
+      "brake_wear_pct": 84
+    },
+    "driver_report": "Le camion freine un peu tout seul, la roue avant droite est très chaude à l'arrêt.",
+    "expected": {
+      "part_id": "P-BCAL",
+      "fuel_anomaly": "overconsumption",
+      "route": [
+        "casablanca",
+        "fes"
+      ]
+    }
+  }
+]

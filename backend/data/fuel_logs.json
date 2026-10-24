@@ -1,0 +1,1762 @@
+[
+  {
+    "id": "F-0144",
+    "vehicle_id": "A-01",
+    "ts": "2026-09-27T16:18",
+    "litres": 85.4,
+    "odometer_km": 180015,
+    "station_city": "marrakech",
+    "price_mad_l": 11.66,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0145",
+    "vehicle_id": "A-01",
+    "ts": "2026-09-30T21:10",
+    "litres": 75.8,
+    "odometer_km": 180637,
+    "station_city": "laayoune",
+    "price_mad_l": 11.43,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0146",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-03T14:22",
+    "litres": 70.5,
+    "odometer_km": 181207,
+    "station_city": "benguerir",
+    "price_mad_l": 11.64,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0147",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-07T17:07",
+    "litres": 114.0,
+    "odometer_km": 182070,
+    "station_city": "casablanca",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0148",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-11T12:41",
+    "litres": 91.4,
+    "odometer_km": 182837,
+    "station_city": "benguerir",
+    "price_mad_l": 11.72,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0149",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-14T15:31",
+    "litres": 67.0,
+    "odometer_km": 183401,
+    "station_city": "meknes",
+    "price_mad_l": 11.64,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0150",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-17T22:45",
+    "litres": 71.4,
+    "odometer_km": 183961,
+    "station_city": "casablanca",
+    "price_mad_l": 11.36,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0151",
+    "vehicle_id": "A-01",
+    "ts": "2026-10-21T12:13",
+    "litres": 81.4,
+    "odometer_km": 184612,
+    "station_city": "fes",
+    "price_mad_l": 11.52,
+    "card_id": "CARD-A-01"
+  },
+  {
+    "id": "F-0152",
+    "vehicle_id": "A-02",
+    "ts": "2026-09-28T09:17",
+    "litres": 94.2,
+    "odometer_km": 207085,
+    "station_city": "rabat",
+    "price_mad_l": 11.39,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0153",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-02T09:30",
+    "litres": 79.0,
+    "odometer_km": 207744,
+    "station_city": "agadir",
+    "price_mad_l": 11.7,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0154",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-05T20:48",
+    "litres": 79.4,
+    "odometer_km": 208392,
+    "station_city": "tanger",
+    "price_mad_l": 11.51,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0155",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-08T14:08",
+    "litres": 69.1,
+    "odometer_km": 208937,
+    "station_city": "marrakech",
+    "price_mad_l": 11.33,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0156",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-11T21:06",
+    "litres": 76.5,
+    "odometer_km": 209581,
+    "station_city": "marrakech",
+    "price_mad_l": 11.87,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0157",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-15T21:56",
+    "litres": 101.5,
+    "odometer_km": 210408,
+    "station_city": "tanger",
+    "price_mad_l": 11.3,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0158",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-19T21:47",
+    "litres": 84.9,
+    "odometer_km": 211093,
+    "station_city": "settat",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0159",
+    "vehicle_id": "A-02",
+    "ts": "2026-10-24T01:47",
+    "litres": 103.5,
+    "odometer_km": 211958,
+    "station_city": "rabat",
+    "price_mad_l": 11.56,
+    "card_id": "CARD-A-02"
+  },
+  {
+    "id": "F-0160",
+    "vehicle_id": "A-03",
+    "ts": "2026-09-26T23:44",
+    "litres": 59.4,
+    "odometer_km": 262776,
+    "station_city": "khouribga",
+    "price_mad_l": 11.73,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0161",
+    "vehicle_id": "A-03",
+    "ts": "2026-09-30T07:47",
+    "litres": 66.7,
+    "odometer_km": 263336,
+    "station_city": "eljadida",
+    "price_mad_l": 11.4,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0162",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-04T17:16",
+    "litres": 105.8,
+    "odometer_km": 264161,
+    "station_city": "safi",
+    "price_mad_l": 11.35,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0163",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-08T21:48",
+    "litres": 93.2,
+    "odometer_km": 264896,
+    "station_city": "kenitra",
+    "price_mad_l": 11.54,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0164",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-12T00:42",
+    "litres": 69.6,
+    "odometer_km": 265460,
+    "station_city": "fes",
+    "price_mad_l": 11.35,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0165",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-15T19:05",
+    "litres": 87.7,
+    "odometer_km": 266183,
+    "station_city": "safi",
+    "price_mad_l": 11.51,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0166",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-20T05:05",
+    "litres": 105.8,
+    "odometer_km": 267058,
+    "station_city": "tanger",
+    "price_mad_l": 11.39,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0167",
+    "vehicle_id": "A-03",
+    "ts": "2026-10-23T02:33",
+    "litres": 73.2,
+    "odometer_km": 267625,
+    "station_city": "kenitra",
+    "price_mad_l": 11.41,
+    "card_id": "CARD-A-03"
+  },
+  {
+    "id": "F-0168",
+    "vehicle_id": "A-04",
+    "ts": "2026-09-27T19:43",
+    "litres": 92.2,
+    "odometer_km": 93013,
+    "station_city": "agadir",
+    "price_mad_l": 11.71,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0169",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-02T02:03",
+    "litres": 111.8,
+    "odometer_km": 93858,
+    "station_city": "eljadida",
+    "price_mad_l": 11.82,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0170",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-05T20:09",
+    "litres": 76.4,
+    "odometer_km": 94496,
+    "station_city": "agadir",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0171",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-09T22:23",
+    "litres": 98.7,
+    "odometer_km": 95295,
+    "station_city": "kenitra",
+    "price_mad_l": 11.49,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0172",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-13T08:04",
+    "litres": 73.0,
+    "odometer_km": 95856,
+    "station_city": "kenitra",
+    "price_mad_l": 11.69,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0173",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-17T18:59",
+    "litres": 94.2,
+    "odometer_km": 96598,
+    "station_city": "khouribga",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0174",
+    "vehicle_id": "A-04",
+    "ts": "2026-10-21T09:35",
+    "litres": 97.7,
+    "odometer_km": 97344,
+    "station_city": "agadir",
+    "price_mad_l": 11.85,
+    "card_id": "CARD-A-04"
+  },
+  {
+    "id": "F-0001",
+    "vehicle_id": "T-01",
+    "ts": "2026-09-26T09:06",
+    "litres": 221.7,
+    "odometer_km": 401277,
+    "station_city": "eljadida",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0002",
+    "vehicle_id": "T-01",
+    "ts": "2026-09-28T20:59",
+    "litres": 282.4,
+    "odometer_km": 402118,
+    "station_city": "marrakech",
+    "price_mad_l": 11.7,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0003",
+    "vehicle_id": "T-01",
+    "ts": "2026-09-30T20:44",
+    "litres": 259.0,
+    "odometer_km": 402919,
+    "station_city": "oujda",
+    "price_mad_l": 11.55,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0004",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-03T18:35",
+    "litres": 391.1,
+    "odometer_km": 404084,
+    "station_city": "marrakech",
+    "price_mad_l": 11.54,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0005",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-06T12:36",
+    "litres": 306.3,
+    "odometer_km": 405067,
+    "station_city": "eljadida",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0006",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-08T16:31",
+    "litres": 240.9,
+    "odometer_km": 405819,
+    "station_city": "fes",
+    "price_mad_l": 11.7,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0007",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-10T14:44",
+    "litres": 250.1,
+    "odometer_km": 406587,
+    "station_city": "kenitra",
+    "price_mad_l": 11.79,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0008",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-13T05:46",
+    "litres": 327.5,
+    "odometer_km": 407636,
+    "station_city": "oujda",
+    "price_mad_l": 11.39,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0009",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-14T19:26",
+    "litres": 222.3,
+    "odometer_km": 408319,
+    "station_city": "kenitra",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0010",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-17T15:20",
+    "litres": 362.1,
+    "odometer_km": 409419,
+    "station_city": "khouribga",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0011",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-19T12:07",
+    "litres": 225.8,
+    "odometer_km": 410161,
+    "station_city": "tanger",
+    "price_mad_l": 11.77,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0012",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-21T08:00",
+    "litres": 249.0,
+    "odometer_km": 410919,
+    "station_city": "agadir",
+    "price_mad_l": 11.33,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0013",
+    "vehicle_id": "T-01",
+    "ts": "2026-10-23T04:58",
+    "litres": 251.7,
+    "odometer_km": 411706,
+    "station_city": "agadir",
+    "price_mad_l": 11.7,
+    "card_id": "CARD-T-01"
+  },
+  {
+    "id": "F-0014",
+    "vehicle_id": "T-02",
+    "ts": "2026-09-26T17:26",
+    "litres": 346.2,
+    "odometer_km": 345632,
+    "station_city": "benimellal",
+    "price_mad_l": 11.8,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0015",
+    "vehicle_id": "T-02",
+    "ts": "2026-09-29T01:09",
+    "litres": 326.0,
+    "odometer_km": 346619,
+    "station_city": "laayoune",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0016",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-01T16:13",
+    "litres": 345.2,
+    "odometer_km": 347719,
+    "station_city": "laayoune",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0017",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-03T14:06",
+    "litres": 199.2,
+    "odometer_km": 348354,
+    "station_city": "benguerir",
+    "price_mad_l": 11.5,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0018",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-06T10:15",
+    "litres": 291.8,
+    "odometer_km": 349297,
+    "station_city": "khouribga",
+    "price_mad_l": 11.72,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0019",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-08T23:41",
+    "litres": 269.2,
+    "odometer_km": 350143,
+    "station_city": "agadir",
+    "price_mad_l": 11.55,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0020",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-10T19:08",
+    "litres": 225.5,
+    "odometer_km": 350814,
+    "station_city": "casablanca",
+    "price_mad_l": 11.81,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0021",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-13T10:41",
+    "litres": 295.2,
+    "odometer_km": 351784,
+    "station_city": "safi",
+    "price_mad_l": 11.48,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0022",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-15T12:44",
+    "litres": 295.2,
+    "odometer_km": 352670,
+    "station_city": "settat",
+    "price_mad_l": 11.59,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0023",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-17T10:33",
+    "litres": 229.5,
+    "odometer_km": 353392,
+    "station_city": "khouribga",
+    "price_mad_l": 11.73,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0024",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-20T04:49",
+    "litres": 399.8,
+    "odometer_km": 354573,
+    "station_city": "casablanca",
+    "price_mad_l": 11.84,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0025",
+    "vehicle_id": "T-02",
+    "ts": "2026-10-22T14:07",
+    "litres": 292.1,
+    "odometer_km": 355525,
+    "station_city": "benimellal",
+    "price_mad_l": 11.38,
+    "card_id": "CARD-T-02"
+  },
+  {
+    "id": "F-0026",
+    "vehicle_id": "T-03",
+    "ts": "2026-09-25T21:48",
+    "litres": 179.7,
+    "odometer_km": 237176,
+    "station_city": "eljadida",
+    "price_mad_l": 11.5,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0027",
+    "vehicle_id": "T-03",
+    "ts": "2026-09-28T17:28",
+    "litres": 337.5,
+    "odometer_km": 238177,
+    "station_city": "benimellal",
+    "price_mad_l": 11.45,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0028",
+    "vehicle_id": "T-03",
+    "ts": "2026-09-30T08:25",
+    "litres": 170.5,
+    "odometer_km": 238704,
+    "station_city": "safi",
+    "price_mad_l": 11.43,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0029",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-01T22:53",
+    "litres": 211.6,
+    "odometer_km": 239397,
+    "station_city": "casablanca",
+    "price_mad_l": 11.87,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0030",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-03T18:04",
+    "litres": 181.1,
+    "odometer_km": 239982,
+    "station_city": "meknes",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0031",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-05T10:11",
+    "litres": 230.8,
+    "odometer_km": 240703,
+    "station_city": "benguerir",
+    "price_mad_l": 11.76,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0032",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-07T04:13",
+    "litres": 227.0,
+    "odometer_km": 241390,
+    "station_city": "tanger",
+    "price_mad_l": 11.77,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0033",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-08T22:07",
+    "litres": 203.0,
+    "odometer_km": 242016,
+    "station_city": "marrakech",
+    "price_mad_l": 11.65,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0034",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-11T18:48",
+    "litres": 352.9,
+    "odometer_km": 243063,
+    "station_city": "oujda",
+    "price_mad_l": 11.35,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0035",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-14T07:40",
+    "litres": 307.7,
+    "odometer_km": 244063,
+    "station_city": "marrakech",
+    "price_mad_l": 11.81,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0036",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-16T17:17",
+    "litres": 273.8,
+    "odometer_km": 244871,
+    "station_city": "rabat",
+    "price_mad_l": 11.51,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0037",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-18T20:42",
+    "litres": 251.8,
+    "odometer_km": 245654,
+    "station_city": "eljadida",
+    "price_mad_l": 11.31,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0038",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-20T23:50",
+    "litres": 257.7,
+    "odometer_km": 246461,
+    "station_city": "safi",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0039",
+    "vehicle_id": "T-03",
+    "ts": "2026-10-23T17:40",
+    "litres": 353.6,
+    "odometer_km": 247568,
+    "station_city": "benguerir",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-T-03"
+  },
+  {
+    "id": "F-0040",
+    "vehicle_id": "T-04",
+    "ts": "2026-09-26T23:53",
+    "litres": 333.4,
+    "odometer_km": 487600,
+    "station_city": "benguerir",
+    "price_mad_l": 11.49,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0041",
+    "vehicle_id": "T-04",
+    "ts": "2026-09-28T20:43",
+    "litres": 251.8,
+    "odometer_km": 488403,
+    "station_city": "agadir",
+    "price_mad_l": 11.45,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0042",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-01T01:27",
+    "litres": 273.7,
+    "odometer_km": 489265,
+    "station_city": "casablanca",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0043",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-03T01:09",
+    "litres": 238.1,
+    "odometer_km": 490018,
+    "station_city": "benguerir",
+    "price_mad_l": 11.5,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0044",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-05T20:50",
+    "litres": 356.5,
+    "odometer_km": 491154,
+    "station_city": "casablanca",
+    "price_mad_l": 11.61,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0045",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-07T15:43",
+    "litres": 199.3,
+    "odometer_km": 491781,
+    "station_city": "settat",
+    "price_mad_l": 11.71,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0046",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-10T02:58",
+    "litres": 310.5,
+    "odometer_km": 492716,
+    "station_city": "kenitra",
+    "price_mad_l": 11.48,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0047",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-12T05:32",
+    "litres": 241.9,
+    "odometer_km": 493455,
+    "station_city": "safi",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0048",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-14T12:38",
+    "litres": 281.7,
+    "odometer_km": 494308,
+    "station_city": "eljadida",
+    "price_mad_l": 11.51,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0049",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-16T16:59",
+    "litres": 243.6,
+    "odometer_km": 495089,
+    "station_city": "oujda",
+    "price_mad_l": 11.49,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0050",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-19T07:43",
+    "litres": 370.3,
+    "odometer_km": 496216,
+    "station_city": "oujda",
+    "price_mad_l": 11.43,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0051",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-21T13:09",
+    "litres": 305.6,
+    "odometer_km": 497119,
+    "station_city": "marrakech",
+    "price_mad_l": 11.89,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0052",
+    "vehicle_id": "T-04",
+    "ts": "2026-10-24T07:07",
+    "litres": 310.6,
+    "odometer_km": 498100,
+    "station_city": "marrakech",
+    "price_mad_l": 11.31,
+    "card_id": "CARD-T-04"
+  },
+  {
+    "id": "F-0053",
+    "vehicle_id": "T-05",
+    "ts": "2026-09-26T05:52",
+    "litres": 268.4,
+    "odometer_km": 550429,
+    "station_city": "meknes",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0054",
+    "vehicle_id": "T-05",
+    "ts": "2026-09-28T20:58",
+    "litres": 267.9,
+    "odometer_km": 551309,
+    "station_city": "marrakech",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0055",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-01T00:49",
+    "litres": 227.3,
+    "odometer_km": 552053,
+    "station_city": "laayoune",
+    "price_mad_l": 11.37,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0056",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-02T15:11",
+    "litres": 196.4,
+    "odometer_km": 552658,
+    "station_city": "rabat",
+    "price_mad_l": 11.39,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0057",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-05T08:23",
+    "litres": 359.6,
+    "odometer_km": 553830,
+    "station_city": "settat",
+    "price_mad_l": 11.37,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0058",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-07T23:54",
+    "litres": 344.4,
+    "odometer_km": 554868,
+    "station_city": "settat",
+    "price_mad_l": 11.77,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0059",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-10T01:35",
+    "litres": 277.7,
+    "odometer_km": 555751,
+    "station_city": "benimellal",
+    "price_mad_l": 11.48,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0060",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-12T11:57",
+    "litres": 315.0,
+    "odometer_km": 556705,
+    "station_city": "oujda",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0061",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-14T09:29",
+    "litres": 196.9,
+    "odometer_km": 557335,
+    "station_city": "kenitra",
+    "price_mad_l": 11.39,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0062",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-16T12:11",
+    "litres": 272.0,
+    "odometer_km": 558184,
+    "station_city": "rabat",
+    "price_mad_l": 11.44,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0063",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-19T01:38",
+    "litres": 330.3,
+    "odometer_km": 559216,
+    "station_city": "settat",
+    "price_mad_l": 11.85,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0064",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-21T18:00",
+    "litres": 346.0,
+    "odometer_km": 560273,
+    "station_city": "oujda",
+    "price_mad_l": 11.56,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0175",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-21T22:40",
+    "litres": 455.0,
+    "odometer_km": 560500,
+    "station_city": "eljadida",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0176",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-22T06:10",
+    "litres": 180.0,
+    "odometer_km": 560500,
+    "station_city": "eljadida",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0065",
+    "vehicle_id": "T-05",
+    "ts": "2026-10-24T01:36",
+    "litres": 308.9,
+    "odometer_km": 561193,
+    "station_city": "meknes",
+    "price_mad_l": 11.34,
+    "card_id": "CARD-T-05"
+  },
+  {
+    "id": "F-0066",
+    "vehicle_id": "T-07",
+    "ts": "2026-09-26T07:04",
+    "litres": 259.6,
+    "odometer_km": 476401,
+    "station_city": "marrakech",
+    "price_mad_l": 11.56,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0067",
+    "vehicle_id": "T-07",
+    "ts": "2026-09-28T11:56",
+    "litres": 250.7,
+    "odometer_km": 477188,
+    "station_city": "benguerir",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0068",
+    "vehicle_id": "T-07",
+    "ts": "2026-09-30T17:43",
+    "litres": 227.3,
+    "odometer_km": 477933,
+    "station_city": "benimellal",
+    "price_mad_l": 11.74,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0069",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-03T03:27",
+    "litres": 244.7,
+    "odometer_km": 478717,
+    "station_city": "casablanca",
+    "price_mad_l": 11.9,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0070",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-05T15:39",
+    "litres": 271.0,
+    "odometer_km": 479604,
+    "station_city": "fes",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0071",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-08T03:06",
+    "litres": 328.7,
+    "odometer_km": 480663,
+    "station_city": "benimellal",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0072",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-10T08:48",
+    "litres": 235.9,
+    "odometer_km": 481409,
+    "station_city": "eljadida",
+    "price_mad_l": 11.49,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0073",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-12T00:34",
+    "litres": 180.1,
+    "odometer_km": 481975,
+    "station_city": "laayoune",
+    "price_mad_l": 11.47,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0074",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-14T22:36",
+    "litres": 392.3,
+    "odometer_km": 483188,
+    "station_city": "agadir",
+    "price_mad_l": 11.35,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0075",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-16T19:41",
+    "litres": 209.2,
+    "odometer_km": 483819,
+    "station_city": "casablanca",
+    "price_mad_l": 11.69,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0076",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-19T03:13",
+    "litres": 266.0,
+    "odometer_km": 484676,
+    "station_city": "safi",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0077",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-21T09:10",
+    "litres": 256.7,
+    "odometer_km": 485515,
+    "station_city": "benguerir",
+    "price_mad_l": 11.63,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0078",
+    "vehicle_id": "T-07",
+    "ts": "2026-10-24T06:34",
+    "litres": 354.3,
+    "odometer_km": 486593,
+    "station_city": "tanger",
+    "price_mad_l": 11.32,
+    "card_id": "CARD-T-07"
+  },
+  {
+    "id": "F-0079",
+    "vehicle_id": "T-08",
+    "ts": "2026-09-27T00:46",
+    "litres": 343.3,
+    "odometer_km": 140690,
+    "station_city": "casablanca",
+    "price_mad_l": 11.63,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0080",
+    "vehicle_id": "T-08",
+    "ts": "2026-09-28T16:07",
+    "litres": 240.4,
+    "odometer_km": 141405,
+    "station_city": "agadir",
+    "price_mad_l": 11.87,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0081",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-01T03:26",
+    "litres": 283.5,
+    "odometer_km": 142247,
+    "station_city": "marrakech",
+    "price_mad_l": 11.61,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0082",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-03T01:17",
+    "litres": 270.4,
+    "odometer_km": 143045,
+    "station_city": "settat",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0083",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-04T18:29",
+    "litres": 192.4,
+    "odometer_km": 143637,
+    "station_city": "meknes",
+    "price_mad_l": 11.82,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0084",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-06T16:26",
+    "litres": 251.9,
+    "odometer_km": 144428,
+    "station_city": "benguerir",
+    "price_mad_l": 11.79,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0085",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-08T14:37",
+    "litres": 223.1,
+    "odometer_km": 145115,
+    "station_city": "laayoune",
+    "price_mad_l": 11.82,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0086",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-10T18:42",
+    "litres": 259.1,
+    "odometer_km": 145936,
+    "station_city": "khouribga",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0087",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-12T18:17",
+    "litres": 224.4,
+    "odometer_km": 146619,
+    "station_city": "khouribga",
+    "price_mad_l": 11.44,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0088",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-15T10:12",
+    "litres": 288.4,
+    "odometer_km": 147492,
+    "station_city": "khouribga",
+    "price_mad_l": 11.53,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0089",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-17T22:05",
+    "litres": 351.9,
+    "odometer_km": 148532,
+    "station_city": "laayoune",
+    "price_mad_l": 11.88,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0090",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-19T14:38",
+    "litres": 231.0,
+    "odometer_km": 149263,
+    "station_city": "tanger",
+    "price_mad_l": 11.82,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0091",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-21T18:29",
+    "litres": 264.8,
+    "odometer_km": 150091,
+    "station_city": "meknes",
+    "price_mad_l": 11.55,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0092",
+    "vehicle_id": "T-08",
+    "ts": "2026-10-24T06:03",
+    "litres": 271.0,
+    "odometer_km": 150936,
+    "station_city": "benguerir",
+    "price_mad_l": 11.5,
+    "card_id": "CARD-T-08"
+  },
+  {
+    "id": "F-0093",
+    "vehicle_id": "T-09",
+    "ts": "2026-09-26T19:23",
+    "litres": 375.0,
+    "odometer_km": 319639,
+    "station_city": "khouribga",
+    "price_mad_l": 11.87,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0094",
+    "vehicle_id": "T-09",
+    "ts": "2026-09-29T05:57",
+    "litres": 359.0,
+    "odometer_km": 320674,
+    "station_city": "rabat",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0095",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-01T02:24",
+    "litres": 252.0,
+    "odometer_km": 321417,
+    "station_city": "settat",
+    "price_mad_l": 11.75,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0096",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-03T06:02",
+    "litres": 253.3,
+    "odometer_km": 322136,
+    "station_city": "tanger",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0097",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-05T19:01",
+    "litres": 357.3,
+    "odometer_km": 323218,
+    "station_city": "rabat",
+    "price_mad_l": 11.48,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0098",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-07T20:30",
+    "litres": 244.1,
+    "odometer_km": 323919,
+    "station_city": "fes",
+    "price_mad_l": 11.4,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0099",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-09T11:21",
+    "litres": 240.5,
+    "odometer_km": 324602,
+    "station_city": "settat",
+    "price_mad_l": 11.6,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0100",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-11T20:20",
+    "litres": 292.6,
+    "odometer_km": 325432,
+    "station_city": "agadir",
+    "price_mad_l": 11.45,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0101",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-13T08:41",
+    "litres": 227.7,
+    "odometer_km": 326060,
+    "station_city": "fes",
+    "price_mad_l": 11.34,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0102",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-16T06:42",
+    "litres": 431.7,
+    "odometer_km": 327331,
+    "station_city": "benimellal",
+    "price_mad_l": 11.71,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0103",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-18T11:09",
+    "litres": 286.1,
+    "odometer_km": 328112,
+    "station_city": "laayoune",
+    "price_mad_l": 11.36,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0104",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-20T12:53",
+    "litres": 256.1,
+    "odometer_km": 328866,
+    "station_city": "marrakech",
+    "price_mad_l": 11.31,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0105",
+    "vehicle_id": "T-09",
+    "ts": "2026-10-23T06:46",
+    "litres": 332.1,
+    "odometer_km": 329877,
+    "station_city": "rabat",
+    "price_mad_l": 11.85,
+    "card_id": "CARD-T-09"
+  },
+  {
+    "id": "F-0106",
+    "vehicle_id": "T-10",
+    "ts": "2026-09-27T01:58",
+    "litres": 388.0,
+    "odometer_km": 219771,
+    "station_city": "settat",
+    "price_mad_l": 11.66,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0107",
+    "vehicle_id": "T-10",
+    "ts": "2026-09-29T02:39",
+    "litres": 261.5,
+    "odometer_km": 220573,
+    "station_city": "meknes",
+    "price_mad_l": 11.68,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0108",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-01T23:11",
+    "litres": 356.6,
+    "odometer_km": 221705,
+    "station_city": "agadir",
+    "price_mad_l": 11.32,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0109",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-04T00:19",
+    "litres": 232.5,
+    "odometer_km": 222397,
+    "station_city": "eljadida",
+    "price_mad_l": 11.75,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0110",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-05T18:38",
+    "litres": 192.6,
+    "odometer_km": 222994,
+    "station_city": "safi",
+    "price_mad_l": 11.62,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0111",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-08T15:31",
+    "litres": 375.3,
+    "odometer_km": 224192,
+    "station_city": "laayoune",
+    "price_mad_l": 11.88,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0112",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-10T14:09",
+    "litres": 272.6,
+    "odometer_km": 225013,
+    "station_city": "agadir",
+    "price_mad_l": 11.88,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0113",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-12T07:13",
+    "litres": 247.8,
+    "odometer_km": 225754,
+    "station_city": "khouribga",
+    "price_mad_l": 11.88,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0114",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-15T00:11",
+    "litres": 327.6,
+    "odometer_km": 226741,
+    "station_city": "casablanca",
+    "price_mad_l": 11.46,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0115",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-16T16:38",
+    "litres": 203.2,
+    "odometer_km": 227356,
+    "station_city": "benguerir",
+    "price_mad_l": 11.65,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0116",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-19T10:14",
+    "litres": 362.0,
+    "odometer_km": 228532,
+    "station_city": "settat",
+    "price_mad_l": 11.58,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0117",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-21T20:32",
+    "litres": 330.0,
+    "odometer_km": 229578,
+    "station_city": "settat",
+    "price_mad_l": 11.69,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0118",
+    "vehicle_id": "T-10",
+    "ts": "2026-10-24T07:25",
+    "litres": 303.1,
+    "odometer_km": 230500,
+    "station_city": "benimellal",
+    "price_mad_l": 11.37,
+    "card_id": "CARD-T-10"
+  },
+  {
+    "id": "F-0119",
+    "vehicle_id": "T-11",
+    "ts": "2026-09-25T21:20",
+    "litres": 209.2,
+    "odometer_km": 129279,
+    "station_city": "settat",
+    "price_mad_l": 11.83,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0120",
+    "vehicle_id": "T-11",
+    "ts": "2026-09-27T14:13",
+    "litres": 209.1,
+    "odometer_km": 129917,
+    "station_city": "benimellal",
+    "price_mad_l": 11.65,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0121",
+    "vehicle_id": "T-11",
+    "ts": "2026-09-30T04:22",
+    "litres": 359.1,
+    "odometer_km": 131015,
+    "station_city": "laayoune",
+    "price_mad_l": 11.67,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0122",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-03T02:11",
+    "litres": 338.9,
+    "odometer_km": 132047,
+    "station_city": "oujda",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0123",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-06T00:24",
+    "litres": 378.3,
+    "odometer_km": 133278,
+    "station_city": "safi",
+    "price_mad_l": 11.63,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0124",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-08T23:36",
+    "litres": 343.3,
+    "odometer_km": 134357,
+    "station_city": "oujda",
+    "price_mad_l": 11.88,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0125",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-11T21:46",
+    "litres": 374.5,
+    "odometer_km": 135576,
+    "station_city": "oujda",
+    "price_mad_l": 11.69,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0126",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-14T07:16",
+    "litres": 258.6,
+    "odometer_km": 136356,
+    "station_city": "settat",
+    "price_mad_l": 11.89,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0127",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-16T23:36",
+    "litres": 309.4,
+    "odometer_km": 137284,
+    "station_city": "oujda",
+    "price_mad_l": 11.65,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0128",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-19T16:52",
+    "litres": 314.9,
+    "odometer_km": 138235,
+    "station_city": "casablanca",
+    "price_mad_l": 11.47,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0129",
+    "vehicle_id": "T-11",
+    "ts": "2026-10-22T16:17",
+    "litres": 418.7,
+    "odometer_km": 139531,
+    "station_city": "fes",
+    "price_mad_l": 11.37,
+    "card_id": "CARD-T-11"
+  },
+  {
+    "id": "F-0130",
+    "vehicle_id": "T-12",
+    "ts": "2026-09-26T00:44",
+    "litres": 204.9,
+    "odometer_km": 422217,
+    "station_city": "eljadida",
+    "price_mad_l": 11.31,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0131",
+    "vehicle_id": "T-12",
+    "ts": "2026-09-27T22:17",
+    "litres": 204.2,
+    "odometer_km": 422858,
+    "station_city": "tanger",
+    "price_mad_l": 11.75,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0132",
+    "vehicle_id": "T-12",
+    "ts": "2026-09-30T03:26",
+    "litres": 293.6,
+    "odometer_km": 423769,
+    "station_city": "tanger",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0133",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-01T23:25",
+    "litres": 237.4,
+    "odometer_km": 424490,
+    "station_city": "marrakech",
+    "price_mad_l": 11.57,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0134",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-04T22:07",
+    "litres": 311.9,
+    "odometer_km": 425462,
+    "station_city": "khouribga",
+    "price_mad_l": 11.56,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0135",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-06T14:00",
+    "litres": 214.7,
+    "odometer_km": 426133,
+    "station_city": "kenitra",
+    "price_mad_l": 11.49,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0136",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-08T07:21",
+    "litres": 189.4,
+    "odometer_km": 426715,
+    "station_city": "eljadida",
+    "price_mad_l": 11.53,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0137",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-10T16:51",
+    "litres": 275.0,
+    "odometer_km": 427569,
+    "station_city": "benimellal",
+    "price_mad_l": 11.36,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0138",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-13T06:07",
+    "litres": 350.7,
+    "odometer_km": 428642,
+    "station_city": "oujda",
+    "price_mad_l": 11.56,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0139",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-16T02:05",
+    "litres": 349.2,
+    "odometer_km": 429690,
+    "station_city": "khouribga",
+    "price_mad_l": 11.55,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0140",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-17T17:30",
+    "litres": 243.9,
+    "odometer_km": 430301,
+    "station_city": "safi",
+    "price_mad_l": 11.87,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0141",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-20T06:14",
+    "litres": 357.6,
+    "odometer_km": 431255,
+    "station_city": "kenitra",
+    "price_mad_l": 11.36,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0142",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-21T21:43",
+    "litres": 271.8,
+    "odometer_km": 431925,
+    "station_city": "rabat",
+    "price_mad_l": 11.65,
+    "card_id": "CARD-T-12"
+  },
+  {
+    "id": "F-0143",
+    "vehicle_id": "T-12",
+    "ts": "2026-10-24T05:56",
+    "litres": 317.7,
+    "odometer_km": 432769,
+    "station_city": "safi",
+    "price_mad_l": 11.82,
+    "card_id": "CARD-T-12"
+  }
+]

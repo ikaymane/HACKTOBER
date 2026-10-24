@@ -1,0 +1,310 @@
+[
+  {
+    "id": "P-ALT",
+    "name_fr": "Alternateur",
+    "name_en": "Alternator",
+    "zone": "electrical",
+    "dtc_codes": [
+      "P0562",
+      "P0620",
+      "P0622"
+    ],
+    "symptoms": [
+      "voyant batterie",
+      "tension basse",
+      "phares faibles",
+      "équipements médicaux qui coupent"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 1200,
+    "repair_hours": 3,
+    "replace_labor_hours": 1.5,
+    "typical_life_km": 200000
+  },
+  {
+    "id": "P-BATT",
+    "name_fr": "Batterie",
+    "name_en": "Battery",
+    "zone": "electrical",
+    "dtc_codes": [
+      "P0562"
+    ],
+    "symptoms": [
+      "démarrage difficile",
+      "tension basse moteur coupé"
+    ],
+    "safety_critical": false,
+    "repairable": false,
+    "repair_cost_mad": 0,
+    "repair_hours": 0,
+    "replace_labor_hours": 0.5,
+    "typical_life_km": 120000
+  },
+  {
+    "id": "P-STARTER",
+    "name_fr": "Démarreur",
+    "name_en": "Starter motor",
+    "zone": "electrical",
+    "dtc_codes": [
+      "P0615",
+      "P0616"
+    ],
+    "symptoms": [
+      "clic au démarrage",
+      "moteur ne démarre pas"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 1100,
+    "repair_hours": 3,
+    "replace_labor_hours": 2,
+    "typical_life_km": 250000
+  },
+  {
+    "id": "P-WPUMP",
+    "name_fr": "Pompe à eau",
+    "name_en": "Water pump",
+    "zone": "cooling",
+    "dtc_codes": [
+      "P0217",
+      "P0128",
+      "P0118"
+    ],
+    "symptoms": [
+      "surchauffe",
+      "fuite liquide de refroidissement",
+      "bruit roulement avant moteur"
+    ],
+    "safety_critical": true,
+    "repairable": true,
+    "repair_cost_mad": 900,
+    "repair_hours": 4,
+    "replace_labor_hours": 3,
+    "typical_life_km": 250000
+  },
+  {
+    "id": "P-THERM",
+    "name_fr": "Thermostat",
+    "name_en": "Thermostat",
+    "zone": "cooling",
+    "dtc_codes": [
+      "P0128",
+      "P0217"
+    ],
+    "symptoms": [
+      "température instable",
+      "surchauffe en côte"
+    ],
+    "safety_critical": false,
+    "repairable": false,
+    "repair_cost_mad": 0,
+    "repair_hours": 0,
+    "replace_labor_hours": 1,
+    "typical_life_km": 200000
+  },
+  {
+    "id": "P-RAD",
+    "name_fr": "Radiateur",
+    "name_en": "Radiator",
+    "zone": "cooling",
+    "dtc_codes": [
+      "P0217"
+    ],
+    "symptoms": [
+      "surchauffe",
+      "fuite liquide",
+      "niveau liquide bas"
+    ],
+    "safety_critical": true,
+    "repairable": true,
+    "repair_cost_mad": 1500,
+    "repair_hours": 5,
+    "replace_labor_hours": 3,
+    "typical_life_km": 400000
+  },
+  {
+    "id": "P-BCAL",
+    "name_fr": "Étrier de frein",
+    "name_en": "Brake caliper",
+    "zone": "brakes",
+    "dtc_codes": [
+      "C0040",
+      "C0045"
+    ],
+    "symptoms": [
+      "bruit au freinage",
+      "véhicule tire d'un côté",
+      "roue chaude",
+      "surconsommation carburant",
+      "usure plaquettes rapide"
+    ],
+    "safety_critical": true,
+    "repairable": true,
+    "repair_cost_mad": 800,
+    "repair_hours": 3,
+    "replace_labor_hours": 2,
+    "typical_life_km": 300000
+  },
+  {
+    "id": "P-BPAD",
+    "name_fr": "Plaquettes de frein",
+    "name_en": "Brake pads",
+    "zone": "brakes",
+    "dtc_codes": [
+      "C0040"
+    ],
+    "symptoms": [
+      "grincement",
+      "usure plaquettes élevée"
+    ],
+    "safety_critical": true,
+    "repairable": false,
+    "repair_cost_mad": 0,
+    "repair_hours": 0,
+    "replace_labor_hours": 1,
+    "typical_life_km": 80000
+  },
+  {
+    "id": "P-INJ",
+    "name_fr": "Injecteur",
+    "name_en": "Fuel injector",
+    "zone": "fuel",
+    "dtc_codes": [
+      "P0201",
+      "P0263",
+      "P0300"
+    ],
+    "symptoms": [
+      "fumée noire",
+      "surconsommation carburant",
+      "ratés moteur"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 600,
+    "repair_hours": 2,
+    "replace_labor_hours": 2,
+    "typical_life_km": 300000
+  },
+  {
+    "id": "P-TURBO",
+    "name_fr": "Turbocompresseur",
+    "name_en": "Turbocharger",
+    "zone": "engine",
+    "dtc_codes": [
+      "P0299",
+      "P0234"
+    ],
+    "symptoms": [
+      "perte de puissance",
+      "sifflement",
+      "fumée bleue"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 4500,
+    "repair_hours": 8,
+    "replace_labor_hours": 5,
+    "typical_life_km": 450000
+  },
+  {
+    "id": "P-EGR",
+    "name_fr": "Vanne EGR",
+    "name_en": "EGR valve",
+    "zone": "engine",
+    "dtc_codes": [
+      "P0401",
+      "P0404"
+    ],
+    "symptoms": [
+      "perte de puissance",
+      "fumée noire",
+      "mode dégradé"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 700,
+    "repair_hours": 2,
+    "replace_labor_hours": 2,
+    "typical_life_km": 250000
+  },
+  {
+    "id": "P-OILP",
+    "name_fr": "Pompe à huile",
+    "name_en": "Oil pump",
+    "zone": "engine",
+    "dtc_codes": [
+      "P0520",
+      "P0524"
+    ],
+    "symptoms": [
+      "pression huile basse",
+      "voyant huile"
+    ],
+    "safety_critical": true,
+    "repairable": false,
+    "repair_cost_mad": 0,
+    "repair_hours": 0,
+    "replace_labor_hours": 5,
+    "typical_life_km": 500000
+  },
+  {
+    "id": "P-DPF",
+    "name_fr": "Filtre à particules",
+    "name_en": "Diesel particulate filter",
+    "zone": "engine",
+    "dtc_codes": [
+      "P2002",
+      "P2463"
+    ],
+    "symptoms": [
+      "mode dégradé",
+      "régénération impossible"
+    ],
+    "safety_critical": false,
+    "repairable": true,
+    "repair_cost_mad": 1800,
+    "repair_hours": 4,
+    "replace_labor_hours": 2,
+    "typical_life_km": 350000
+  },
+  {
+    "id": "P-CLUTCH",
+    "name_fr": "Kit embrayage",
+    "name_en": "Clutch kit",
+    "zone": "transmission",
+    "dtc_codes": [
+      "P0806"
+    ],
+    "symptoms": [
+      "patinage",
+      "passage vitesses difficile"
+    ],
+    "safety_critical": false,
+    "repairable": false,
+    "repair_cost_mad": 0,
+    "repair_hours": 0,
+    "replace_labor_hours": 6,
+    "typical_life_km": 400000
+  },
+  {
+    "id": "P-TIRE",
+    "name_fr": "Pneu",
+    "name_en": "Tire",
+    "zone": "tires",
+    "dtc_codes": [
+      "C0750"
+    ],
+    "symptoms": [
+      "perte pression",
+      "vibration"
+    ],
+    "safety_critical": true,
+    "repairable": true,
+    "repair_cost_mad": 150,
+    "repair_hours": 0.5,
+    "replace_labor_hours": 0.5,
+    "typical_life_km": 120000
+  }
+]

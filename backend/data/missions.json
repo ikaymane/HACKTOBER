@@ -1,0 +1,201 @@
+[
+  {
+    "id": "M-101",
+    "vehicle_id": "T-01",
+    "kind": "delivery",
+    "client": "Marjane Rabat",
+    "origin": "casablanca",
+    "stops": [
+      {
+        "city": "rabat",
+        "window_start": "2026-10-24T10:00",
+        "window_end": "2026-10-24T11:00",
+        "cargo": "18 palettes produits secs"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-102",
+    "vehicle_id": "T-02",
+    "kind": "delivery",
+    "client": "Tanger Med Logistics",
+    "origin": "rabat",
+    "stops": [
+      {
+        "city": "tanger",
+        "window_start": "2026-10-24T11:30",
+        "window_end": "2026-10-24T12:30",
+        "cargo": "Conteneur pièces auto"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-103",
+    "vehicle_id": "T-03",
+    "kind": "delivery",
+    "client": "Souss Distribution",
+    "origin": "casablanca",
+    "stops": [
+      {
+        "city": "marrakech",
+        "window_start": "2026-10-24T11:00",
+        "window_end": "2026-10-24T12:00",
+        "cargo": "12 palettes électroménager"
+      },
+      {
+        "city": "agadir",
+        "window_start": "2026-10-24T15:30",
+        "window_end": "2026-10-24T17:00",
+        "cargo": "8 palettes électroménager"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000,
+    "capacity_free_pallets": 14
+  },
+  {
+    "id": "M-104",
+    "vehicle_id": "T-04",
+    "kind": "delivery",
+    "client": "Oriental Agro",
+    "origin": "fes",
+    "stops": [
+      {
+        "city": "oujda",
+        "window_start": "2026-10-24T12:00",
+        "window_end": "2026-10-24T13:00",
+        "cargo": "Engrais 20 t"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-105",
+    "vehicle_id": "T-05",
+    "kind": "delivery",
+    "client": "Atlantic Fish Safi",
+    "origin": "casablanca",
+    "stops": [
+      {
+        "city": "eljadida",
+        "window_start": "2026-10-24T09:30",
+        "window_end": "2026-10-24T10:00",
+        "cargo": "Emballages"
+      },
+      {
+        "city": "safi",
+        "window_start": "2026-10-24T12:00",
+        "window_end": "2026-10-24T13:00",
+        "cargo": "Emballages"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-107",
+    "vehicle_id": "T-07",
+    "kind": "delivery",
+    "client": "Pharma Sud Marrakech",
+    "origin": "casablanca",
+    "stops": [
+      {
+        "city": "marrakech",
+        "window_start": "2026-10-24T11:30",
+        "window_end": "2026-10-24T12:30",
+        "cargo": "10 palettes médicaments (chaîne du froid)"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-109",
+    "vehicle_id": "T-09",
+    "kind": "delivery",
+    "client": "Agadir Primeurs",
+    "origin": "marrakech",
+    "stops": [
+      {
+        "city": "agadir",
+        "window_start": "2026-10-24T11:00",
+        "window_end": "2026-10-24T12:00",
+        "cargo": "Cagettes vides"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-112",
+    "vehicle_id": "T-12",
+    "kind": "delivery",
+    "client": "Fès Textile",
+    "origin": "casablanca",
+    "stops": [
+      {
+        "city": "meknes",
+        "window_start": "2026-10-24T11:00",
+        "window_end": "2026-10-24T11:45",
+        "cargo": "Rouleaux tissu"
+      },
+      {
+        "city": "fes",
+        "window_start": "2026-10-24T12:30",
+        "window_end": "2026-10-24T13:30",
+        "cargo": "Rouleaux tissu"
+      }
+    ],
+    "sla_minutes_replacement": 90,
+    "penalty_mad_per_hour": 1500,
+    "penalty_flat_mad": 8000
+  },
+  {
+    "id": "M-201",
+    "vehicle_id": "A-01",
+    "kind": "emergency_transfer",
+    "client": "CHU Ibn Sina → CHU Ibn Rochd",
+    "origin": "rabat",
+    "stops": [
+      {
+        "city": "casablanca",
+        "window_start": "2026-10-24T09:15",
+        "window_end": "2026-10-24T09:30",
+        "cargo": "Patient transfert cardiologie"
+      }
+    ],
+    "sla_minutes_replacement": 30,
+    "penalty_mad_per_hour": 5000,
+    "penalty_flat_mad": 25000
+  },
+  {
+    "id": "M-203",
+    "vehicle_id": "A-03",
+    "kind": "emergency_transfer",
+    "client": "CHU Mohammed VI → CHU Ibn Rochd",
+    "origin": "marrakech",
+    "stops": [
+      {
+        "city": "casablanca",
+        "window_start": "2026-10-24T10:15",
+        "window_end": "2026-10-24T10:30",
+        "cargo": "Patient transfert neurologie"
+      }
+    ],
+    "sla_minutes_replacement": 30,
+    "penalty_mad_per_hour": 5000,
+    "penalty_flat_mad": 25000
+  }
+]

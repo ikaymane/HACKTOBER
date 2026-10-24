@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 440" width="1280" height="440" role="img" aria-label="Pipeline: a driver report, OBD codes and fleet data go to the orchestrator, which routes the event through the fuel, maintenance and delay agents on DeepSeek. Every number is recomputed by code before the incident and final plan reach the fleet manager.">
+<title>How FleetSense handles a breakdown</title>
+<defs>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity=".04"/></pattern>
+  <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22d3ee"/></marker>
+  <style>
+    .sans { font-family: Inter, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono { font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; }
+    .flow { stroke-dasharray: 5 7; animation: dash 1.1s linear infinite; }
+    @keyframes dash { to { stroke-dashoffset: -24; } }
+    @media (prefers-reduced-motion: reduce) { .flow { animation: none; } }
+  </style>
+</defs>
+<rect width="1280" height="440" rx="20" fill="#0b0f14"/>
+<rect width="1280" height="440" rx="20" fill="url(#grid)"/>
+
+<g class="mono" font-size="11" fill="#64748b" letter-spacing="2">
+  <text x="40" y="44">01 · SIGNALS</text>
+  <text x="300" y="44">02 · ROUTE</text>
+  <text x="540" y="44">03 · REASON ON DEEPSEEK</text>
+  <text x="880" y="44">04 · VERIFY</text>
+  <text x="1080" y="44">05 · DECIDE</text>
+</g>
+
+<g class="sans">
+  <rect x="40" y="70" width="210" height="88" rx="12" fill="#121821" stroke="#1f2a37"/>
+  <text x="58" y="98" font-size="15" font-weight="600" fill="#e5e7eb">Driver report</text>
+  <text x="58" y="120" font-size="13" fill="#94a3b8">Darija, French, or a mix,</text>
+  <text x="58" y="139" font-size="13" fill="#94a3b8">typed in a hurry</text>
+  <rect x="40" y="176" width="210" height="88" rx="12" fill="#121821" stroke="#1f2a37"/>
+  <text x="58" y="204" font-size="15" font-weight="600" fill="#e5e7eb">Telemetry</text>
+  <text x="58" y="226" font-size="13" fill="#94a3b8">OBD fault codes, coolant,</text>
+  <text x="58" y="245" font-size="13" fill="#94a3b8">battery, brake wear, km</text>
+  <rect x="40" y="282" width="210" height="88" rx="12" fill="#121821" stroke="#1f2a37"/>
+  <text x="58" y="310" font-size="15" font-weight="600" fill="#e5e7eb">Fleet data</text>
+  <text x="58" y="332" font-size="13" fill="#94a3b8">Missions, SLAs, depots,</text>
+  <text x="58" y="351" font-size="13" fill="#94a3b8">parts, suppliers, fuel logs</text>
+</g>
+<g stroke="#22d3ee" stroke-width="1.6" fill="none" marker-end="url(#arr)" class="flow">
+  <path d="M250 114C275 114 275 220 298 220"/>
+  <path d="M250 220H298"/>
+  <path d="M250 326C275 326 275 220 298 220"/>
+</g>
+
+<rect x="300" y="160" width="200" height="120" rx="14" fill="#0f141c" stroke="#ec4899" stroke-opacity=".7"/>
+<text x="320" y="190" class="mono" font-size="12" fill="#ec4899" letter-spacing="1">ORCHESTRATOR</text>
+<text x="320" y="216" class="sans" font-size="13" fill="#94a3b8">Picks which agent goes</text>
+<text x="320" y="235" class="sans" font-size="13" fill="#94a3b8">first, hands off, applies</text>
+<text x="320" y="254" class="sans" font-size="13" fill="#94a3b8">fleet changes</text>
+
+<g stroke="#22d3ee" stroke-width="1.6" fill="none" marker-end="url(#arr)" class="flow">
+  <path d="M500 200C520 200 520 104 538 104"/>
+  <path d="M500 220H538"/>
+  <path d="M500 240C520 240 520 336 538 336"/>
+</g>
+
+<g class="sans">
+  <rect x="540" y="66" width="300" height="76" rx="12" fill="#121821" stroke="#f59e0b" stroke-opacity=".55"/>
+  <text x="558" y="92" class="mono" font-size="12" fill="#f59e0b" letter-spacing="1">FUEL AGENT</text>
+  <text x="558" y="114" font-size="13" fill="#94a3b8">Overconsumption, card fraud, idling.</text>
+  <text x="558" y="132" font-size="13" fill="#94a3b8">Mechanical cause → hands to Maintenance</text>
+
+  <rect x="540" y="156" width="300" height="128" rx="12" fill="#121821" stroke="#22d3ee" stroke-opacity=".7"/>
+  <text x="558" y="182" class="mono" font-size="12" fill="#22d3ee" letter-spacing="1">MAINTENANCE AGENT</text>
+  <text x="558" y="204" font-size="13" fill="#94a3b8">Failing part, repair or replace,</text>
+  <text x="558" y="222" font-size="13" fill="#94a3b8">supplier, depot, load takeover</text>
+  <g class="mono" font-size="10.5" fill="#64748b">
+    <text x="558" y="248">get_vehicle · lookup_parts · get_part</text>
+    <text x="558" y="264">score_suppliers · find_replacement</text>
+    <text x="558" y="280">compute_penalty · find_load_takeover</text>
+  </g>
+
+  <rect x="540" y="298" width="300" height="76" rx="12" fill="#121821" stroke="#a78bfa" stroke-opacity=".6"/>
+  <text x="558" y="324" class="mono" font-size="12" fill="#a78bfa" letter-spacing="1">DELAY AGENT</text>
+  <text x="558" y="346" font-size="13" fill="#94a3b8">Late-delivery risk, re-sequenced stops,</text>
+  <text x="558" y="364" font-size="13" fill="#94a3b8">client message</text>
+</g>
+
+<g stroke="#22d3ee" stroke-width="1.6" fill="none" marker-end="url(#arr)" class="flow">
+  <path d="M840 104C860 104 860 210 878 210"/>
+  <path d="M840 220H878"/>
+  <path d="M840 336C860 336 860 230 878 230"/>
+</g>
+
+<rect x="880" y="150" width="170" height="140" rx="14" fill="#0f141c" stroke="#10b981" stroke-opacity=".7"/>
+<text x="898" y="178" class="mono" font-size="12" fill="#10b981" letter-spacing="1">CODE CHECK</text>
+<text x="898" y="202" class="sans" font-size="13" fill="#94a3b8">Costs, ETAs, SLA</text>
+<text x="898" y="221" class="sans" font-size="13" fill="#94a3b8">penalties, scores:</text>
+<text x="898" y="240" class="sans" font-size="13" fill="#94a3b8">recomputed from</text>
+<text x="898" y="259" class="sans" font-size="13" fill="#94a3b8">tools, never trusted</text>
+<text x="898" y="278" class="sans" font-size="13" fill="#94a3b8">from the model</text>
+
+<path d="M1050 220H1078" stroke="#22d3ee" stroke-width="1.6" fill="none" marker-end="url(#arr)" class="flow"/>
+
+<rect x="1080" y="120" width="160" height="200" rx="14" fill="#121821" stroke="#1f2a37"/>
+<text x="1098" y="150" class="mono" font-size="12" fill="#e5e7eb" letter-spacing="1">INCIDENT</text>
+<g class="sans" font-size="13" fill="#94a3b8">
+  <text x="1098" y="176">Part + evidence</text>
+  <text x="1098" y="198">Repair / replace</text>
+  <text x="1098" y="220">Ranked suppliers</text>
+  <text x="1098" y="242">Driver order</text>
+  <text x="1098" y="264">SLA risk in MAD</text>
+  <text x="1098" y="286">Client message</text>
+</g>
+<text x="1160" y="350" text-anchor="middle" class="sans" font-size="13" fill="#64748b">Fleet manager approves</text>
+</svg>

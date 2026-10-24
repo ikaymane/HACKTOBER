@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 400" width="1280" height="400" role="img" aria-label="Replacement ETA against the contract SLA for each scenario. A-03: 46 min against 60, no penalty. T-07: best spare truck 137 min against 90, so the agent sends T-03 to take the load and avoids 8,000 MAD. T-12: 80 min against 90, no penalty.">
+<title>Replacement ETA vs. SLA</title>
+<defs><style>
+  .run { transform-box: fill-box; transform-origin: 0% 50%; animation: run 2.2s cubic-bezier(.4,0,.2,1) backwards; }
+  @keyframes run { from { transform: scaleX(0); } }
+  .late { animation: late .4s ease-out backwards; }
+  @keyframes late { from { opacity: 0; transform: translateY(6px); } }
+  .pulse { animation: p 1.5s ease-in-out infinite; }
+  @keyframes p { 50% { opacity: .3; } }
+  @media (prefers-reduced-motion: reduce) { .run, .late, .pulse { animation: none; } }
+</style></defs>
+<rect width="1280" height="400" rx="20" fill="#0b0f14"/>
+<text x="40" y="50" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#e5e7eb">Can a replacement arrive inside the contract SLA?</text>
+<text x="40" y="76" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="14" fill="#94a3b8">compute_penalty() answers in MAD before the agent decides. When the answer is no, it looks for another truck on the road.</text>
+<line x1="300.0" y1="100" x2="300.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="300.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">0 min</text>
+<line x1="480.0" y1="100" x2="480.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="480.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">30 min</text>
+<line x1="660.0" y1="100" x2="660.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="660.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">60 min</text>
+<line x1="840.0" y1="100" x2="840.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="840.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">90 min</text>
+<line x1="1020.0" y1="100" x2="1020.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="1020.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">120 min</text>
+<line x1="1200.0" y1="100" x2="1200.0" y2="356" stroke="#ffffff" stroke-opacity=".05"/>
+<text x="1200.0" y="378" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="11" fill="#64748b">150 min</text>
+<text x="40" y="130" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">A-03 · ambulance · alternator</text>
+<text x="40" y="152" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" fill="#10b981">Spare A-04 from Settat · 0 MAD</text>
+<rect x="300" y="118" width="900" height="22" rx="11" fill="#0f141c"/>
+<rect x="300" y="118" width="360.0" height="22" rx="11" fill="#10b981" fill-opacity=".1"/>
+<line x1="660.0" y1="112" x2="660.0" y2="146" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="660.0" y="108" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="10.5" fill="#10b981">SLA 60</text>
+<rect class="run" style="animation-delay:0.4s" x="300" y="122" width="276.0" height="14" rx="7" fill="#22d3ee" fill-opacity=".85"/>
+<g class="late" style="animation-delay:2.5s"><circle cx="576.0" cy="129" r="7" fill="#22d3ee"/><text x="590.0" y="134" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="12" font-weight="700" fill="#e5e7eb">46 min</text></g>
+<text x="40" y="214" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">T-07 · truck · water pump</text>
+<text x="40" y="236" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" fill="#ef4444">Spare 47 min late: 1,175 MAD</text>
+<rect x="300" y="202" width="900" height="22" rx="11" fill="#0f141c"/>
+<rect x="300" y="202" width="540.0" height="22" rx="11" fill="#10b981" fill-opacity=".1"/>
+<line x1="840.0" y1="196" x2="840.0" y2="230" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="840.0" y="192" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="10.5" fill="#10b981">SLA 90</text>
+<rect class="run" style="animation-delay:0.9s" x="300" y="206" width="822.0" height="14" rx="7" fill="#ef4444" fill-opacity=".85"/>
+<g class="late" style="animation-delay:3.0s"><circle cx="1122.0" cy="213" r="7" fill="#ef4444"/><text x="1136.0" y="218" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="12" font-weight="700" fill="#e5e7eb">137 min</text></g>
+<g class="late" style="animation-delay:3.5s"><rect x="300" y="232" width="900" height="26" rx="13" fill="#10b981" fill-opacity=".1" stroke="#10b981" stroke-opacity=".5"/><circle class="pulse" cx="318" cy="245" r="5" fill="#10b981"/><text x="332" y="250" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="600" fill="#10b981">T-03 takes the load → 0 MAD · 8,000 MAD avoided</text></g>
+<text x="40" y="298" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">T-12 · truck · brake caliper</text>
+<text x="40" y="320" font-family="Inter, 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" fill="#10b981">Spare T-10 at Rabat · 0 MAD</text>
+<rect x="300" y="286" width="900" height="22" rx="11" fill="#0f141c"/>
+<rect x="300" y="286" width="540.0" height="22" rx="11" fill="#10b981" fill-opacity=".1"/>
+<line x1="840.0" y1="280" x2="840.0" y2="314" stroke="#10b981" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="840.0" y="276" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="10.5" fill="#10b981">SLA 90</text>
+<rect class="run" style="animation-delay:1.4s" x="300" y="290" width="480.0" height="14" rx="7" fill="#22d3ee" fill-opacity=".85"/>
+<g class="late" style="animation-delay:3.5s"><circle cx="780.0" cy="297" r="7" fill="#22d3ee"/><text x="794.0" y="302" font-family="'JetBrains Mono', ui-monospace, Consolas, Menlo, monospace" font-size="12" font-weight="700" fill="#e5e7eb">80 min</text></g>
+</svg>

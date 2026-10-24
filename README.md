@@ -140,13 +140,7 @@ The model never invents a figure. It **asks a tool**, reads the KPI, and decides
 
 **Supplier ranking** · [`tools/suppliers.py`](backend/app/tools/suppliers.py). Each offer is scored 0–100 on five KPIs, min-max normalised across the suppliers that stock the part. **The weights shift with urgency**, which the agent sets (critical for an ambulance, urgent for a truck on mission):
 
-| KPI | Normal | Urgent | Critical |
-|---|---|---|---|
-| Price (MAD, lower is better) | **35%** | 20% | 10% |
-| Delivery time (hours, lower is better) | 20% | **40%** | **50%** |
-| On-time delivery rate | 15% | 20% | 25% |
-| Warranty (months) | 15% | 10% | 5% |
-| Rating (1–5) | 15% | 10% | 10% |
+<p align="center"><img src="docs/readme/kpi-weights.svg" alt="Supplier KPI weights by urgency. Normal: price 35%, delivery 20%, on-time 15%, warranty 15%, rating 15%. Urgent: price 20%, delivery 40%, on-time 20%, warranty 10%, rating 10%. Critical: price 10%, delivery 50%, on-time 25%, warranty 5%, rating 10%." width="100%"></p>
 
 That is why the ambulance gets **Medi-Fleet** (2.6 h delivery, score 87) while a cheaper supplier at 6.3 h loses: at *critical* urgency, delivery time is half the score. The agent then explains the pick in words the manager can check against the score breakdown shown in the UI.
 
@@ -157,6 +151,8 @@ replacement ETA ≤ SLA          → 0 MAD
 replacement ETA > SLA          → (minutes late ÷ 60) × MAD per hour
 no replacement vehicle at all  → flat contract penalty
 ```
+
+<p align="center"><img src="docs/readme/sla-race.svg" alt="Replacement ETA against the contract SLA. A-03: 46 min against 60, no penalty. T-07: best spare truck 137 min against 90, 1,175 MAD late, so T-03 takes the load and 8,000 MAD is avoided. T-12: 80 min against 90, no penalty." width="100%"></p>
 
 T-07: the nearest spare truck arrives in 137 min against a 90-min SLA, so 1,175 MAD late, or the 8,000 MAD flat fee if nothing comes. A takeover by T-03 makes it **0**.
 
@@ -367,12 +363,9 @@ shared/            API contract, TypeScript types, team briefs
 
 ### What's next
 
-- **Self-hosted DeepSeek** on vLLM inside the operator's network: same client, two env vars.
-- **Voice notes.** WhatsApp voice messages in Darija, transcribed by an open speech model, into the same agents.
-- **Real telematics.** OBD-II / J1939 boxes and fuel-card feeds in place of the scenario runner.
-- **Learn from outcomes.** Log what the mechanic actually found, so the agent learns this fleet's failure patterns.
-- **Driver app.** The order and depot route pushed to the driver's phone, with one-tap confirmation.
-- **Fresh evaluation** on a larger set of unseen breakdowns, to measure diagnosis accuracy rather than demonstrate it.
+<p align="center"><img src="docs/readme/roadmap.svg" alt="Roadmap. Live: four agents on DeepSeek-V3, Darija and French reports, suppliers, SLA and takeover, 3D twin, live map and audit. Next, a pilot with one fleet: self-hosted DeepSeek on vLLM, real OBD-II and J1939 boxes, fuel-card and TMS connectors, a driver app. Later: Darija voice notes, learning from mechanic outcomes, failure prediction, evaluation on unseen breakdowns." width="100%"></p>
+
+The pilot needs no new AI: the same client points at a self-hosted DeepSeek with two environment variables, and real telematics boxes send the same `Telemetry` schema the scenario runner uses today.
 
 ---
 
@@ -431,13 +424,9 @@ python -m pytest -q        # 21 tests: tools, the three scenarios end to end on 
 
 ## The team
 
-Three lanes, one binding API contract ([`shared/contracts.md`](shared/contracts.md)). Each of us owned our own files and merged through small PRs.
+Three lanes, one binding API contract ([`shared/contracts.md`](shared/contracts.md)). Each of us owned our own files and merged through small PRs, all within the hackathon day.
 
-| | Role | Built |
-|---|---|---|
-| **Aymane Idrissi Khamlichi** | Dev A · agentic orchestrator | DeepSeek tool-calling loop with record/replay, orchestrator, maintenance agent, fleet tools (parts, suppliers, depots, penalty), seed data, Blender vehicle twins |
-| **Mohammed Guissi** | Dev B · fuel and delay agents | Fuel agent, delay agent, routing on the road graph, fuel statistics and anomaly detection, fuel and ETA routes |
-| **Marwane Haddane** | Frontend designer | Ops-room dashboard, deck.gl map, live audit feed, 3D inspector, fuel drawer |
+<p align="center"><img src="docs/readme/crew.svg" alt="The crew as ID badges. A: Aymane Idrissi Khamlichi, Dev A and agentic orchestrator: DeepSeek tool loop with record/replay, maintenance agent with 7 fleet tools, orchestrator and Blender vehicle twins. B: Mohammed Guissi, Dev B, fuel and delay agents: 4 fuel anomaly detectors, stop re-ordering and client note, route pricing. C: Marwane Haddane, frontend designer: ops-room dashboard and live audit feed, deck.gl map of Morocco, 3D inspector with failing-part glow." width="100%"></p>
 
 ---
 

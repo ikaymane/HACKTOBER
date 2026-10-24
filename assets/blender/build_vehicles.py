@@ -465,11 +465,13 @@ def render_video(root, other, road, floor, cam, name, dist):
             o.keyframe_insert("rotation_euler", frame=f)
         road.location = (-r * ang, 0, 0)  # ground speed = wheel radius x angle
         road.keyframe_insert("location", frame=f)
-    for o in shell:
-        o.hide_render = False
+    for o in shell:  # hide in render AND viewport so playback in Blender matches the video
+        o.hide_render = o.hide_viewport = False
         o.keyframe_insert("hide_render", frame=fade - 1)
-        o.hide_render = True
+        o.keyframe_insert("hide_viewport", frame=fade - 1)
+        o.hide_render = o.hide_viewport = True
         o.keyframe_insert("hide_render", frame=fade)
+        o.keyframe_insert("hide_viewport", frame=fade)
     _set_interp("BEZIER")
     for o in kids:
         x, y, z = o["explode_dir"]
@@ -494,15 +496,20 @@ def render_video(root, other, road, floor, cam, name, dist):
     scene.render.ffmpeg.format, scene.render.ffmpeg.codec = "MPEG4", "H264"
     scene.render.ffmpeg.constant_rate_factor = "HIGH"
     scene.render.filepath = os.path.join(OUT, f"anim_{name}.mp4")
+    for o in hidden:  # the other vehicle and the floor stay out of the animated .blend too
+        o.hide_viewport = True
+    scene.frame_set(1)
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, f"anim_{name}.blend"), copy=True)
     bpy.ops.render.render(animation=True)
 
     for o in [*kids, road, cam]:
         o.animation_data_clear()
     for o in kids:
-        o.location, o.rotation_euler, o.hide_render = base[o.name], (0, 0, 0), False
+        o.location, o.rotation_euler = base[o.name], (0, 0, 0)
+        o.hide_render = o.hide_viewport = False
     road.location = (0, 0, 0)
     for o in hidden:
-        o.hide_render = False
+        o.hide_render = o.hide_viewport = False
     for o in [road, *children(road)]:
         o.hide_render = True
 

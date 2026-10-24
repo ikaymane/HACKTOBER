@@ -1,21 +1,144 @@
-import {fleetSeed,incidentsSeed,initialEvents,mockFuel,mockRoutes} from './mock';
-import type {Vehicle,Incident,HealthZone,FuelData,RouteOption,AgentEvent,Zone} from './types';
-const env=import.meta as ImportMeta & {env:Record<string,string>};
-export const liveMode=env.env?.VITE_DATA_MODE==='live';
-const base=(env.env?.VITE_API_BASE_URL||'/api').replace(/\/$/,'');
-const clone=<T,>(x:T):T=>structuredClone(x);
-let fleet=clone(fleetSeed),incidents=clone(incidentsSeed);
-let demoRoads:Promise<Record<string,[number,number][]>>|undefined;
-async function request<T>(path:string,options?:RequestInit):Promise<T>{const response=await fetch(base+path,{...options,signal:AbortSignal.timeout(12000)});if(!response.ok)throw new Error(`API ${response.status} · ${path}`);if(response.status===204)return undefined as T;return response.json();}
-export const api={
- fleet:()=>liveMode?request<Vehicle[]>('/fleet'):Promise.resolve(clone(fleet)),
- incident:(id:string)=>liveMode?request<Incident>(`/incidents/${encodeURIComponent(id)}`):Promise.resolve(clone(incidents.find(x=>x.id===id)!)),
- health:(id:string)=>liveMode?request<HealthZone[]>(`/vehicles/${encodeURIComponent(id)}/health`):Promise.resolve((['engine','cooling','electrical','brakes','transmission','tires','fuel'] as Zone[]).map(zone=>{const incident=incidents.find(x=>x.vehicle_id===id&&x.zone===zone);return {zone,status:incident?.severity||'ok',reasons:incident?incident.diagnosis.evidence:['Paramètres dans les plages de fonctionnement normales.','Aucun problème détecté sur les signaux disponibles.']};})),
- fuel:(id:string)=>liveMode?request<FuelData>(`/fuel/${encodeURIComponent(id)}`):Promise.resolve(mockFuel(id)),
- routes:(id:string)=>liveMode?request<RouteOption[]>(`/route/compare?vehicle_id=${encodeURIComponent(id)}`):Promise.resolve(clone(mockRoutes)),
- path:(id:string)=>liveMode?request<{path:[number,number][]}>(`/missions/${encodeURIComponent(id)}/path`):(demoRoads??=fetch('/data/roads.json').then(r=>{if(!r.ok)throw new Error('Géométrie routière indisponible');return r.json();})).then(data=>({path:data[id]||[]})),
- scenario:async(id:number)=>{if(liveMode){await request('/scenarios/'+id,{method:'POST'});return;} fleet=clone(fleetSeed);incidents=clone(incidentsSeed);const selected=incidents.find(x=>x.id===['INC-001','INC-002','INC-003'][id-1])!;fleet=fleet.map(v=>({...v,status:v.id===selected.vehicle_id?selected.severity:'ok',health:v.id===selected.vehicle_id?62:98,incident_id:v.id===selected.vehicle_id?selected.id:undefined}));incidents=[selected];},
- reset:async()=>{if(liveMode){await request('/reset',{method:'POST'});return;}fleet=clone(fleetSeed);incidents=clone(incidentsSeed);},
- events:()=>liveMode?[]:clone(initialEvents),
- subscribe:(onEvent:(event:AgentEvent)=>void,onConnection:(connected:boolean)=>void)=>{if(!liveMode){onConnection(true);return ()=>{};}const source=new EventSource(base+'/events');source.onopen=()=>onConnection(true);source.onerror=()=>onConnection(false);source.onmessage=e=>{try{onEvent(JSON.parse(e.data));}catch{console.warn('Invalid agent event');}};return ()=>source.close();}
+import type {
+  AgentEvent, Depot, FuelAnomaly, Incident, Mission, RouteOption, Vehicle, Zone,
+} from "@shared/types";
+import { compareRoutesLocal, missionCityChain } from "@/lib/geo";
+
+const BASE = "/api";
+
+export type ZoneStatus = "ok" | "warn" | "fail";
+export interface ZoneHealth { status: ZoneStatus; reasons: string[]; part_id: string | null; incident_id: string | null }
+export interface VehicleHealth { vehicle_id: string; type: Vehicle["type"]; zones: Record<Zone, ZoneHealth> }
+
+export interface FuelLog { ts: string; litres: number; odometer_km: number; l_100km: number | null; station_city: string; cost_mad: number }
+export interface FuelReport {
+  vehicle_id: string; expected_l_100km: number; actual_l_100km: number | null; delta_pct: number | null;
+  logs: FuelLog[]; anomalies: FuelAnomaly[]; mocked?: boolean;
+}
+export interface MissionPath { mission_id: string; path: string[]; coords: [number, number][]; progress_pct: number | null }
+export interface Scenario { id: number; title: string; vehicle_id: string }
+
+class HttpError extends Error {
+  status: number;
+  constructor(status: number, path: string) {
+    super(`${status} ${path}`);
+    this.status = status;
+  }
+}
+
+async function get<T>(path: string): Promise<T> {
+  const res = await fetch(BASE + path);
+  if (!res.ok) throw new HttpError(res.status, path);
+  return res.json();
+}
+async function post<T>(path: string, body?: unknown): Promise<T> {
+  const res = await fetch(BASE + path, {
+    method: "POST",
+    headers: body ? { "Content-Type": "application/json" } : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) throw new HttpError(res.status, path);
+  return res.json();
+}
+
+/** Dev B's endpoints may not be live yet: fall back to a local computation on 404 / 405. */
+async function withFallback<T>(fn: () => Promise<T>, fallback: () => T): Promise<T> {
+  try {
+    return await fn();
+  } catch (e) {
+    if (e instanceof HttpError && e.status !== 404 && e.status !== 405) throw e;
+    return fallback();
+  }
+}
+
+export const api = {
+  fleet: () => get<Vehicle[]>("/fleet"),
+  depots: () => get<Depot[]>("/depots"),
+  missions: () => get<Mission[]>("/missions"),
+  scenarios: () => get<Scenario[]>("/scenarios"),
+  incidents: () => get<Incident[]>("/incidents"),
+  incident: (id: string) => get<Incident>(`/incidents/${id}`),
+  health: (vid: string) => get<VehicleHealth>(`/vehicles/${vid}/health`),
+  audit: () => get<AgentEvent[]>("/audit"),
+  runScenario: (id: number) => post<{ started: number }>(`/scenario/${id}`),
+  reset: () => post<{ ok: boolean }>("/reset"),
+
+  missionPath: (m: Mission, v: Vehicle | undefined) =>
+    withFallback(
+      () => get<MissionPath>(`/missions/${m.id}/path`),
+      () => ({
+        mission_id: m.id,
+        path: missionCityChain(m.origin, m.stops.map((s) => s.city), v?.type ?? "truck"),
+        coords: [],
+        progress_pct: null,
+      }),
+    ),
+
+  fuel: (v: Vehicle) => withFallback(() => get<FuelReport>(`/fuel/${v.id}`), () => mockFuel(v)),
+
+  compareRoutes: (from: string, to: string, v: Vehicle) =>
+    withFallback(
+      () => post<RouteOption[]>("/route/compare", { from, to, vehicle_id: v.id }),
+      () => compareRoutesLocal(from, to, v),
+    ),
 };
+
+/** Server-sent agent events. Returns a disposer. */
+export function subscribeEvents(onEvent: (ev: AgentEvent) => void, onStatus: (live: boolean) => void) {
+  // The Vite dev proxy holds back SSE headers, so the stream goes straight to the backend (CORS is open).
+  const url = import.meta.env.VITE_EVENTS_URL ?? (import.meta.env.DEV ? `http://${location.hostname}:8000/events` : `${BASE}/events`);
+  const es = new EventSource(url);
+  es.onopen = () => onStatus(true);
+  es.onerror = () => onStatus(false);
+  es.addEventListener("agent", (e) => onEvent(JSON.parse((e as MessageEvent).data)));
+  return () => es.close();
+}
+
+// ---------- local fuel mock (shape of GET /fuel/{id}) ----------
+
+function seeded(seed: string) {
+  let h = 2166136261;
+  for (const c of seed) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  return () => {
+    h = Math.imul(h ^ (h >>> 15), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+const STATIONS = ["casablanca", "rabat", "settat", "marrakech", "fes", "meknes", "eljadida", "benguerir"];
+
+function mockFuel(v: Vehicle): FuelReport {
+  const rnd = seeded(v.id);
+  const drift = v.id === "T-12" ? 0.26 : v.telemetry.idle_pct_7d > 25 ? 0.12 : 0;
+  const logs: FuelLog[] = [];
+  let odo = v.km - 6200;
+  for (let i = 0; i < 10; i++) {
+    const dist = 480 + Math.round(rnd() * 260);
+    const ramp = drift * (i / 9);
+    const l100 = v.base_l_100km * (1 + (rnd() - 0.5) * 0.08 + ramp);
+    const litres = +((dist * l100) / 100).toFixed(1);
+    odo += dist;
+    const d = new Date(2026, 9, 24 - (10 - i) * 3, 8 + Math.floor(rnd() * 10), Math.floor(rnd() * 60));
+    logs.push({
+      ts: d.toISOString().slice(0, 16), litres, odometer_km: odo, l_100km: +l100.toFixed(1),
+      station_city: STATIONS[Math.floor(rnd() * STATIONS.length)], cost_mad: Math.round(litres * 11.6),
+    });
+  }
+  const recent = logs.slice(-3);
+  const actual = +(recent.reduce((s, l) => s + (l.l_100km ?? 0), 0) / recent.length).toFixed(1);
+  const delta = +(((actual - v.base_l_100km) / v.base_l_100km) * 100).toFixed(1);
+  const anomalies: FuelAnomaly[] = [];
+  if (delta > 12)
+    anomalies.push({
+      vehicle_id: v.id, kind: "overconsumption", value: actual, expected: v.base_l_100km,
+      detected_at: logs[logs.length - 1].ts, probable_cause: "mechanical",
+      note: "Hausse progressive sur 3 pleins, sans changement d'itinéraire : cause mécanique probable (frein qui frotte). Transmis à l'agent maintenance.",
+    });
+  if (v.telemetry.idle_pct_7d > 25)
+    anomalies.push({
+      vehicle_id: v.id, kind: "excessive_idle", value: v.telemetry.idle_pct_7d, expected: 10,
+      detected_at: logs[logs.length - 1].ts, probable_cause: "behavior",
+      note: "Moteur au ralenti au-delà du seuil sur 7 jours.",
+    });
+  return { vehicle_id: v.id, expected_l_100km: v.base_l_100km, actual_l_100km: actual, delta_pct: delta, logs, anomalies, mocked: true };
+}

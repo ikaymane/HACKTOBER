@@ -4,6 +4,8 @@
 |---|---|
 | `truck.glb` | Rigid truck, 3 axles (6 wheels), ~8.5 m, 46 nodes |
 | `ambulance.glb` | Ambulance van, 4 wheels, ~6.2 m, 45 nodes |
+| `road.glb` | Straight 2-lane road tile, 60 m along X, sand shoulders. Vehicles drive +X in the right lane at z=0, y=0. Tile it along X. |
+| `anim_truck.mp4`, `anim_ambulance.mp4` | 4.5 s showcase: drives on the road, the body disappears, the parts explode (good for the README / demo video) |
 | `preview_*.png` | Renders: assembled + exploded (exploded previews hide the body shell) |
 | `vehicles.blend` | Blender source (both side by side) |
 
@@ -33,6 +35,22 @@ Parts with a `part_id`, per vehicle:
 - **tires:** `P-TIRE` each wheel (tire + rim + hub merged)
 - **fuel:** `P-INJ` injector rail (tank has no id)
 - **body:** shell (cab, cargo/patient box, windows, lights, stripes). Fade to `opacity 0.12` when exploded; the chassis rails can stay visible.
+
+## Animations baked in the GLBs
+| Clip | Vehicles | Length | What |
+|---|---|---|---|
+| `drive` | both | 1 s, loop | Wheels + brake discs roll forward, body bobs slightly. Play while the vehicle moves on the map / road. |
+| `explode` | both | 1 s, once | Every part slides from rest to `rest + explode_dir`. Play forward to open the exploded view, `timeScale = -1` to reassemble. Same motion as the `explode_dir` metadata, so pick either the clip or your own lerp. |
+| `siren` | ambulance | 0.5 s, loop | Red/blue beacons pulse alternately. Play on emergency missions. |
+
+```tsx
+const { scene, animations } = useGLTF(`/models/${type}.glb`);
+const { actions } = useAnimations(animations, scene);
+actions.drive?.setLoop(THREE.LoopRepeat, Infinity).play();
+const boom = actions.explode!; boom.setLoop(THREE.LoopOnce, 1); boom.clampWhenFinished = true;
+boom.timeScale = exploded ? 1 : -1; boom.paused = false; boom.play();
+// stop "drive" while exploded: both clips move body parts
+```
 
 ## How the frontend should use it
 ```ts

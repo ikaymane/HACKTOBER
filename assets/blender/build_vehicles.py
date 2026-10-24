@@ -284,19 +284,109 @@ def build_ambulance():
     return root
 
 
+# ---------------------------------------------------------------- road tile
+def build_road(length=60.0):
+    """Straight 2-lane road along X. Vehicles drive +X in the right lane (y = 0); tile it along X."""
+    root = bpy.data.objects.new("Road", None)
+    scene.collection.objects.link(root)
+    asphalt = mat("asphalt", (0.06, 0.065, 0.07), rough=0.9)
+    paint = mat("road_paint", (0.92, 0.92, 0.88), rough=0.6)
+    shoulder = mat("shoulder", (0.55, 0.45, 0.32), rough=1.0)  # Moroccan red-sand verge
+    box("road__asphalt", (0, 1.75, 0.0), (length, 7.5, 0.04), asphalt, bevel=0, parent=root)
+    for y in (-2.0, 5.5):
+        box(f"road__edge_{y}", (0, y, 0.025), (length, 0.15, 0.01), paint, bevel=0, parent=root)
+        box(f"road__shoulder_{y}", (0, y + (-1.6 if y < 0 else 1.6), -0.01), (length, 3.0, 0.03), shoulder, bevel=0, parent=root)
+    dash, gap = 3.0, 6.0
+    x = -length / 2 + dash / 2
+    i = 0
+    while x < length / 2:
+        box(f"road__dash_{i}", (x, 1.75, 0.025), (dash, 0.15, 0.01), paint, bevel=0, parent=root)
+        x += dash + gap
+        i += 1
+    for o in children(root):
+        tag(o, "road")
+    return root
+
+
+# ---------------------------------------------------------------- animation clips (glTF animations)
+# Each clip = one NLA track name, exported as one glTF animation:
+#   drive   (1 s loop): wheels + brake discs roll forward, body bobs slightly
+#   explode (1 s):      every part slides from rest to rest + explode_dir (play reversed to reassemble)
+#   siren   (0.5 s loop, ambulance): beacons pulse alternately
+FPS = 24
+
+
+def _set_interp(kind):
+    bpy.context.preferences.edit.keyframe_new_interpolation_type = kind
+
+
+def _push(o, track):
+    ad = o.animation_data
+    act = ad.action
+    act.name = f"{track}__{o.name}"
+    tr = ad.nla_tracks.new()
+    tr.name = track
+    tr.strips.new(track, 1, act)
+    ad.action = None
+
+
+def add_clips(root):
+    scene.render.fps = FPS
+    kids = children(root)
+    base = {o.name: tuple(o.location) for o in kids}
+
+    _set_interp("LINEAR")
+    for o in kids:
+        rolls = o["zone"] == "tires" or o.name.startswith("brakes__disc")
+        bobs = o["zone"] == "body" and "chassis" not in o.name
+        if not (rolls or bobs):
+            continue
+        for i, f in enumerate(range(1, FPS + 2, FPS // 4)):
+            if rolls:  # +Y spin rolls the wheel toward +X
+                o.rotation_euler = (0, i * math.pi / 2, 0)
+                o.keyframe_insert("rotation_euler", frame=f)
+            if bobs:
+                o.location = (*base[o.name][:2], base[o.name][2] + (0.015 if i % 2 else 0))
+                o.keyframe_insert("location", frame=f)
+        o.rotation_euler, o.location = (0, 0, 0), base[o.name]
+        _push(o, "drive")
+
+    _set_interp("BEZIER")
+    for o in kids:
+        x, y, z = o["explode_dir"]
+        if (x, y, z) == (0, 0, 0):
+            continue
+        bx, by, bz = base[o.name]
+        o.location = (bx, by, bz)
+        o.keyframe_insert("location", frame=1)
+        o.location = (bx + x, by - z, bz + y)  # three.js dir -> Blender space
+        o.keyframe_insert("location", frame=FPS + 1)
+        o.location = base[o.name]
+        _push(o, "explode")
+
+    beacons = [o for o in kids if o.name.startswith("body__beacon")]
+    for i, o in enumerate(beacons):
+        for f, s in ((1, 1.0), (4, 1.0 + 0.35 * (i == 0)), (7, 1.0 + 0.35 * (i == 1)), (13, 1.0)):
+            o.scale = (s, s, s)
+            o.keyframe_insert("scale", frame=f)
+        o.scale = (1, 1, 1)
+        _push(o, "siren")
+
+
 # ---------------------------------------------------------------- export + previews
 def children(root):
     return [o for o in bpy.data.objects if o.parent == root]
 
 
-def export(root, filename):
+def export(root, filename, animations=True):
     bpy.ops.object.select_all(action="DESELECT")
     root.select_set(True)
     for o in children(root):
         o.select_set(True)
     bpy.context.view_layer.objects.active = root
     bpy.ops.export_scene.gltf(filepath=os.path.join(OUT, filename), export_format="GLB", use_selection=True,
-                              export_extras=True, export_yup=True, export_apply=True)
+                              export_extras=True, export_yup=True, export_apply=True,
+                              export_animations=animations, export_animation_mode="NLA_TRACKS")
 
 
 def setup_render():
@@ -352,20 +442,93 @@ def explode(root, factor):
                       o.get("_base", o.location)[2] + y * factor)
 
 
+def render_video(root, other, road, floor, cam, name, dist):
+    """~4.5 s clip: drives along the road, body fades out, parts explode while the camera orbits."""
+    hidden = [other, *children(other), floor]
+    for o in hidden:
+        o.hide_render = True
+    road.hide_render = False
+    for o in children(road):
+        o.hide_render = False
+    kids = children(root)
+    base = {o.name: tuple(o.location) for o in kids}
+    wheels = [o for o in kids if o["zone"] == "tires" or o.name.startswith("brakes__disc")]
+    r = max(o.dimensions.z for o in kids if o["zone"] == "tires") / 2
+    shell = [o for o in kids if o["zone"] == "body" and "chassis" not in o.name]
+    drive_end, fade, boom_end, end = 60, 66, 90, 110
+
+    _set_interp("LINEAR")
+    for f in range(1, drive_end + 1, 6):  # wheels roll, road slides back at the matching speed
+        ang = (f - 1) / FPS * 2 * math.pi
+        for o in wheels:
+            o.rotation_euler = (0, ang, 0)
+            o.keyframe_insert("rotation_euler", frame=f)
+        road.location = (-r * ang, 0, 0)  # ground speed = wheel radius x angle
+        road.keyframe_insert("location", frame=f)
+    for o in shell:
+        o.hide_render = False
+        o.keyframe_insert("hide_render", frame=fade - 1)
+        o.hide_render = True
+        o.keyframe_insert("hide_render", frame=fade)
+    _set_interp("BEZIER")
+    for o in kids:
+        x, y, z = o["explode_dir"]
+        bx, by, bz = base[o.name]
+        o.location = (bx, by, bz)
+        o.keyframe_insert("location", frame=fade)
+        o.location = (bx + x * 0.9, by - z * 0.9, bz + y * 0.9)
+        o.keyframe_insert("location", frame=boom_end)
+    for f in range(1, end + 1, 10):
+        grow = min(1, max(0, (f - fade) / (boom_end - fade)))
+        aim(cam, (0, 0, 1.2), dist * (1.25 + 0.35 * grow), az_deg=-50 + 30 * f / end, el_deg=24 + 8 * grow)
+        cam.keyframe_insert("location", frame=f)
+        cam.keyframe_insert("rotation_euler", frame=f)
+
+    scene.frame_start, scene.frame_end = 1, end
+    scene.render.resolution_x, scene.render.resolution_y = 960, 540
+    try:
+        scene.render.image_settings.media_type = "VIDEO"  # Blender >= 5.0
+    except (AttributeError, TypeError):
+        pass
+    scene.render.image_settings.file_format = "FFMPEG"
+    scene.render.ffmpeg.format, scene.render.ffmpeg.codec = "MPEG4", "H264"
+    scene.render.ffmpeg.constant_rate_factor = "HIGH"
+    scene.render.filepath = os.path.join(OUT, f"anim_{name}.mp4")
+    bpy.ops.render.render(animation=True)
+
+    for o in [*kids, road, cam]:
+        o.animation_data_clear()
+    for o in kids:
+        o.location, o.rotation_euler, o.hide_render = base[o.name], (0, 0, 0), False
+    road.location = (0, 0, 0)
+    for o in hidden:
+        o.hide_render = False
+    for o in [road, *children(road)]:
+        o.hide_render = True
+
+
 def main():
     truck = build_truck()
     amb = build_ambulance()
-    for root in (truck, amb):
-        for o in children(root):
-            o["_base"] = list(o.location)
+    road = build_road()
+    add_clips(truck)
+    add_clips(amb)
+    scene.frame_set(1)
     export(truck, "truck.glb")
     export(amb, "ambulance.glb")
-    for root in (truck, amb):
-        for o in children(root):
-            del o["_base"]
-
-    cam, floor = setup_render()
+    export(road, "road.glb", animations=False)
+    amb.location = (0, 6, 0)  # side by side in the .blend, on the road
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "vehicles.blend"))
     amb.location = (0, 0, 0)
+
+    for o in [*children(truck), *children(amb)]:  # previews use plain transforms
+        o.animation_data_clear()
+    scene.frame_set(1)
+    for o in [road, *children(road)]:
+        o.hide_render = True
+    cam, floor = setup_render()
+    if hasattr(scene, "eevee"):
+        scene.eevee.taa_render_samples = 16
     for root, other, name, dist in ((truck, amb, "truck", 13), (amb, truck, "ambulance", 10)):
         other.hide_render = True
         for o in children(other):
@@ -389,8 +552,9 @@ def main():
         for o in children(other):
             o.hide_render = False
 
-    amb.location = (0, 5, 0)  # side by side in the .blend
-    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "vehicles.blend"))
+    if "--no-video" not in sys.argv:
+        render_video(truck, amb, road, floor, cam, "truck", 13)
+        render_video(amb, truck, road, floor, cam, "ambulance", 10)
     print("DONE", OUT)
 
 

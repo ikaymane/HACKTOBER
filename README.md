@@ -4,7 +4,7 @@
 
 <p align="center">
   <img alt="UM6P Hackathon · Best use of open models" src="https://img.shields.io/badge/UM6P%20Hackathon-Best%20use%20of%20open%20models-0B0F14?style=for-the-badge&labelColor=22D3EE&color=0B0F14">
-  <img alt="DeepSeek open weights" src="https://img.shields.io/badge/model-DeepSeek%20·%20open%20weights-4D6BFE?style=for-the-badge">
+  <img alt="DeepSeek open weights" src="https://img.shields.io/badge/model-DeepSeek--V3%20·%20open%20weights-4D6BFE?style=for-the-badge">
   <img alt="4 agents, 12 tools" src="https://img.shields.io/badge/4%20agents-12%20tools-10B981?style=for-the-badge">
 </p>
 <p align="center">
@@ -19,40 +19,228 @@
 </p>
 
 <p align="center">
-  <a href="#see-it-work">See it work</a> ·
-  <a href="#how-it-works">How it works</a> ·
-  <a href="#why-the-open-model-is-load-bearing">Why the model matters</a> ·
-  <a href="#three-breakdowns-three-decisions">Results</a> ·
+  <a href="#1--the-problem">Problem</a> ·
+  <a href="#2--who-uses-it-and-why-it-pays">Usefulness</a> ·
+  <a href="#3--ai--approach">AI + approach</a> ·
+  <a href="#4--implementation">Implementation</a> ·
+  <a href="#5--whats-original">Originality</a> ·
   <a href="#run-it">Run it</a> ·
-  <a href="#whats-next">What's next</a>
+  <a href="#the-team">Team</a>
 </p>
 
 ---
+
+### In one minute
+
+A truck breaks down on the motorway. The driver sends a panicked message in Darija. **FleetSense** reads it together with the vehicle's fault codes, and four AI agents on the **open-weights DeepSeek-V3 model** work through the fleet's own tools: which part failed, repair or replace, which supplier, which depot, can a spare vehicle arrive inside the contract SLA, and if not, which other truck can take the load. In under a minute the fleet manager gets a decision with its evidence, its cost in MAD and a message ready for the client. **Every number comes from code; the model reasons, chooses and explains.**
+
+| Judging criterion | Where to look |
+|---|---|
+| **Problem** · clear and meaningful | [1 · The problem](#1--the-problem) |
+| **Usefulness** · practical value | [2 · Who uses it](#2--who-uses-it-and-why-it-pays) · [three real decisions](#three-breakdowns-three-decisions) |
+| **AI + approach** · meaningful and appropriate | [3 · AI + approach](#3--ai--approach): the open model, what we diagnose from, KPIs, tools, guardrails |
+| **Implementation** · working and verifiable | [4 · Implementation](#4--implementation): screenshots, recorded runs, 21 tests, [run it in 3 commands](#run-it) |
+| **Originality** · growth potential | [5 · What's original](#5--whats-original) · [roadmap](#whats-next) |
+
+---
+
+## 1 · The problem
 
 Mid-afternoon on the A7 motorway. Truck **T-07** is carrying 10 pallets of medicine to Marrakech when the driver sends this to dispatch:
 
 > *« Salam chef, lmoteur skhoun bzaf, l'aiguille wslat l7mer. Kayna ri7a dial liquide w chwiya d dokhan byed kaykhrej mn capot. W kayn wa7d sda3 bhal roulement l9eddam dial lmoteur. Nw9ef wla nkemmel? »*
 
-That is Darija, typed in a hurry: the engine is very hot, the needle is in the red, there is a coolant smell and white smoke, and a bearing-like noise at the front of the engine. *Should I stop or keep going?*
+The engine is very hot, the needle is in the red, there is a coolant smell and white smoke, and a bearing-like noise at the front of the engine. *Should I stop or keep going?*
 
-A dispatcher now has about ten minutes to work out which part failed, whether to repair or replace it, which supplier can deliver in time, which depot has a workshop, whether a spare truck can arrive inside the 90-minute SLA, and, if not, who else can carry the load. Most fleets do this by phone, from memory.
+The dispatcher now has minutes to answer six questions at once, from six different places:
 
-**FleetSense** does it in under a minute. Four AI agents on an **open-weights DeepSeek model** read the message and the OBD codes, call the fleet's own tools, and come back with:
+| Question | Where the answer lives today |
+|---|---|
+| Which part failed? | The driver's words + a fault code on the dashboard |
+| Repair or replace? | The mechanic's experience, the part's mileage |
+| Which supplier, how fast? | Phone calls, a price list in Excel |
+| Which depot has a workshop and a spare truck? | Memory, more phone calls |
+| What does the delay cost us? | The client contract: SLA minutes, MAD per hour, flat penalty |
+| Can another truck take the load? | Nobody checks |
 
-> **Stop now.** The water pump has failed (90% confidence; it is at 194% of its rated life). **Replace it**: AutoPièces Atlas, 2,450 MAD, delivered in 6.4 h. No spare truck reaches T-07 within the SLA, so **T-03**, 37 km away with 14 free pallets and the same destination, **takes the load**. **8,000 MAD penalty avoided.** T-07 goes to the Marrakech workshop, not Settat: Settat is closer but has no workshop.
-
-Every figure in that answer was computed by code. The model chose, explained and wrote it.
-
-**Who it is for:** dispatchers and fleet managers at Moroccan logistics companies and ambulance services, where SLA penalties are real money and drivers report problems in whatever language comes fastest.
+Breakdowns, fuel overspend and late deliveries are handled as **three separate problems by three separate people**. A dragging brake shows up as a fuel bill in one office and a late delivery in another, and nobody links them. For an **ambulance**, the same delay is not a penalty, it is a patient on a backup battery.
 
 ---
 
-## See it work
+## 2 · Who uses it, and why it pays
 
-Every screenshot is the real dashboard, running against the backend with recorded DeepSeek runs.
+**Users:** the dispatcher on shift, who needs one clear order to give the driver, and the fleet manager, who needs the cost, the SLA risk and the audit trail.
+
+### An example customer
+
+Picture a Moroccan national carrier in the mould of **CTM Messagerie** or a regional 3PL: a few hundred trucks on the Casablanca–Marrakech–Agadir–Fès corridors, contracts with pharmaceutical and retail clients that carry SLA penalties, and drivers who report problems by WhatsApp in Darija. Or an **ambulance operator** running inter-hospital transfers for clinics, where a missed replacement window is a clinical risk, not just a fee.
+
+*(These are illustrative profiles of the companies FleetSense is built for, not customers or partners.)*
+
+What a rollout looks like for them:
+
+1. **Plug in.** A standard telematics box in each vehicle's OBD-II / CAN port (most fleets already have GPS trackers that can read it).
+2. **Load their data.** Vehicles, depots and spare vehicles, the parts catalog, supplier price lists with delivery times, and each client contract's SLA and penalties. All plain JSON today, an ERP/TMS connector tomorrow.
+3. **Keep the dispatcher in charge.** FleetSense proposes; the dispatcher approves the order to the driver and the purchase.
+
+### What changes
+
+| | Today | With FleetSense |
+|---|---|---|
+| Time to a decision | Tens of minutes of phone calls | **Under a minute**, with evidence |
+| Repair vs. replace | Gut feeling | Mileage vs. rated life, safety, downtime, cost, all shown |
+| Supplier choice | Whoever answers first | Ranked on 5 KPIs, weighted by urgency |
+| SLA penalty | Discovered on the invoice | **Computed before the decision**, in MAD |
+| Load takeover | Rarely considered | Checked automatically: in scenario 2 it saves **8,000 MAD** |
+| Fuel, maintenance, delays | Three silos | One incident, one timeline |
+
+---
+
+## 3 · AI + approach
+
+<p align="center"><img src="docs/readme/pipeline.svg" alt="Pipeline: driver report, telemetry and fleet data go to the orchestrator, which routes them through the fuel, maintenance and delay agents on DeepSeek; code recomputes every number; the incident goes to the fleet manager" width="100%"></p>
+
+### The open model: DeepSeek-V3
+
+| | |
+|---|---|
+| **Model** | DeepSeek-V3 series, served as `deepseek-chat` through DeepSeek's OpenAI-compatible API |
+| **Why open weights** | The same weights are published on Hugging Face, so a fleet operator can **self-host** it (vLLM, SGLang) and keep vehicle positions, client contracts and driver messages inside the company. Switching is two environment variables: `DEEPSEEK_BASE_URL` and `DEEPSEEK_MODEL`. |
+| **Why this model** | Strong native **tool calling**, reliable **JSON output**, good French, and it copes with Darija written in Latin script with Arabizi digits (`skhoun`, `l7mer`, `l9eddam`) |
+| **How we call it** | `temperature 0.2`, up to 10 tool-calling steps per agent, the final answer must be one JSON object (we re-ask if it isn't) |
+| **Where it runs** | Every agent goes through one loop, [`backend/app/llm.py`](backend/app/llm.py), which also **records** each run for offline replay |
+
+**Why the model is load-bearing.** Take it out and FleetSense cannot decide anything. The tools return facts; turning them into *"stop now, replace the pump, send T-03"* takes reasoning no rule table covers:
+
+- **Reading drivers.** *"sda3 bhal roulement l9eddam"* becomes "bearing noise at the front of the engine, a typical water-pump symptom", and that becomes a search term for `lookup_parts`.
+- **Weighing trade-offs.** Repairing the A-03 alternator costs 1,200 MAD but takes 3 h with a patient on board, and the part is at 268,000 km against a 200,000 km life. The agent replaces it.
+- **Planning.** In scenario 2 the agent makes 9 tool calls on its own: no spare truck inside the SLA, so it prices the penalty, looks for a takeover, compares both, then picks a supplier and a depot **with a workshop** (Marrakech, not the closer Settat).
+- **Linking silos.** The fuel agent sees +22% consumption on T-12, reads 84% brake wear and a brake code, labels the cause *mechanical*, and the orchestrator hands it to Maintenance.
+
+### What we diagnose from, and what we diagnose on
+
+<p align="center"><img src="docs/readme/diagnosis.svg" alt="A telematics box in the OBD-II or J1939 port sends fault codes, coolant, oil pressure, battery voltage, brake wear, idle time and odometer; the driver's phone adds what sensors can't say; fuel cards add fill-ups; FleetSense turns this into per-zone health for the agents" width="100%"></p>
+
+**The physical object: a telematics box.** Every vehicle carries an off-the-shelf GPS/CAN tracker plugged into its diagnostic port: **OBD-II** on vans and ambulances, **J1939 / FMS** on heavy trucks. It streams standard **fault codes** (P0217 engine overheat, P0562 low system voltage, C0040 brake circuit…) and live readings over 4G. The driver's phone adds what no sensor reports: the smell, the smoke, the noise. In this hackathon build, the scenario runner injects that telemetry with exactly the same schema ([`Telemetry`](backend/app/schemas.py)).
+
+**The digital object: a 3D twin of each vehicle.** The truck and the ambulance are built in **Blender** ([`assets/blender/`](assets/blender/)) with a real inline-6 diesel inside. **Every part is its own clickable node** carrying its catalog `part_id` and `zone` (`P-WPUMP` water pump, `P-ALT` alternator, `P-BCAL` brake caliper…). When the agent names a part, that exact part glows red on the engine, and clicking it opens the agent's evidence.
+
+| Zone | Rule that flags it (code) | Then the agent… |
+|---|---|---|
+| Cooling | coolant > 105 °C fail, > 98 °C warn | weighs the driver's words and part mileage to name the part |
+| Electrical | battery < 12.0 V fail, < 13.2 V warn | rules alternator vs. battery in or out |
+| Engine | oil < 1.5 bar fail, < 2.5 bar warn | decides severity: monitor, drive to depot, stop now |
+| Brakes | wear > 85 % fail, > 70 % warn | links it to fuel overconsumption if there is one |
+| Fuel | idle > 25 % over 7 days | classifies: behaviour, fraud, mechanical, detour |
+| Any | a fault code that matches a catalog part | uses it as evidence, never alone |
+
+### How the agents get the KPIs and work with them
+
+The model never invents a figure. It **asks a tool**, reads the KPI, and decides. Here is every KPI it works with and where it comes from.
+
+**Supplier ranking** · [`tools/suppliers.py`](backend/app/tools/suppliers.py). Each offer is scored 0–100 on five KPIs, min-max normalised across the suppliers that stock the part. **The weights shift with urgency**, which the agent sets (critical for an ambulance, urgent for a truck on mission):
+
+| KPI | Normal | Urgent | Critical |
+|---|---|---|---|
+| Price (MAD, lower is better) | **35%** | 20% | 10% |
+| Delivery time (hours, lower is better) | 20% | **40%** | **50%** |
+| On-time delivery rate | 15% | 20% | 25% |
+| Warranty (months) | 15% | 10% | 5% |
+| Rating (1–5) | 15% | 10% | 10% |
+
+That is why the ambulance gets **Medi-Fleet** (2.6 h delivery, score 87) while a cheaper supplier at 6.3 h loses: at *critical* urgency, delivery time is half the score. The agent then explains the pick in words the manager can check against the score breakdown shown in the UI.
+
+**SLA penalty** · [`tools/penalty.py`](backend/app/tools/penalty.py). From the client contract on each mission:
+
+```
+replacement ETA ≤ SLA          → 0 MAD
+replacement ETA > SLA          → (minutes late ÷ 60) × MAD per hour
+no replacement vehicle at all  → flat contract penalty
+```
+
+T-07: the nearest spare truck arrives in 137 min against a 90-min SLA, so 1,175 MAD late, or the 8,000 MAD flat fee if nothing comes. A takeover by T-03 makes it **0**.
+
+**Repair vs. replace** · [`tools/parts.py`](backend/app/tools/parts.py) and `get_part`. For each candidate part: repair cost and hours, replacement labour hours, typical life in km, whether it is repairable and safety-critical. The agent compares, then `build_incident()` computes the cost (supplier price + labour × 350 MAD/h) and the downtime.
+
+**Fleet logistics** · [`tools/depots.py`](backend/app/tools/depots.py). Road distance and ETA to each depot, whether it has a workshop, which spare vehicles of the same type are available, and which trucks on the road share a destination and have enough free pallets.
+
+**Fuel** · [`tools/fuel_stats.py`](backend/app/tools/fuel_stats.py). L/100 km over 7 days against the vehicle's baseline (anomaly above +15%), fills larger than the tank, fills with under 20 km driven, idling above 25%. Routes are priced as fuel + tolls (×truck multiplier) + driver time on the road graph.
+
+**Fleet KPIs on the dashboard.** Vehicles on mission, open incidents, penalties at risk vs. avoided (MAD), and today's fuel cost update live as the agents act.
+
+### The tools
+
+<details open>
+<summary><b>12 tools, 3 agents (the orchestrator arbitrates without tools)</b></summary>
+
+| Agent | Tool | Returns |
+|---|---|---|
+| Maintenance | `get_vehicle(vehicle_id)` | Telemetry, mileage, position, current mission |
+| Maintenance | `lookup_parts(dtc, symptoms_text)` | Candidate parts from fault codes (×3) and driver symptoms (×1) |
+| Maintenance | `get_part(part_id)` | Repairable, rated life, repair/replace cost and hours, safety-critical |
+| Maintenance | `score_suppliers(part_id, urgency, vehicle_type)` | Suppliers ranked on the 5 KPIs above, with the score breakdown |
+| Maintenance | `find_replacement(vehicle_id)` | Depots by road distance, ETA, workshop, same-type spare vehicles |
+| Maintenance | `compute_penalty(mission_id, replacement_eta_min)` | SLA penalty in MAD and whether the mission is at risk |
+| Maintenance | `find_load_takeover(vehicle_id)` | Trucks on mission to the same destination with enough free pallets |
+| Fuel | `get_fuel_stats(vehicle_id)` | Fill-ups, L/100 km vs. baseline, detected anomalies |
+| Fuel | `get_vehicle(vehicle_id)` | Brake wear, fault codes, idle ratio |
+| Fuel | `compare_routes(from, to, vehicle_id)` | Shortest, cheapest and fastest routes: fuel, tolls, driver time |
+| Delay | `get_mission(mission_id)` | Stops, time windows, start delay after the breakdown |
+| Delay | `simulate_order(stop_order)` | ETA and minutes late per stop for a given order |
+
+Tools never crash the agent: an error goes back to the model as `{"error": ...}` so it can correct itself.
+</details>
+
+| Agent | What the model decides | What code computes |
+|---|---|---|
+| **Orchestrator** | Priority, a 3–4 line summary, next actions, the client message | Routing between agents, fleet changes (vehicle out, replacement or takeover gets the mission) |
+| **Maintenance** | Failing part and confidence, severity, repair or replace, supplier, depot, takeover | Part candidates, supplier scores, ETAs, penalties, spare capacity |
+| **Fuel** | Probable cause of each anomaly | Every anomaly and every route cost |
+| **Delay** | A better stop order, the client message | Start delay, every ETA and minute late |
+
+### Guardrails: the model reasons, code does the maths
+
+- **Numbers are recomputed.** `build_incident()` rebuilds the incident from the model's *choices*: cost, downtime, ETA and penalty all come from tools again.
+- **Impossible choices are corrected.** "Repair" on a non-repairable part becomes "replace". A replacement vehicle that isn't at the chosen depot is swapped for one that is.
+- **People decide.** The output is a proposal with evidence; the dispatcher gives the order.
+- **Everything is on the record.** Each thought, tool call and result streams over SSE into the audit feed.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant S as Telematics + driver
+    participant O as Orchestrator
+    participant M as Maintenance agent
+    participant L as DeepSeek-V3 (open weights)
+    participant T as Fleet tools (Python)
+    participant B as build_incident()
+    participant UI as Dashboard (SSE)
+    S->>O: fault codes + readings + driver message
+    O->>M: run(vehicle, report)
+    loop up to 10 steps
+        M->>L: system prompt + history + 7 tool specs
+        L-->>M: tool_calls (lookup_parts, score_suppliers, compute_penalty…)
+        M->>T: execute each call
+        T-->>M: JSON KPIs (errors go back to the model)
+        M-->>UI: thought · tool_call · tool_result
+    end
+    L-->>M: final JSON: part, action, supplier, depot, takeover, report
+    M->>B: the model's choices
+    B->>T: recompute cost, downtime, ETA, penalty
+    B-->>O: Incident
+    O->>O: apply fleet changes, run Fuel and Delay agents
+    O->>L: arbitrate: priority, summary, next actions, client message
+    O-->>UI: final decision
+```
+
+---
+
+## 4 · Implementation
+
+It runs end to end: Python agents, a live dashboard, and real recorded DeepSeek runs you can replay offline.
 
 <p align="center"><img src="docs/readme/screens/fleet-map.jpg" alt="Operations map of Morocco: 16 vehicles on their routes, KPI bar with vehicles on mission, open incidents, penalties at risk and fuel cost" width="100%"></p>
-<p align="center"><b>The ops room.</b> 16 trucks and ambulances live on a 3D map of Morocco, KPIs on top, the agents' audit feed on the right. Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to trigger a breakdown.</p>
+<p align="center"><b>The ops room.</b> 16 trucks and ambulances on a 3D map of Morocco, live KPIs on top, the agents' audit feed on the right. Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to trigger a breakdown.</p>
 
 <table>
   <tr>
@@ -60,131 +248,48 @@ Every screenshot is the real dashboard, running against the backend with recorde
     <td width="50%"><img src="docs/readme/screens/inspector-a03.jpg" alt="3D inspector on ambulance A-03: the alternator glows red, with evidence, decision and the chosen medical-fleet supplier"></td>
   </tr>
   <tr>
-    <td><b>T-07 · water pump.</b> The failing part glows on a real diesel engine. Five pieces of evidence, the replace decision with its cost and downtime, and suppliers ranked on price, delay, punctuality, warranty and rating.</td>
+    <td><b>T-07 · water pump.</b> The failing part glows on the real diesel engine. Five pieces of evidence, the replace decision with cost and downtime, and suppliers ranked on the five KPIs.</td>
     <td><b>A-03 · alternator.</b> An ambulance mid-transfer with the heart monitor on backup battery. The agent rules out the battery, replaces rather than repairs, and picks the only supplier fast enough.</td>
   </tr>
 </table>
 
 <p align="center"><img src="docs/readme/screens/inspector-t12.jpg" alt="Exploded 3D view of truck T-12 with the fuel drawer open: 39.3 L/100 km against 32 expected (+22.8%), overconsumption flagged with a mechanical cause, and three route options from Casablanca to Fès" width="100%"></p>
-<p align="center"><b>T-12 · the fuel bill that was really a brake.</b> Exploded view plus the fuel drawer: +22.8% consumption over three fill-ups. The fuel agent finds 84% brake wear and a brake fault code, labels the cause <i>mechanical</i> and hands the case to Maintenance: a seized caliper is dragging the truck.</p>
+<p align="center"><b>T-12 · the fuel bill that was really a brake.</b> Exploded view plus the fuel drawer: +22.8% consumption. The fuel agent finds 84% brake wear and a brake fault code, labels the cause <i>mechanical</i> and hands the case to Maintenance.</p>
 
----
+### Three breakdowns, three decisions
 
-## How it works
-
-<p align="center"><img src="docs/readme/pipeline.svg" alt="Pipeline: driver report, telemetry and fleet data go to the orchestrator, which routes them through the fuel, maintenance and delay agents on DeepSeek; code recomputes every number; the incident goes to the fleet manager" width="100%"></p>
-
-| Agent | What the model decides | What code computes | Where |
-|---|---|---|---|
-| **Orchestrator** | Final priority, a 3–4 line summary, next actions, the client message | Routing between agents, fleet side effects (vehicle out, replacement or takeover gets the mission) | `agents/orchestrator.py` |
-| **Maintenance** | Which part failed and how sure it is, severity, repair or replace, which supplier, which depot, takeover or replacement | Part candidates from fault codes, supplier KPI scores, depot distances and ETAs, SLA penalties, spare load capacity | `agents/maintenance.py` |
-| **Fuel** | The probable cause of each anomaly: mechanical, behaviour, fraud, detour | Overconsumption (+15% over 7 days), fills larger than the tank, fills with no km driven, excessive idling, route costs | `agents/fuel.py` |
-| **Delay** | A better stop order when there are several, the message to the client | Start delay after the breakdown, every ETA and minute late | `agents/delay.py` |
-
-The orchestrator also links the silos. A fuel anomaly with a mechanical cause goes straight to Maintenance, so a dragging brake shows up as one incident instead of a fuel ticket and a maintenance ticket nobody connects.
-
----
-
-## Why the open model is load-bearing
-
-Take the model out and FleetSense cannot run. The tools return numbers; nothing in the code can turn them into a decision.
-
-- **It reads what drivers actually write.** Darija in Latin script with Arabizi numbers (`skhoun`, `l7mer`, `l9eddam`), French, or both in one message. The maintenance agent turns *"sda3 bhal roulement"* into "bearing noise at the front of the engine, a typical water-pump symptom".
-- **It weighs trade-offs a rule table can't.** Repairing the A-03 alternator is cheaper (1,200 MAD) but takes 3 h, and the ambulance is moving a patient. The part is also at 268,000 km against a 200,000 km life. The agent replaces it.
-- **It plans with tools.** In scenario 2 it calls 9 tools on its own: it finds no spare truck inside the SLA, computes the 8,000 MAD penalty, looks for a takeover, compares both penalties, and only then picks a supplier and a workshop depot.
-- **It cannot invent a number.** `build_incident()` rebuilds the incident from the model's choices: costs, downtime, ETAs and penalties are recomputed from tools. A "repair" on a non-repairable part becomes "replace". A replacement vehicle that is not at the chosen depot is swapped for one that is.
-- **Every step is on the record.** Each thought, tool call and result streams over SSE into the audit feed, so a manager can see why, not just what.
-
----
-
-## Inside the agent loop
-
-```mermaid
-sequenceDiagram
-    autonumber
-    participant S as Scenario / telemetry
-    participant O as Orchestrator
-    participant M as Maintenance agent
-    participant L as DeepSeek (open weights)
-    participant T as Fleet tools (Python)
-    participant B as build_incident()
-    participant UI as Dashboard (SSE)
-    S->>O: driver report + OBD codes
-    O->>M: run(vehicle, report)
-    loop up to 10 steps
-        M->>L: system prompt + history + 7 tool specs
-        L-->>M: tool_calls (e.g. lookup_parts, compute_penalty)
-        M->>T: execute each call
-        T-->>M: JSON result (errors go back to the model, not up the stack)
-        M-->>UI: thought · tool_call · tool_result events
-    end
-    L-->>M: final JSON: part, action, supplier, depot, takeover, report
-    M->>B: model's choices
-    B->>T: recompute cost, downtime, ETA, penalty
-    B-->>O: Incident
-    O->>O: apply fleet changes, call Fuel and Delay agents
-    O->>L: arbitrate: priority, summary, next actions, client message
-    O-->>UI: final decision
-```
-
-<details>
-<summary><b>The 12 tools the agents can call</b></summary>
-
-| Agent | Tool | Returns |
-|---|---|---|
-| Maintenance | `get_vehicle(vehicle_id)` | Telemetry, mileage, position, current mission |
-| Maintenance | `lookup_parts(dtc, symptoms_text)` | Candidate parts from fault codes and symptoms |
-| Maintenance | `get_part(part_id)` | Full catalog entry: repairable, life, costs, safety-critical |
-| Maintenance | `score_suppliers(part_id, urgency, vehicle_type)` | Suppliers ranked on price, delivery, on-time rate, warranty, rating, weighted by urgency |
-| Maintenance | `find_replacement(vehicle_id)` | Depots by road distance, with same-type spare vehicles and ETA |
-| Maintenance | `compute_penalty(mission_id, replacement_eta_min)` | SLA penalty in MAD and whether the mission is at risk |
-| Maintenance | `find_load_takeover(vehicle_id)` | Trucks on mission to the same destination with free pallets |
-| Fuel | `get_fuel_stats(vehicle_id)` | Fill-ups, L/100 km against baseline, detected anomalies |
-| Fuel | `get_vehicle(vehicle_id)` | Brake wear, fault codes, idle ratio |
-| Fuel | `compare_routes(from, to, vehicle_id)` | Shortest, cheapest and fastest routes: fuel, tolls, driver time |
-| Delay | `get_mission(mission_id)` | Stops, time windows, start delay after the breakdown |
-| Delay | `simulate_order(stop_order)` | ETA and lateness per stop for a given order |
-
-</details>
-
----
-
-## Three breakdowns, three decisions
-
-Seeded scenarios on a simulated Moroccan fleet (12 trucks, 4 ambulances, 6 depots, 15 parts, 6 suppliers). Decisions below are the recorded DeepSeek outputs in [`backend/replay_cache/`](backend/replay_cache/).
+Seeded scenarios on a simulated Moroccan fleet: 12 trucks, 4 ambulances, 6 depots, 15 parts, 6 suppliers. Every decision below is a recorded DeepSeek output in [`backend/replay_cache/`](backend/replay_cache/).
 
 | | **1 · Ambulance A-03** | **2 · Truck T-07** | **3 · Truck T-12** |
 |---|---|---|---|
 | **Signal** | P0562 + P0620, battery 11.2 V, heart monitor on backup | P0217, coolant 118 °C, driver message in Darija | Fuel +22%, C0040, brake wear 84% |
 | **Diagnosis** | Alternator · 90% | Water pump · 90% · *stop now* | Front-right brake caliper · 88% |
 | **Decision** | Replace (268k km vs 200k life; repair = 3 h with a patient on board) | Replace (194% of rated life, safety-critical) | Replace (433k vs 300k km life, and faster than repair) |
-| **Supplier** | Medi-Fleet Équipement · 2.6 h | AutoPièces Atlas · 2,450 MAD · 6.4 h | AutoPièces Atlas · 3,100 MAD · 5.2 h |
+| **Supplier** | Medi-Fleet Équipement · 4,400 MAD · 2.6 h | AutoPièces Atlas · 2,450 MAD · 6.4 h | AutoPièces Atlas · 3,100 MAD · 5.2 h |
 | **Fleet move** | Spare ambulance **A-04** from Settat, ETA 46 min | **T-03 takes the load** (no spare inside SLA) | Spare truck **T-10** at Rabat, ETA 80 min |
 | **SLA** | 60 min · met | 90 min · would be missed | 90 min · met |
 | **Penalty** | **0 MAD** | **8,000 MAD avoided** | **0 MAD** |
 | **Tool calls** | 7 | 9 | 7 |
 
-**Read these honestly.** The fleet, its telemetry, suppliers and penalties are simulated, and the three scenarios were written by us. They show that the agents reason correctly on cases we designed; they are not a benchmark. Tests in [`backend/tests/`](backend/tests/) pin the expected outcome of each scenario so a prompt change can't silently break one.
+**Read these honestly.** The fleet, telemetry, suppliers and penalties are simulated, and we wrote the three scenarios. They show the agents reason correctly on cases we designed; they are not a benchmark. The tests in [`backend/tests/`](backend/tests/) pin each scenario's expected outcome so a prompt change can't silently break one.
 
----
-
-## Architecture
+### Architecture
 
 ```mermaid
 flowchart LR
     subgraph UI["React 19 · Vite"]
         MAP["deck.gl + MapLibre<br/>fleet map"]
-        INS["three.js inspector<br/>Blender .glb models"]
+        INS["three.js inspector<br/>Blender .glb twins"]
         FEED["Audit feed"]
     end
     subgraph API["FastAPI · one process"]
-        SIM["Scenario runner"]
+        SIM["Scenario runner<br/>(telemetry in)"]
         ORC["Orchestrator"]
         AG["Maintenance · Fuel · Delay"]
-        TOOLS["Tools: parts, suppliers,<br/>depots, penalty, routing, fuel stats"]
-        ST[("In-memory state<br/>seed JSON")]
+        TOOLS["Tools: parts, suppliers,<br/>depots, penalty, routing, fuel"]
+        ST[("In-memory fleet<br/>seed JSON")]
     end
-    LLM["DeepSeek<br/>OpenAI-compatible API"]
+    LLM["DeepSeek-V3<br/>OpenAI-compatible API<br/>or self-hosted vLLM"]
     RC[("replay_cache/")]
     MAP & INS -->|REST /api| API
     FEED -->|SSE /events| API
@@ -193,9 +298,7 @@ flowchart LR
     AG <-->|record / replay| RC
 ```
 
-One FastAPI process holds the fleet in memory and streams every agent event over **Server-Sent Events**. Any OpenAI-compatible server works: change `DEEPSEEK_BASE_URL` and `DEEPSEEK_MODEL` to point FleetSense at a self-hosted DeepSeek on vLLM, so fleet data never leaves the company.
-
-**Demo safety net.** Every live run records the raw model messages to `replay_cache/<scenario>-<agent>.json`. With `REPLAY=1` the agents replay those messages while the tools still run live, so the demo works offline and on stage Wi-Fi.
+One FastAPI process holds the fleet in memory and streams every agent event over **Server-Sent Events**. **Demo safety net:** every live run records the raw model messages to `replay_cache/`; with `REPLAY=1` the agents replay them while the tools still run live, so the demo works offline.
 
 <details>
 <summary><b>API endpoints</b></summary>
@@ -216,6 +319,60 @@ One FastAPI process holds the fleet in memory and streams every agent event over
 
 Contract: [`shared/contracts.md`](shared/contracts.md). Models: [`backend/app/schemas.py`](backend/app/schemas.py), mirrored in [`shared/types.ts`](shared/types.ts).
 </details>
+
+<details>
+<summary><b>The stack</b></summary>
+
+| Layer | Tech |
+|---|---|
+| **AI** | DeepSeek-V3 (open weights) via the `openai` SDK, native tool calling, JSON outputs, record/replay |
+| **Backend** | Python · FastAPI · Pydantic v2 · sse-starlette · NetworkX (road graph with toll and national roads) |
+| **Frontend** | React 19 · TypeScript · Vite · Tailwind 4 · Zustand · Framer Motion · Recharts |
+| **Map** | MapLibre GL · deck.gl (paths, 3D vehicle meshes, depots) |
+| **3D** | three.js · React Three Fiber · drei · Blender-built `.glb` twins, one clickable node per part |
+| **Quality** | pytest (21 tests) · oxlint |
+</details>
+
+<details>
+<summary><b>Repository layout</b></summary>
+
+```
+backend/
+  app/
+    agents/        orchestrator, maintenance, fuel, delay
+    tools/         parts, suppliers, depots, penalty, routing, fuel stats, health, geo
+    llm.py         DeepSeek tool-calling loop + record/replay
+    simulator.py   scenario runner (live or mock)
+    main.py        FastAPI + SSE; routes_fuel.py for fuel, routes, ETAs
+  data/            vehicles, missions, depots, parts, suppliers, fuel logs, road graph, scenarios
+  replay_cache/    recorded model runs for offline demos
+  tests/
+frontend/          React 19 + Vite + TypeScript: map, audit feed, 3D inspector, fuel drawer
+assets/
+  blender/         scripts that build the truck and ambulance with per-part nodes
+  models/          .glb models used by the inspector
+shared/            API contract, TypeScript types, team briefs
+```
+</details>
+
+---
+
+## 5 · What's original
+
+- **Darija in, decision out.** Drivers write the way they talk. The agent turns Moroccan Arabizi into a part search and a diagnosis, with no translation step.
+- **One root cause across three silos.** Fuel, maintenance and delays are usually three tools. Here a fuel anomaly with a mechanical cause becomes a maintenance incident, and the delay agent re-plans the mission it affects.
+- **The load takeover.** Instead of only "send a spare truck", the agent looks for a truck already on the road with free pallets to the same city, and prices both options in MAD.
+- **The model can't lie about money.** It chooses; code recomputes every cost, ETA and penalty before anyone sees them.
+- **Diagnosis you can see.** The failing part glows on a 3D twin of the vehicle, built in Blender with one node per part.
+
+### What's next
+
+- **Self-hosted DeepSeek** on vLLM inside the operator's network: same client, two env vars.
+- **Voice notes.** WhatsApp voice messages in Darija, transcribed by an open speech model, into the same agents.
+- **Real telematics.** OBD-II / J1939 boxes and fuel-card feeds in place of the scenario runner.
+- **Learn from outcomes.** Log what the mechanic actually found, so the agent learns this fleet's failure patterns.
+- **Driver app.** The order and depot route pushed to the driver's phone, with one-tap confirmation.
+- **Fresh evaluation** on a larger set of unseen breakdowns, to measure diagnosis accuracy rather than demonstrate it.
 
 ---
 
@@ -248,22 +405,18 @@ Open <http://localhost:5173>, wait for the intro, then press <kbd>1</kbd>, <kbd>
 | Mode | Command | What runs |
 |---|---|---|
 | Replay | `REPLAY=1 uvicorn app.main:app --port 8000` | Recorded DeepSeek messages, live tools |
-| Mock | `MOCK=1 uvicorn app.main:app --port 8000` | A scripted event stream, no model at all (for UI work) |
+| Mock | `MOCK=1 uvicorn app.main:app --port 8000` | A scripted event stream, no model (for UI work) |
 
 PowerShell: `$env:REPLAY="1"; uvicorn app.main:app --port 8000`.
 </details>
 
 <details>
-<summary><b>Tests</b></summary>
+<summary><b>Tests and configuration</b></summary>
 
 ```bash
 cd backend
 python -m pytest -q        # 21 tests: tools, the three scenarios end to end on replays, fuel and delay
 ```
-</details>
-
-<details>
-<summary><b>Configuration</b> (<code>.env</code>)</summary>
 
 | Variable | Default | What it does |
 |---|---|---|
@@ -274,67 +427,20 @@ python -m pytest -q        # 21 tests: tools, the three scenarios end to end on 
 | `MOCK` | `0` | `1` = scripted events, no model |
 </details>
 
-<details>
-<summary><b>Repository layout</b></summary>
-
-```
-backend/
-  app/
-    agents/        orchestrator, maintenance, fuel, delay
-    tools/         parts, suppliers, depots, penalty, routing, fuel stats, health, geo
-    llm.py         DeepSeek tool-calling loop + record/replay
-    simulator.py   scenario runner (live or mock)
-    main.py        FastAPI + SSE; routes_fuel.py for fuel, routes, ETAs
-  data/            vehicles, missions, depots, parts, suppliers, fuel logs, road graph, scenarios
-  replay_cache/    recorded model runs for offline demos
-  tests/
-frontend/          React 19 + Vite + TypeScript: map, audit feed, 3D inspector, fuel drawer
-assets/
-  blender/         scripts that build the truck and ambulance with clickable per-part nodes
-  models/          .glb models used by the inspector
-shared/            API contract, TypeScript types, team briefs
-```
-</details>
-
 ---
 
-## The stack
-
-| Layer | Tech |
-|---|---|
-| **AI** | DeepSeek (open weights) through the `openai` SDK, native tool calling, JSON outputs |
-| **Backend** | Python · FastAPI · Pydantic v2 · sse-starlette · NetworkX (road graph, toll vs. national roads) |
-| **Frontend** | React 19 · TypeScript · Vite · Tailwind 4 · Zustand · Framer Motion · Recharts |
-| **Map** | MapLibre GL · deck.gl (paths, 3D vehicle meshes, depots) |
-| **3D** | three.js · React Three Fiber · drei · Blender-built `.glb` trucks and ambulances, one clickable node per part |
-| **Quality** | pytest · oxlint |
-
----
-
-## What's next
-
-- **Self-hosted DeepSeek.** Same client, pointed at vLLM inside the fleet operator's network.
-- **Voice notes.** Drivers send WhatsApp voice messages in Darija; transcribe with an open speech model and feed the same agents.
-- **Real telematics.** Plug OBD-II dongles and fuel-card feeds in place of the simulator.
-- **Learn from outcomes.** Log what the mechanic actually found and feed it back, so the agent learns this fleet's failure patterns.
-- **Driver app.** Push the driver order and depot route straight to the driver's phone, with one-tap confirmation.
-- **Fresh evaluation.** A larger set of unseen breakdown scenarios to measure diagnosis accuracy instead of demonstrating it.
-
----
-
-## The crew
+## The team
 
 Three lanes, one binding API contract ([`shared/contracts.md`](shared/contracts.md)). Each of us owned our own files and merged through small PRs.
 
-<!-- TODO: add names -->
-| Lane | Built |
-|---|---|
-| **A · Agents core** | DeepSeek tool loop with record/replay, maintenance agent, orchestrator, fleet tools, seed data, Blender vehicles |
-| **B · Fuel & delay** | Fuel agent, delay agent, routing on the road graph, fuel statistics, REST routes |
-| **C · Frontend** | Ops-room dashboard, deck.gl map, audit feed, 3D inspector, fuel drawer |
+| | Role | Built |
+|---|---|---|
+| **Aymane Idrissi Khamlichi** | Dev A · agentic orchestrator | DeepSeek tool-calling loop with record/replay, orchestrator, maintenance agent, fleet tools (parts, suppliers, depots, penalty), seed data, Blender vehicle twins |
+| **Mohammed Guissi** | Dev B · fuel and delay agents | Fuel agent, delay agent, routing on the road graph, fuel statistics and anomaly detection, fuel and ETA routes |
+| **Marwane Haddane** | Frontend designer | Ops-room dashboard, deck.gl map, live audit feed, 3D inspector, fuel drawer |
 
 ---
 
 <sub>**Credits.** The diesel engine inside both vehicles is ["Truck Engine"](https://sketchfab.com/3d-models/truck-engine-d7ff313ff1e64c4db803e39b600a0fbf) by **andreviewport**, licensed CC BY 4.0. Map data © OpenStreetMap contributors, © CARTO.</sub>
 
-<sub>**Data note.** The fleet, telemetry, missions, suppliers, prices and penalties are simulated. Supplier names, drivers and companies in the seed data are fictional. Built for the UM6P Hackathon, open-models track.</sub>
+<sub>**Data note.** The fleet, telemetry, missions, suppliers, prices and penalties are simulated. Supplier names, drivers and client companies in the seed data are fictional; companies named in section 2 are illustrative examples, not partners. Built for the UM6P Hackathon, open-models track.</sub>

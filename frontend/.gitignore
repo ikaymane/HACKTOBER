@@ -1,0 +1,7 @@
+node_modules/
+.npm-cache/
+dist/
+.env
+.env.local
+*.tsbuildinfo
+.openai/*.tar.gz

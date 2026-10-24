@@ -54,9 +54,11 @@ def apply_incident(state: State, inc: Incident) -> None:
         v.mission_id = None
         state.emit("orchestrator", "handoff", f"{repl.id} remplace {v.id}",
                    f"Départ {depot.city}, ETA {di.eta_min} min", vehicle_id=repl.id, incident_id=inc.id)
-    elif mission and inc.penalty.mitigation:
-        state.emit("orchestrator", "handoff", "Reprise de charge", inc.penalty.mitigation,
-                   vehicle_id=v.id, incident_id=inc.id)
+    elif mission and inc.takeover_vehicle_id:
+        mission.vehicle_id = inc.takeover_vehicle_id  # delay agent now tracks the takeover truck
+        v.mission_id = None
+        state.emit("orchestrator", "handoff", f"{inc.takeover_vehicle_id} reprend la charge de {v.id}",
+                   inc.penalty.mitigation or "", vehicle_id=inc.takeover_vehicle_id, incident_id=inc.id)
 
 
 async def handle_scenario(sc: dict, state: State) -> None:

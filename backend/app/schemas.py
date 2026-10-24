@@ -172,6 +172,7 @@ class Incident(BaseModel):
     chosen_supplier_id: Optional[str] = None
     supplier_reason: Optional[str] = None
     driver_instruction: Optional[DriverInstruction] = None
+    takeover_vehicle_id: Optional[str] = None  # truck on the road that absorbs the load
     penalty: PenaltyRisk
     report_fr: str  # text sent to the company
 

@@ -111,6 +111,7 @@ export interface Incident {
   chosen_supplier_id: string | null;
   supplier_reason: string | null;
   driver_instruction: DriverInstruction | null;
+  takeover_vehicle_id: string | null;
   penalty: PenaltyRisk;
   report_fr: string;
 }

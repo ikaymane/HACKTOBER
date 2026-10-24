@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
-from .schemas import AgentEvent, Depot, Incident, Mission, Part, Supplier, Vehicle
+from .schemas import AgentEvent, Depot, FuelAnomaly, Incident, Mission, Part, Supplier, Vehicle
 
 DATA = Path(__file__).resolve().parents[1] / "data"
 
@@ -31,6 +31,8 @@ class State:
         self.fuel_logs: list[dict] = _load("fuel_logs.json")
         self.scenarios: dict[int, dict] = {s["id"]: s for s in _load("scenarios.json")}
         self.incidents: dict[str, Incident] = {}
+        self.fuel_anomalies: dict[str, list[FuelAnomaly]] = {}  # vehicle_id -> anomalies (Dev B writes)
+        self.etas: dict[str, dict] = {}  # mission_id -> {"stops": [{city, eta, late_min}]} (Dev B writes)
         self.audit: list[AgentEvent] = []
 
     # ---- event bus ----

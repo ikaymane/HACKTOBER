@@ -74,5 +74,6 @@ def test_scenario2_end_to_end_replay(state, tmp_path, monkeypatch):
     assert inc.diagnosis.part_id == "P-WPUMP" and inc.decision.action == "replace"
     assert inc.chosen_supplier_id == "SUP-SAHARA" and inc.penalty.amount_mad == 0
     assert "8000" in inc.penalty.reason
+    assert inc.takeover_vehicle_id == "T-03" and state.missions["M-107"].vehicle_id == "T-03"
     assert vehicle_health(state, "T-07")["zones"]["cooling"]["status"] == "fail"
     assert state.audit[-1].agent == "orchestrator" and state.audit[-1].kind == "decision"

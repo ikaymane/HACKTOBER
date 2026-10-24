@@ -141,6 +141,7 @@ def build_incident(state: State, vid: str, out: dict) -> Incident:
                                 downtime_hours=round(downtime, 1)),
         suppliers=suppliers, chosen_supplier_id=chosen.supplier_id if chosen else None,
         supplier_reason=out.get("supplier_reason"), driver_instruction=instruction,
+        takeover_vehicle_id=takeover if (takeover and not repl and takeover in state.vehicles) else None,
         penalty=PenaltyRisk(at_risk=pen["at_risk"], amount_mad=pen["amount_mad"],
                             reason=out.get("penalty_reason") or pen["reason"],
                             mitigation=out.get("mitigation") or (f"Reprise de la charge par {takeover}" if takeover else None)),

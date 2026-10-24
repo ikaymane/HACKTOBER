@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import ts from 'typescript';
+const js=ts.transpileModule(await readFile(new URL('../src/api.ts',import.meta.url),'utf8'),{compilerOptions:{module:ts.ModuleKind.ESNext,target:ts.ScriptTarget.ES2022}}).outputText;
+const mock='const fleetSeed=[],incidentsSeed=[],initialEvents=[{id:"demo"}],mockFuel=()=>({}),mockRoutes=[];';
+const source=js.replace(/^import .* from '\.\/mock';/m,mock).replace('const env = import.meta;','const env = {env:{VITE_DATA_MODE:"live",VITE_API_BASE_URL:"https://backend.example"}};');
+const {api}=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+test('live mode starts with no demo events and preserves API errors',async()=>{assert.deepEqual(api.events(),[]);const previous=globalThis.fetch;globalThis.fetch=async()=>new Response('Unavailable',{status:503});try{await assert.rejects(api.fleet(),/API 503/);}finally{globalThis.fetch=previous;}});
+test('live scenario accepts an empty 204 response',async()=>{const previous=globalThis.fetch;let request;globalThis.fetch=async(url,options)=>{request={url,method:options.method};return new Response(null,{status:204});};try{await api.scenario(2);assert.deepEqual(request,{url:'https://backend.example/scenarios/2',method:'POST'});}finally{globalThis.fetch=previous;}});
+test('SSE delivers incident messages, connection changes, and closes on cleanup',()=>{const previous=globalThis.EventSource;let source;globalThis.EventSource=class{constructor(url){this.url=url;source=this;}close(){this.closed=true;}};try{const received=[],connections=[];const close=api.subscribe(e=>received.push(e),c=>connections.push(c));assert.equal(source.url,'https://backend.example/events');source.onopen();const event={id:'e1',vehicle_id:'T-07',data:{incident_id:'INC-002'}};source.onmessage({data:JSON.stringify(event)});source.onerror();assert.deepEqual(received,[event]);assert.deepEqual(connections,[true,false]);close();assert.equal(source.closed,true);}finally{globalThis.EventSource=previous;}});

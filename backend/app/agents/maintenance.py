@@ -30,8 +30,10 @@ Un véhicule vient de signaler un problème. Ta mission, en utilisant les outils
    urgent pour un camion en mission, normal sinon. Choisis un fournisseur et justifie (KPIs).
 5. Envoyer le chauffeur au dépôt le plus pertinent (find_replacement) pour prendre un véhicule de remplacement
    du même type. Calcule la pénalité SLA (compute_penalty) avec l'ETA du remplacement, ou null si aucun.
-6. Si un camion n'a pas de remplacement dans le SLA, cherche un autre camion sur la route qui peut reprendre
-   la charge (find_load_takeover) et compare les options par la pénalité.
+6. Camion: si aucun remplacement n'arrive dans le SLA (compute_penalty.at_risk = true), appelle OBLIGATOIREMENT
+   find_load_takeover. Si un camion peut reprendre la charge, c'est en général moins cher qu'un remplacement en
+   retard: compare les pénalités. Si tu choisis la reprise, mets replacement_vehicle_id = null et depot_id = le
+   dépôt avec atelier le plus proche (le chauffeur y amène le camion en panne pour réparation).
 Réponds à la fin UNIQUEMENT avec ce JSON:
 {"part_id": str, "confidence": float, "severity": str, "evidence": [str],
  "action": "repair"|"replace", "action_reason": str,
@@ -116,7 +118,7 @@ def build_incident(state: State, vid: str, out: dict) -> Incident:
     depots = {d["depot_id"]: d for d in find_replacement(state, vid)}
     d = depots.get(out.get("depot_id") or "")
     repl = out.get("replacement_vehicle_id")
-    if d and repl not in d["spare_vehicles_same_type"]:
+    if d and repl and repl not in d["spare_vehicles_same_type"]:  # null = takeover chosen, keep it
         repl = d["spare_vehicles_same_type"][0] if d["spare_vehicles_same_type"] else None
     instruction = DriverInstruction(
         depot_id=d["depot_id"], depot_city=state.depots[d["depot_id"]].city, distance_km=d["distance_km"],

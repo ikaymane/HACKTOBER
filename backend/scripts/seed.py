@@ -279,7 +279,8 @@ SCENARIOS = [
      "expected": {"part_id": "P-ALT", "depot": "DEP-SETTAT", "replacement": "A-04", "penalty": False}},
     {"id": 2, "title": "Camion T-07: surchauffe moteur sur l'A7", "vehicle_id": "T-07",
      "telemetry": {"dtc": ["P0217"], "coolant_c": 118, "speed_kmh": 40},
-     "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot, bruit de roulement à l'avant du moteur.",
+     # Darija/French WhatsApp-style message: the LLM has to read it, keyword lookup alone can't.
+     "driver_report": "Salam chef, lmoteur skhoun bzaf, l'aiguille wslat l7mer. Kayna ri7a dial liquide w chwiya d dokhan byed kaykhrej mn capot. W kayn wa7d sda3 bhal roulement l9eddam dial lmoteur. Nw9ef wla nkemmel?",
      "expected": {"part_id": "P-WPUMP", "depot": None, "replacement": None, "penalty": True, "mitigation_vehicle": "T-03"}},
     {"id": 3, "title": "Camion T-12: surconsommation carburant + freins", "vehicle_id": "T-12",
      "telemetry": {"dtc": ["C0040"], "brake_wear_pct": 84},

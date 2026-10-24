@@ -30,7 +30,7 @@
       "coolant_c": 118,
       "speed_kmh": 40
     },
-    "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot, bruit de roulement à l'avant du moteur.",
+    "driver_report": "Salam chef, lmoteur skhoun bzaf, l'aiguille wslat l7mer. Kayna ri7a dial liquide w chwiya d dokhan byed kaykhrej mn capot. W kayn wa7d sda3 bhal roulement l9eddam dial lmoteur. Nw9ef wla nkemmel?",
     "expected": {
       "part_id": "P-WPUMP",
       "depot": null,

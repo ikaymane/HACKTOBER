@@ -1,0 +1,86 @@
+[
+ {
+  "role": "assistant",
+  "content": "I'll start by reading the vehicle telemetry and mission, and looking up candidate parts.",
+  "tool_calls": [
+   {
+    "id": "call_00_v1MQlx6ExV575nNchyTp3888",
+    "type": "function",
+    "function": {
+     "name": "get_vehicle",
+     "arguments": "{\"vehicle_id\": \"A-03\"}"
+    }
+   },
+   {
+    "id": "call_01_HQ5B0lOupsfyrviqsABS8060",
+    "type": "function",
+    "function": {
+     "name": "lookup_parts",
+     "arguments": "{\"dtc\": [\"P0562\", \"P0620\"], \"symptoms_text\": \"Voyant batterie allumé, le moniteur cardiaque est passé sur batterie interne et les phares baissent. Ambulance Mercedes Sprinter 319, 268000 km.\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_GnjyPZleBkKj9wbN2wV53561",
+    "type": "function",
+    "function": {
+     "name": "get_part",
+     "arguments": "{\"part_id\": \"P-ALT\"}"
+    }
+   },
+   {
+    "id": "call_01_LGm26KlmLDgvHQbKi9sb5908",
+    "type": "function",
+    "function": {
+     "name": "get_part",
+     "arguments": "{\"part_id\": \"P-BATT\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_WNv3F8p4yLIB3YpV4rg29390",
+    "type": "function",
+    "function": {
+     "name": "score_suppliers",
+     "arguments": "{\"part_id\": \"P-ALT\", \"urgency\": \"critical\", \"vehicle_type\": \"ambulance\"}"
+    }
+   },
+   {
+    "id": "call_01_u0yOfgVKCv4Z6U4tLH7F0221",
+    "type": "function",
+    "function": {
+     "name": "find_replacement",
+     "arguments": "{\"vehicle_id\": \"A-03\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_xxbgtcGVYmOebUDvOJbN9201",
+    "type": "function",
+    "function": {
+     "name": "compute_penalty",
+     "arguments": "{\"mission_id\": \"M-203\", \"replacement_eta_min\": 46}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "**Diagnostic** : P0562 (tension système basse) + P0620 (circuit de commande d'alternateur) + batterie à 11,2 V moteur tournant + phares faibles + équipement médical en secours → **alternateur défaillant** (P-ALT), confiance élevée. La batterie n'est que la victime (pas de symptôme de démarrage difficile).\n\n**Décision** : REMPLACER. L'alternateur est réparable (1 200 MAD / 3 h) mais le véhicule a 268 000 km contre une durée de vie typique de 200 000 km → pièce déjà au-delà de sa durée de vie, et l'immobilisation de 3 h de réparation est incompatible avec un transfert de patient en cours. Remplacement : 1,5 h de main d'œuvre.\n\n**Fournisseur** : SUP-MEDI (score 86,8) — livraison 2,6 h, ponctualité 95 %, garantie 12 mois, le seul compatible avec le SLA de 60 min. SUP-ATLAS (6,3 h) et SUP-OEM (23 h) sont hors délai.\n\n**Dépôt** : DEP-SETTAT (68 km, ETA 46 min) — seul dépôt avec ambulance de remplacement disponible (A-04). Pénalité SLA : 0 MAD (46 min < 60 min).\n\n```json\n{\"part_id\": \"P-ALT\", \"confidence\": 0.9, \"severity\": \"drive_to_depot\", \"evidence\": [\"DTC P0562 (tension système basse) + P0620 (circuit de commande alternateur)\", \"Batterie 11,2 V alors que le moteur tourne (charge insuffisante)\", \"Rapport chauffeur: voyant batterie, phares faibles, moniteur cardiaque sur batterie interne\", \"268 000 km vs durée de vie alternateur 200 000 km\", \"Batterie P-BATT écartée: pas de symptôme de démarrage difficile, DTC P0562 seul\"], \"action\": \"replace\", \"action_reason\": \"Alternateur réparable (1200 MAD / 3h) mais déjà à 268 000 km pour une durée de vie de 200 000 km; réparation = 3h d'immobilisation incompatible avec un transfert de patient en cours, remplacement = 1,5h de main d'oeuvre et fiabilité restaurée\", \"urgency\": \"critical\", \"chosen_supplier_id\": \"SUP-MEDI\", \"supplier_reason\": \"Score 86,8 (meilleur): livraison 2,6h compatible avec le SLA 60 min, ponctualité 95%, garantie 12 mois, note 4,5. SUP-ATLAS 6,3h et SUP-OEM 23h hors délai; SUP-MTP garantie 6 mois et ponctualité 84%\", \"depot_id\": \"DEP-SETTAT\", \"replacement_vehicle_id\": \"A-04\", \"driver_message\": \"Yassine, coupe les équipements non vitaux et roule directement au dépôt DEP-SETTAT (68 km, ~46 min). Une ambulance A-04 t'y attend pour reprendre le transfert du patient vers Casablanca. Ne coupe pas le moteur avant d'être arrivé.\", \"takeover_vehicle_id\": null, \"penalty_reason\": \"Remplacement disponible en 46 min (A-04 à DEP-SETTAT) pour un SLA de 60 min: aucune pénalité (0 MAD).\", \"mitigation\": null, \"report_fr\": \"PANNE A-03 (Mercedes Sprinter 319, 268 000 km, ambulance): codes P0562 + P0620, batterie à 11,2 V moteur tournant, phares faibles et moniteur cardiaque basculé sur batterie interne. Diagnostic: alternateur défaillant (confiance 90%), la batterie n'étant que victime.\\nDÉCISION: remplacement de l'alternateur plutôt que réparation — la pièce est déjà au-delà de sa durée de vie (268 000 km vs 200 000 km) et une réparation de 3h est incompatible avec le transfert de patient en cours.\\nFOURNISSEUR: SUP-MEDI (Medi-Fleet Équipement), 4 400 MAD, livraison 2,6h, ponctualité 95%, garantie 12 mois — seul fournisseur tenant le SLA.\\nDÉPÔT: DEP-SETTAT (68 km, ETA 46 min), seule station avec ambulance de remplacement disponible (A-04).\\nCOÛT: ~4 400 MAD pièce + 1,5h de main d'oeuvre.\\nRISQUE PÉNALITÉ: nul — remplacement en 46 min pour un SLA de 60 min (0 MAD au lieu de 25 000 MAD forfaitaires + 5 000 MAD/h).\\nACTION CHAUFFEUR: consigne envoyée, route directe vers DEP-SETTAT sans couper le moteur.\"}\n```"
+ }
+]

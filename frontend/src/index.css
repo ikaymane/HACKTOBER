@@ -1,0 +1,158 @@
+@import "tailwindcss";
+@import "maplibre-gl/dist/maplibre-gl.css";
+
+@theme {
+  --color-bg: #0b0f14;
+  --color-panel: #121821;
+  --color-panel-2: #0f141c;
+  --color-line: #1f2a37;
+  --color-ink: #e5e7eb;
+  --color-muted: #94a3b8;
+  --color-dim: #64748b;
+  --color-accent: #22d3ee;
+  --color-ok: #10b981;
+  --color-warn: #f59e0b;
+  --color-fail: #ef4444;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::selection {
+  background: rgb(34 211 238 / 0.3);
+}
+
+/* Thin, quiet scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1f2a37 transparent;
+}
+
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Bracketed section tag, e.g. [01] FLOTTE */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Hairline grid used behind panels (terminal-industries style) */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(31 42 55 / 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(31 42 55 / 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Corner crosshair marks on a panel */
+.ticks {
+  position: relative;
+}
+.ticks::before,
+.ticks::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+  border-color: rgb(34 211 238 / 0.55);
+  border-style: solid;
+  z-index: 2;
+}
+.ticks::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+.ticks::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Film grain to soften flat dark surfaces */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, 1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring {
+  animation: pulse-ring 1.6s var(--ease-expo) infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.scanline {
+  animation: scan 3.2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgb(34 211 238 / 0.18) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* Maplibre chrome in the dark theme */
+.maplibregl-ctrl-attrib {
+  background: rgb(11 15 20 / 0.6) !important;
+  color: #64748b !important;
+  font-size: 10px !important;
+}
+.maplibregl-ctrl-attrib a {
+  color: #94a3b8 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

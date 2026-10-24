@@ -16,9 +16,9 @@ load_dotenv()
 app = FastAPI(title="FleetSense")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-# Dev B: uncomment once routes_fuel.py exists
-# from .routes_fuel import router as fuel_router
-# app.include_router(fuel_router)
+from .routes_fuel import router as fuel_router  # noqa: E402  (Dev B: fuel, routing, ETA)
+
+app.include_router(fuel_router)
 
 
 @app.get("/health")

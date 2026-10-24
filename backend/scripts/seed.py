@@ -253,6 +253,8 @@ def fuel_logs():
                 factor *= 1.22  # dragging brake caliper
             if v["id"] == "T-09":
                 factor *= 1.08  # idling
+            # a real fill never exceeds the tank: cap the distance between fills (only T-05's planted fraud does)
+            km = min(km, 0.92 * v["tank_l"] / (v["base_l_100km"] / 100 * factor))
             litres = km * v["base_l_100km"] / 100 * factor
             odo += km
             n += 1

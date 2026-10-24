@@ -79,7 +79,7 @@ def test_t09_excessive_idle(state):
     assert next(a for a in fuel_stats(state, "T-09")["anomalies"] if a.kind == "excessive_idle").value == 31
 
 
-@pytest.mark.xfail(reason="seed fuel_logs overfill the tank on T-09, T-11 and every ambulance (fill_over_capacity noise)")
+
 def test_every_other_vehicle_is_clean(state):
     seeded = {"T-12": {"overconsumption"}, "T-05": {"fill_over_capacity", "fill_without_km"},
               "T-09": {"excessive_idle"}}

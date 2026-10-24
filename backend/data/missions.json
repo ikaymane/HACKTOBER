@@ -176,7 +176,7 @@
         "cargo": "Patient transfert cardiologie"
       }
     ],
-    "sla_minutes_replacement": 30,
+    "sla_minutes_replacement": 60,
     "penalty_mad_per_hour": 5000,
     "penalty_flat_mad": 25000
   },
@@ -194,7 +194,7 @@
         "cargo": "Patient transfert neurologie"
       }
     ],
-    "sla_minutes_replacement": 30,
+    "sla_minutes_replacement": 60,
     "penalty_mad_per_hour": 5000,
     "penalty_flat_mad": 25000
   }

@@ -1,17 +1,20 @@
 """Scenario runner: injects scripted telemetry, then hands off to the orchestrator.
 
-Until the real agents land, `_mock_pipeline` emits a fake event stream + Incident that follows
-shared/contracts.md exactly, so the frontend can be built against it right now.
+MOCK=1 env -> `_mock_pipeline` emits a fake event stream + Incident (no LLM, no key), handy for
+frontend work. Default runs the real agents (needs DEEPSEEK_API_KEY or REPLAY=1).
 """
 from __future__ import annotations
 
 import asyncio
+import os
 from datetime import datetime
 
 from .schemas import Diagnosis, DriverInstruction, Incident, PenaltyRisk, RepairDecision
 from .state import State
 
-USE_MOCK = True  # Dev A: flip to False when agents/orchestrator.py is wired
+
+def _use_mock() -> bool:
+    return os.getenv("MOCK") == "1"
 
 
 async def run_scenario(scenario_id: int, state: State) -> None:
@@ -21,12 +24,16 @@ async def run_scenario(scenario_id: int, state: State) -> None:
     v.status = "breakdown"
     state.emit("system", "alert", sc["title"], sc["driver_report"], vehicle_id=v.id, scenario_id=scenario_id)
 
-    if USE_MOCK:
+    if _use_mock():
         await _mock_pipeline(sc, state)
-    else:
-        from .agents import orchestrator  # noqa: PLC0415
+        return
+    from .agents import orchestrator  # noqa: PLC0415
 
+    try:
         await orchestrator.handle_scenario(sc, state)
+    except Exception as e:  # surface failures on the timeline instead of dying silently in a task
+        state.emit("system", "alert", "Erreur agent", f"{type(e).__name__}: {e}", vehicle_id=v.id)
+        raise
 
 
 async def _mock_pipeline(sc: dict, state: State) -> None:

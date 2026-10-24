@@ -144,7 +144,7 @@ def stop(city, start, end, cargo):
     return {"city": city, "window_start": f"2026-10-24T{start}", "window_end": f"2026-10-24T{end}", "cargo": cargo}
 
 TRUCK_SLA = dict(sla_minutes_replacement=90, penalty_mad_per_hour=1500, penalty_flat_mad=8000)
-AMB_SLA = dict(sla_minutes_replacement=30, penalty_mad_per_hour=5000, penalty_flat_mad=25000)
+AMB_SLA = dict(sla_minutes_replacement=60, penalty_mad_per_hour=5000, penalty_flat_mad=25000)
 
 MISSIONS = [
     {"id": "M-101", "vehicle_id": "T-01", "kind": "delivery", "client": "Marjane Rabat", "origin": "casablanca",
@@ -227,7 +227,8 @@ for sid, name, city, rating, on_time, pf, dh, warranty, share in SUPPLIER_DEFS:
                 "in_stock": in_stock,
             })
     SUPPLIERS.append({"id": sid, "name": name, "city": city, "position": pos(city),
-                      "rating": rating, "on_time_pct": on_time, "offers": offers})
+                      "rating": rating, "on_time_pct": on_time, "offers": offers,
+                      "vehicle_types": ["ambulance"] if sid == "SUP-MEDI" else ["truck", "ambulance"]})
 
 # ---------------------------------------------------------------- fuel logs (30 days)
 STATIONS = list(CITIES)
@@ -272,13 +273,13 @@ def fuel_logs():
 
 # ---------------------------------------------------------------- scenarios (telemetry injected by simulator)
 SCENARIOS = [
-    {"id": 1, "title": "Ambulance A-03: panne alternateur près de Benguerir", "vehicle_id": "A-03",
+    {"id": 1, "title": "Ambulance A-03: panne alternateur sur l'A7 entre Benguerir et Settat", "vehicle_id": "A-03",
      "telemetry": {"dtc": ["P0562", "P0620"], "battery_v": 11.2, "speed_kmh": 60},
      "driver_report": "Voyant batterie allumé, le moniteur cardiaque est passé sur batterie interne et les phares baissent.",
      "expected": {"part_id": "P-ALT", "depot": "DEP-SETTAT", "replacement": "A-04", "penalty": False}},
     {"id": 2, "title": "Camion T-07: surchauffe moteur sur l'A7", "vehicle_id": "T-07",
      "telemetry": {"dtc": ["P0217"], "coolant_c": 118, "speed_kmh": 40},
-     "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot.",
+     "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot, bruit de roulement à l'avant du moteur.",
      "expected": {"part_id": "P-WPUMP", "depot": None, "replacement": None, "penalty": True, "mitigation_vehicle": "T-03"}},
     {"id": 3, "title": "Camion T-12: surconsommation carburant + freins", "vehicle_id": "T-12",
      "telemetry": {"dtc": ["C0040"], "brake_wear_pct": 84},

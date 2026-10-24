@@ -111,6 +111,7 @@ class Supplier(BaseModel):
     rating: float  # 1-5
     on_time_pct: float  # 0-100
     offers: list[SupplierOffer]
+    vehicle_types: list[VehicleType] = ["truck", "ambulance"]
 
 
 class SupplierScore(BaseModel):

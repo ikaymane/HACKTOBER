@@ -7,4 +7,3 @@ venv/
 node_modules/
 dist/
 .DS_Store
-backend/replay_cache/

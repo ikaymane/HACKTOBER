@@ -115,6 +115,10 @@
         "warranty_months": 12,
         "in_stock": false
       }
+    ],
+    "vehicle_types": [
+      "truck",
+      "ambulance"
     ]
   },
   {
@@ -226,6 +230,10 @@
         "warranty_months": 6,
         "in_stock": true
       }
+    ],
+    "vehicle_types": [
+      "truck",
+      "ambulance"
     ]
   },
   {
@@ -316,6 +324,10 @@
         "warranty_months": 12,
         "in_stock": true
       }
+    ],
+    "vehicle_types": [
+      "truck",
+      "ambulance"
     ]
   },
   {
@@ -434,6 +446,10 @@
         "warranty_months": 24,
         "in_stock": false
       }
+    ],
+    "vehicle_types": [
+      "truck",
+      "ambulance"
     ]
   },
   {
@@ -510,6 +526,10 @@
         "warranty_months": 3,
         "in_stock": false
       }
+    ],
+    "vehicle_types": [
+      "truck",
+      "ambulance"
     ]
   },
   {
@@ -572,6 +592,9 @@
         "warranty_months": 12,
         "in_stock": true
       }
+    ],
+    "vehicle_types": [
+      "ambulance"
     ]
   }
 ]

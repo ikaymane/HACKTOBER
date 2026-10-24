@@ -18,6 +18,9 @@ Change one → change both in the same PR.
 | POST | `/reset` | `{"ok": true}`: reloads seed data | A |
 | GET | `/events` | SSE, each `data:` is one `AgentEvent` JSON | A |
 | GET | `/incidents` / `/incidents/{id}` | `Incident[]` / `Incident` | A |
+| GET | `/vehicles/{id}/health` | `{vehicle_id, type, zones: {engine\|cooling\|electrical\|brakes\|transmission\|tires\|fuel: {status: ok\|warn\|fail, reasons: str[], part_id, incident_id}}}`. Drives the 3D part colors | A |
+| GET | `/fuel/{vehicle_id}` | `{vehicle_id, expected_l_100km, actual_l_100km, delta_pct, logs: [{ts, litres, odometer_km, l_100km, station_city, cost_mad}], anomalies: FuelAnomaly[]}`. Right-side fuel drawer | B |
+| GET | `/missions/{id}/path` | `{mission_id, path: cityId[], coords: [lat,lng][], progress_pct}`. Road line + vehicle position on the map | B |
 | GET | `/fuel/summary` | `{vehicle_id, expected_l_100km, actual_l_100km, delta_pct, anomalies: FuelAnomaly[]}[]` | B |
 | POST | `/route/compare` body `{from, to, vehicle_id}` | `RouteOption[]` (shortest, cheapest, fastest) | B |
 | GET | `/missions/{id}/eta` | `{mission_id, stops: [{city, eta, late_min}]}` | B |

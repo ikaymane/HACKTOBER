@@ -10,6 +10,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from .simulator import run_scenario
 from .state import state
+from .tools.health import vehicle_health
 
 load_dotenv()
 app = FastAPI(title="FleetSense")
@@ -28,6 +29,13 @@ def health():
 @app.get("/fleet")
 def fleet():
     return list(state.vehicles.values())
+
+
+@app.get("/vehicles/{vehicle_id}/health")
+def health_of(vehicle_id: str):
+    if vehicle_id not in state.vehicles:
+        raise HTTPException(404, "unknown vehicle")
+    return vehicle_health(state, vehicle_id)
 
 
 @app.get("/depots")

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "Ambulance A-03: panne alternateur près de Benguerir",
+    "title": "Ambulance A-03: panne alternateur sur l'A7 entre Benguerir et Settat",
     "vehicle_id": "A-03",
     "telemetry": {
       "dtc": [
@@ -30,7 +30,7 @@
       "coolant_c": 118,
       "speed_kmh": 40
     },
-    "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot.",
+    "driver_report": "Température moteur dans le rouge, odeur de liquide de refroidissement, petite fumée blanche sous le capot, bruit de roulement à l'avant du moteur.",
     "expected": {
       "part_id": "P-WPUMP",
       "depot": null,

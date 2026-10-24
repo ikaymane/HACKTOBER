@@ -64,6 +64,13 @@ def test_scenario2_end_to_end_replay(state, tmp_path, monkeypatch):
         {"role": "assistant", "content": "", "tool_calls": [_call(3, "find_load_takeover", {"vehicle_id": "T-07"})]},
         {"role": "assistant", "content": json.dumps(final)},
     ]))
+    # Dev B agents run after maintenance (fuel/delay replays kept minimal here, covered in test_fuel_delay.py)
+    (tmp_path / "s2-delay.json").write_text(json.dumps([
+        {"role": "assistant", "content": json.dumps({"stop_order": ["marrakech"], "client_message_fr": "Retard", "summary_fr": "ok"})},
+    ]))
+    (tmp_path / "s2-fuel.json").write_text(json.dumps([
+        {"role": "assistant", "content": json.dumps({"anomalies": [], "route_advice": "", "manager_note_fr": "RAS"})},
+    ]))
     (tmp_path / "s2-orchestrator.json").write_text(json.dumps([
         {"role": "assistant", "content": json.dumps({"priority": "high", "summary_fr": "ok", "next_actions": ["a"],
                                                      "client_message_fr": "Retard"})},

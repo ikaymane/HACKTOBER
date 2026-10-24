@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import mimetypes
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -128,6 +129,7 @@ class StripApiPrefix:
 app.add_middleware(StripApiPrefix)
 
 # Serve the built frontend (frontend/dist) from the same service when it exists.
+mimetypes.add_type("text/javascript", ".mjs")  # maplibre's worker; module workers need a JS type
 DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 if DIST.is_dir():
     app.mount("/", StaticFiles(directory=DIST, html=True), name="frontend")

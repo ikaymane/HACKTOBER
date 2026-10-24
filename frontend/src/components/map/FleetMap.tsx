@@ -4,10 +4,15 @@ import { ColumnLayer, PathLayer, ScatterplotLayer, TextLayer } from "@deck.gl/la
 import { ScenegraphLayer } from "@deck.gl/mesh-layers";
 import { TripsLayer } from "@deck.gl/geo-layers";
 import { Map } from "react-map-gl/maplibre";
+import { setWorkerUrl } from "maplibre-gl";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?url";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Vehicle } from "@shared/types";
 import { useStore } from "@/store";
 import { pointAt, type LngLat } from "@/lib/geo";
+
+// maplibre looks for its worker next to its own chunk, which the production build does not emit.
+setWorkerUrl(maplibreWorkerUrl);
 
 const STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
 

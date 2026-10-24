@@ -49,7 +49,7 @@ es.addEventListener("agent", (e) => {
 - **Later** (Dev B): `/fuel/{id}`, `/fuel/summary`, `/route/compare`, `/missions/{id}/path`, `/missions/{id}/eta`, `/cities`. Until then, mock them in `api.ts` with the shapes from `shared/contracts.md`. For the path, a straight line from the vehicle to the stop city is enough; city coords are in `backend/data/road_graph.json`.
 
 ## 3D notes
-- **Inspector vehicle:** build it procedurally (boxes, cylinders) so every zone is a separate group to explode. Truck ≈ 6 wheels, cab + cargo box. Ambulance ≈ 4 wheels, van body + red/blue light bar.
+- **Inspector vehicle: models are DONE.** Use `assets/models/truck.glb` and `ambulance.glb` (copy to `public/models/`). Every part is a node with `userData.zone`, `part_id`, `label_fr` and `explode_dir`. Read `assets/models/README.md` and look at the `preview_*.png` renders.
 - **Explode:** give each zone a direction vector and set `group.position = base + dir * explode * 1.5`, with `explode` animated 0→1 in `useFrame`. When exploded, set the body shell to `transparent opacity 0.15`.
 - **Colors:** from `/vehicles/{id}/health` `zones[zone].status`. On `fail`, pulse `emissiveIntensity` and add a drei `<Html>` label.
 - **Click:** `onClick` on the zone group opens `PartPopup` with `incident_id` from health → `/incidents/{id}`.

@@ -6,7 +6,7 @@ Goal: a professional fleet-operations dashboard. Dark ops-room look, a 3D map wi
 React + Vite + TypeScript + Tailwind.
 - Map: `react-map-gl/maplibre` + `maplibre-gl` with the free CARTO dark style `https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json` (no key). Pitch 50° for the 3D feel.
 - Vehicles on map: deck.gl `ScenegraphLayer` (`@deck.gl/react @deck.gl/layers @deck.gl/mesh-layers @loaders.gl/gltf`) with low-poly GLB models: Kenney "Car Kit" (CC0) has a delivery truck and an ambulance. Mission roads: deck.gl `PathLayer` from `/missions/{id}/path`. Fallback if time is short: colored `IconLayer` markers.
-- Vehicle 3D viewer: `@react-three/fiber` + `@react-three/drei`. The vehicle is built **procedurally from primitives**, not from a downloaded model, because the exploded view needs one mesh group per zone (a downloaded truck is one blob).
+- Vehicle 3D viewer: `@react-three/fiber` + `@react-three/drei`, loading **`assets/models/truck.glb` / `ambulance.glb`** (made in Blender, one node per part with `userData.zone/part_id/label_fr/explode_dir`; see `assets/models/README.md`). The zone groups below describe what is inside them.
 - Charts: `recharts`. Animation: `framer-motion` for panels.
 
 Design tokens: bg `#0B0F14`, panel `#121821`, border `#1F2A37`, text `#E5E7EB`, muted `#94A3B8`, accent `#22D3EE`, ok `#10B981`, warn `#F59E0B`, fail `#EF4444`. Fonts: Inter (UI), JetBrains Mono (numbers, ids).

@@ -218,3 +218,11 @@ def test_scenario3_timeline_fuel_handoff_maintenance_orchestrator(state, tmp_pat
                                       ("orchestrator", "decision"))]
     assert order == sorted(order)
     assert any(e.agent == "delay" and e.kind == "decision" for e in state.audit)
+
+
+def test_fleet_fuel_kpi_comes_from_the_logs(state):
+    from app.tools.fuel_stats import fleet_fuel_kpi
+    kpi = fleet_fuel_kpi(state)
+    assert kpi["spend_mad"] > kpi["overspend_mad"] > 0
+    assert kpi["anomalies"] == sum(len(fuel_stats(state, v)["anomalies"]) for v in state.vehicles)
+    assert fleet_fuel_kpi(state) == kpi  # no clock in it

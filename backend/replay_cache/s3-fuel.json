@@ -1,0 +1,46 @@
+[
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_vTsSow2cAQNpUe5QWeMA7894",
+    "type": "function",
+    "function": {
+     "name": "get_fuel_stats",
+     "arguments": "{\"vehicle_id\": \"T-12\"}"
+    }
+   },
+   {
+    "id": "call_01_o39FUCpJ79KOOE8idzzr8910",
+    "type": "function",
+    "function": {
+     "name": "get_vehicle",
+     "arguments": "{\"vehicle_id\": \"T-12\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_7QamHkLdhbamvKew6wti2724",
+    "type": "function",
+    "function": {
+     "name": "compare_routes",
+     "arguments": "{\"from_city\": \"casablanca\", \"to_city\": \"fes\", \"vehicle_id\": \"T-12\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "{\"anomalies\": [{\"kind\": \"overconsumption\", \"probable_cause\": \"mechanical\", \"note\": \"Surconsommation de 20,9 % (38,7 vs 32,0 L/100km) avec code défaut C0040 (circuit capteur/feux de freinage) et usure des freins à 84 % ; la dérive apparaît à partir du plein du 17/10 (39,9 L/100km) et persiste (37,5 / 40,6 / 37,6). Ralenti 7j limité à 6,6 %, donc pas de cause comportementale de ralenti. Véhicule en statut breakdown.\"}], \"route_advice\": \"Mission M-112 Casablanca → Meknès → Fès : l'itinéraire le plus court et le plus rapide (Casablanca–Rabat–Meknès–Fès, 287 km, 3h23) est aussi le moins cher en carburant (91,8 L, 1065 MAD) ; l'option « cheapest » ne gagne que 20 MAD de total mais coûte 5 km et 0h23 de plus, avec un risque de pénalité de 1500 MAD/h et 8000 MAD forfaitaires sur les fenêtres de livraison. Conseil : rester sur l'axe autoroutier direct et ne pas dévier.\"} , \"manager_note_fr\": \"T-12 (Renault T 480, 433 000 km) présente une surconsommation de 20,9 % sur 7 jours, corrélée à un code défaut C0040 et une usure des freins à 84 % : cause mécanique probable, véhicule déjà en panne. Action : immobiliser et diagnostiquer le circuit de freinage avant de reprendre la mission M-112, puis refaire le calcul de consommation après réparation. Aucun indice de fraude : tous les pleins sont sous la capacité de 400 L et cohérents avec les kilomètres parcourus.\"}"
+ },
+ {
+  "role": "assistant",
+  "content": "{\"anomalies\": [{\"kind\": \"overconsumption\", \"probable_cause\": \"mechanical\", \"note\": \"Surconsommation de 20,9 % (38,7 vs 32,0 L/100km) avec code défaut C0040 et usure des freins à 84 % ; dérive depuis le plein du 17/10 (39,9 L/100km) puis 37,5 / 40,6 / 37,6. Ralenti 7j à 6,6 %, donc pas de cause comportementale. Véhicule en statut breakdown.\"}], \"route_advice\": \"Mission M-112 Casablanca → Meknès → Fès : l'itinéraire le plus court et le plus rapide (Casablanca–Rabat–Meknès–Fès, 287 km, 3h23) est aussi le moins gourmand en carburant (91,8 L, 1065 MAD) ; l'option « cheapest » n'économise que 20 MAD au total mais ajoute 5 km et 0h23, avec un risque de pénalité de 1500 MAD/h et 8000 MAD forfaitaires sur les fenêtres de livraison. Rester sur l'axe autoroutier direct, sans détour.\", \"manager_note_fr\": \"T-12 (Renault T 480, 433 000 km) affiche une surconsommation de 20,9 % sur 7 jours, corrélée à un code défaut C0040 et une usure des freins à 84 % : cause mécanique probable, véhicule déjà en panne. Action : immobiliser et diagnostiquer le circuit de freinage avant de reprendre la mission M-112, puis recalculer la consommation après réparation. Aucun indice de fraude : tous les pleins restent sous la capacité de 400 L et cohérents avec les kilomètres parcourus.\"}"
+ }
+]

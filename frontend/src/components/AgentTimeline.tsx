@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { ChevronRight, X } from "lucide-react";
+import { memo, useEffect, useRef, useState } from "react";
 import type { AgentEvent, AgentName } from "@shared/types";
 import { useStore } from "@/store";
-import { EXPO, Tag } from "./ui";
+import { EXPO } from "./ui";
 
 export const AGENT_COLOR: Record<AgentName, string> = {
   maintenance: "#22D3EE",
@@ -18,7 +18,7 @@ const KIND_LABEL: Record<AgentEvent["kind"], string> = {
   alert: "alerte", handoff: "relais", message: "message",
 };
 
-function EventRow({ ev }: { ev: AgentEvent }) {
+const EventRow = memo(function EventRow({ ev }: { ev: AgentEvent }) {
   const [open, setOpen] = useState(false);
   const color = AGENT_COLOR[ev.agent];
   const collapsible = ev.kind === "tool_call" || ev.kind === "tool_result";
@@ -28,10 +28,9 @@ function EventRow({ ev }: { ev: AgentEvent }) {
 
   return (
     <motion.li
-      layout
-      initial={{ opacity: 0, y: 18, filter: "blur(6px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      transition={{ duration: 0.8, ease: EXPO }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease: EXPO }}
       className="relative pl-6"
     >
       <span className="absolute left-[7px] top-0 h-full w-px bg-line" />
@@ -82,11 +81,12 @@ function EventRow({ ev }: { ev: AgentEvent }) {
       </div>
     </motion.li>
   );
-}
+});
 
 export function AgentTimeline() {
   const events = useStore((s) => s.events);
   const running = useStore((s) => s.runningScenario);
+  const close = useStore((s) => s.toggleAudit);
   const scroller = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -95,18 +95,15 @@ export function AgentTimeline() {
 
   return (
     <motion.aside
-      className="ticks flex w-[360px] shrink-0 flex-col border-l border-line bg-bg"
-      initial={{ x: 40, opacity: 0, filter: "blur(8px)" }}
-      animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 1.1, ease: EXPO, delay: 0.25 }}
+      className="absolute inset-y-0 right-0 z-20 flex w-[380px] flex-col border-l border-line bg-bg shadow-2xl"
+      initial={{ x: "100%" }}
+      animate={{ x: 0 }}
+      exit={{ x: "100%" }}
+      transition={{ duration: 0.4, ease: EXPO }}
     >
       <div className="flex items-center justify-between border-b border-line px-5 py-3">
-        <Tag n="C">Agents · fil d'audit</Tag>
-        <div className="flex gap-1.5">
-          {(Object.keys(AGENT_COLOR) as AgentName[]).map((a) => (
-            <span key={a} title={a} className="h-1.5 w-1.5 rounded-full" style={{ background: AGENT_COLOR[a] }} />
-          ))}
-        </div>
+        <span className="text-[13px] font-medium">Journal d'audit</span>
+        <button onClick={close} className="rounded-full p-1 text-dim hover:bg-line hover:text-ink"><X size={14} /></button>
       </div>
       {running && (
         <div className="relative h-px overflow-hidden bg-line">
@@ -121,7 +118,7 @@ export function AgentTimeline() {
               <span className="absolute inset-3 rounded-full bg-accent/60" />
             </div>
             <p className="max-w-[220px] text-[12.5px] leading-relaxed text-muted">
-              En attente d'événements. Lancez un scénario pour voir les agents raisonner en direct.
+              Chaque outil, résultat, décision et approbation sera enregistré ici.
             </p>
           </div>
         ) : (

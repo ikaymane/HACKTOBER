@@ -84,3 +84,74 @@ def test_scenario2_end_to_end_replay(state, tmp_path, monkeypatch):
     assert inc.takeover_vehicle_id == "T-03" and state.missions["M-107"].vehicle_id == "T-03"
     assert vehicle_health(state, "T-07")["zones"]["cooling"]["status"] == "fail"
     assert state.audit[-1].agent == "orchestrator" and state.audit[-1].kind == "decision"
+
+
+def _replay_all(state, sid):
+    """Runs a scenario on the recordings committed in replay_cache/, as `python run.py` does."""
+    from app.simulator import run_scenario
+    asyncio.run(run_scenario(sid, state))
+    return list(state.incidents.values())[-1]
+
+
+@pytest.mark.parametrize("sid,part,fleet_move", [(1, "P-ALT", "A-04"), (2, "P-WPUMP", "T-03"), (3, "P-BCAL", "T-10")])
+def test_offline_demo_runs_on_committed_recordings(state, monkeypatch, sid, part, fleet_move):
+    monkeypatch.setenv("REPLAY", "1")
+    monkeypatch.delenv("MOCK", raising=False)
+    monkeypatch.delenv("DEEPSEEK_API_KEY", raising=False)
+    inc = _replay_all(state, sid)
+    assert inc.diagnosis.part_id == part
+    moved = inc.takeover_vehicle_id or inc.driver_instruction.replacement_vehicle_id
+    assert moved == fleet_move
+    titles = [e.title for e in state.audit]
+    assert not any(e.title == "Erreur agent" for e in state.audit)
+    assert not any("indisponible" in t for t in titles)
+    assert any(t.startswith("Décision finale") for t in titles)
+
+
+def test_takeover_reports_the_penalty_it_avoided(state, monkeypatch):
+    monkeypatch.setenv("REPLAY", "1")
+    monkeypatch.delenv("MOCK", raising=False)
+    inc = _replay_all(state, 2)
+    assert inc.penalty.avoided_mad == 8000
+    assert not inc.penalty.at_risk
+
+
+def test_side_agent_failure_keeps_the_final_decision(state, tmp_path, monkeypatch):
+    monkeypatch.setenv("REPLAY", "1")
+    monkeypatch.delenv("MOCK", raising=False)
+    for name in ("s1-maintenance", "s1-orchestrator"):  # no fuel or delay recording
+        (tmp_path / f"{name}.json").write_text((llm.CACHE / f"{name}.json").read_text("utf-8"), "utf-8")
+    monkeypatch.setattr(llm, "CACHE", tmp_path)
+    _replay_all(state, 1)
+    titles = [e.title for e in state.audit]
+    assert "Agent delay indisponible" in titles and any(t.startswith("Décision finale") for t in titles)
+
+
+def test_replaying_a_finished_scenario_is_refused(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+    from app.state import state as live_state
+    monkeypatch.setenv("REPLAY", "1")
+    live_state.reset()
+    with TestClient(app) as c:
+        live_state.vehicles["T-07"].status = "breakdown"
+        assert c.post("/api/scenario/2").status_code == 409
+        assert c.post("/api/reset").json() == {"ok": True}
+    live_state.reset()
+
+
+def test_approval_goes_on_the_audit_trail(monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+    from app.state import state as live_state
+    monkeypatch.setenv("REPLAY", "1")
+    monkeypatch.delenv("MOCK", raising=False)
+    live_state.reset()
+    inc = _replay_all(live_state, 2)
+    with TestClient(app) as c:
+        assert c.post(f"/incidents/{inc.id}/approve").json()["approved"] is True
+        c.post(f"/incidents/{inc.id}/approve")  # idempotent
+    assert sum("approuvé" in e.title for e in live_state.audit) == 1
+    live_state.reset()

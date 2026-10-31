@@ -1,10 +1,10 @@
 [
  {
   "role": "assistant",
-  "content": "I'll start by pulling the vehicle telemetry and mission, plus candidate parts for the DTC.",
+  "content": "I'll start by reading the vehicle telemetry and looking up the fault codes.",
   "tool_calls": [
    {
-    "id": "call_00_PzgukVPs8eTfeirBBtmi3441",
+    "id": "call_00_aP8swl47CQGlwz1OFuA47575",
     "type": "function",
     "function": {
      "name": "get_vehicle",
@@ -12,21 +12,21 @@
     }
    },
    {
-    "id": "call_01_y5c1r9AVv019fG0asxVN7333",
+    "id": "call_01_nQ1kh3MCYwtvVbHilfFx7019",
     "type": "function",
     "function": {
      "name": "lookup_parts",
-     "arguments": "{\"dtc\": [\"P0217\"], \"symptoms_text\": \"Moteur surchauffe, aiguille température en zone rouge, odeur de liquide de refroidissement, fumée blanche sous le capot, bruit de roulement côté avant moteur (probable pompe à eau)\"}"
+     "arguments": "{\"dtc\": [\"P0217\"], \"symptoms_text\": \"Moteur surchauffe, aiguille température en zone rouge, odeur de liquide de refroidissement, fumée blanche sous le capot, bruit de roulement côté avant moteur (pompe à eau / galet tendeur)\"}"
     }
    }
   ]
  },
  {
   "role": "assistant",
-  "content": "The strongest match is the water pump (P0217 + overheating + coolant leak + front-engine bearing noise). Let me get its full record and check replacement options.",
+  "content": "The water pump is the strongest match. Let me get its full record and check replacement options in parallel.",
   "tool_calls": [
    {
-    "id": "call_00_InF7kawrc3t0kDvZTMJs0802",
+    "id": "call_00_iUSfQrumFNFGnak4MqAl3660",
     "type": "function",
     "function": {
      "name": "get_part",
@@ -34,7 +34,7 @@
     }
    },
    {
-    "id": "call_01_br0bV8eWGVnG69qn6NZ65760",
+    "id": "call_01_7LgHxe1NwgL1NUfukQhx4755",
     "type": "function",
     "function": {
      "name": "find_replacement",
@@ -45,10 +45,10 @@
  },
  {
   "role": "assistant",
-  "content": "No spare truck at the two nearest depots; the closest replacement (T-11 at DEP-CASA) has ETA 137 min vs SLA 90 min → at risk. Let me compute the penalty and check load takeover options.",
+  "content": "Only DEP-CASA (ETA 137 min) has a spare truck, which exceeds the 90-min SLA. Let me compute the penalty and check for load takeover.",
   "tool_calls": [
    {
-    "id": "call_00_AMB9PctXJUxPNRdexKqe8005",
+    "id": "call_00_lEmPRlE4Nd0NuUvD2hIF7079",
     "type": "function",
     "function": {
      "name": "compute_penalty",
@@ -56,7 +56,7 @@
     }
    },
    {
-    "id": "call_01_PHUIhpez6y9l372igFIh7520",
+    "id": "call_01_xUnmc7Bw91XPuwD95atD6883",
     "type": "function",
     "function": {
      "name": "find_load_takeover",
@@ -67,10 +67,10 @@
  },
  {
   "role": "assistant",
-  "content": "A takeover truck (T-03) is available with 14 free pallets for the 10 needed, heading to Marrakech, only 36.7 km away. Let me compare: takeover penalty vs replacement penalty.",
+  "content": "A takeover truck (T-03) is available with 14 free pallets for the 10 needed, heading to Marrakech. Let me compare: takeover penalty vs replacement penalty.",
   "tool_calls": [
    {
-    "id": "call_00_XsXyhYDJmgSU2f2QTGyc0358",
+    "id": "call_00_TPsSol9EOlr9evXV1oCL9855",
     "type": "function",
     "function": {
      "name": "compute_penalty",
@@ -78,7 +78,7 @@
     }
    },
    {
-    "id": "call_01_XnYw3PBtCnEm0RsaWsie9852",
+    "id": "call_01_tpQKEyagXjDEvT30aJOy0009",
     "type": "function",
     "function": {
      "name": "score_suppliers",
@@ -89,20 +89,20 @@
  },
  {
   "role": "assistant",
-  "content": "Analysis complete. Decision: **replace** the water pump (safety-critical, 487,000 km vs 250,000 km typical life — well past end of life, bearing noise + leak = failed unit, not worth a 900 MAD repair on a worn core). Takeover (T-03) is far cheaper than a late replacement (0–8000 MAD flat vs 1175 MAD + risk), so I route the driver to the nearest workshop depot.",
+  "content": "Analysis complete. The decision is clear:\n\n**Diagnostic:** P0217 + coolant at 118°C + coolant smell + white smoke + bearing noise at front of engine = **water pump failure** (bearing shot, seal leaking). Confidence high.\n\n**Repair vs Replace:** The pump is at 487,000 km vs 250,000 km typical life — nearly double its service life. It's safety-critical (cooling). Repair (900 MAD, 4h) on a worn-out bearing/seal is false economy; replace with new pump (labor 3h). → **REPLACE**.\n\n**Takeover vs Replacement:** \n- Replacement via DEP-CASA (only depot with a spare truck, T-11): ETA 137 min > 90 min SLA → penalty **1,175 MAD**.\n- No replacement at all → flat penalty **8,000 MAD**.\n- **T-03 takeover**: 14 free pallets for 10 needed, heading to Marrakech, only 36.7 km away → far cheaper than a late replacement. → **TAKEOVER**.\n\n**Supplier:** SUP-ATLAS (score 73.3, best overall; 6.4h delivery, 12-month warranty, 92% on-time). SUP-SAHARA is marginally cheaper/faster but lower on-time (88%) and rating. For an urgent truck repair, Atlas balances speed and reliability best.\n\n**Depot:** DEP-SETTAT is closest (83 km) but has no workshop. DEP-MARRAKECH (114 km, workshop) is the nearest workshop — driver brings the broken truck there for repair.",
   "tool_calls": [
    {
-    "id": "call_00_0QLEQBIvGjLqssjLSepP2054",
+    "id": "call_00_hGlT5c9yF7d2DCEJubjc7615",
     "type": "function",
     "function": {
-     "name": "find_replacement",
-     "arguments": "{\"vehicle_id\": \"T-07\"}"
+     "name": "compute_penalty",
+     "arguments": "{\"mission_id\": \"M-107\", \"replacement_eta_min\": null}"
     }
    }
   ]
  },
  {
   "role": "assistant",
-  "content": "Nearest depot **with a workshop** is DEP-MARRAKECH (114 km, ETA 98 min) — DEP-SETTAT is closer but has no workshop. The driver brings the broken truck there for repair while T-03 takes over the load.\n\n```json\n{\"part_id\": \"P-WPUMP\", \"confidence\": 0.9, \"severity\": \"stop_now\",\n \"evidence\": [\"DTC P0217 (surchauffe moteur) confirmé par télémétrie coolant_c=118°C\", \"Rapport chauffeur: aiguille en zone rouge, odeur de liquide de refroidissement, fumée blanche sous capot\", \"Bruit de roulement côté avant moteur = symptôme typique pompe à eau (roulement HS)\", \"Pompe à eau: 487000 km vs durée de vie typique 250000 km (194% de la vie)\", \"Pièce classée safety_critical\"],\n \"action\": \"replace\",\n \"action_reason\": \"Pompe à eau défaillante (fuite + roulement bruyant) sur pièce de sécurité critique déjà à 194% de sa durée de vie: une réparation à 900 MAD sur un corps usé n'est pas fiable. Remplacement complet (pièce + 3h MO) s'impose; l'immobilisation est couverte par la reprise de charge.\",\n \"urgency\": \"urgent\", \"chosen_supplier_id\": \"SUP-ATLAS\",\n \"supplier_reason\": \"Meilleur score global (73.3): prix 2450 MAD, livraison 6.4h, ponctualité 92%, garantie 12 mois, note 4.3. SUP-SAHARA est proche (72.0, 4.8h) mais moins ponctuel (88%); l'OEM est 2x plus cher et à 21.7h de délai, incompatible avec l'immobilisation.\",\n \"depot_id\": \"DEP-MARRAKECH\", \"replacement_vehicle_id\": null,\n \"driver_message\": \"Mustapha, coupe le moteur et arrête-toi dès que possible en sécurité: surchauffe à 118°C, ne roule plus. La pompe à eau est HS. Rends-toi au dépôt de Marrakech (114 km, atelier sur place) pour la réparation. Ta charge de 10 palettes médicaments est reprise par le camion T-03 qui est à 37 km et va vers Marrakech — coordonne avec lui pour le transfert.\",\n \"takeover_vehicle_id\": \"T-03\",\n \"penalty_reason\": \"Remplacement par véhicule du même type impossible dans le SLA: le plus proche (T-11, DEP-CASA) arrive en 137 min > SLA 90 min, pénalité 1175 MAD. Reprise de charge par T-03 (14 palettes libres pour 10 nécessaires, même destination Marrakech) évite le forfait 8000 MAD.\",\n \"mitigation\": \"Reprise de charge par T-03 (36.7 km, 14 palettes libres) au lieu d'un remplacement tardif: économie de 8000 MAD de pénalité forfaitaire, T-07 rapatrié à DEP-MARRAKECH pour remplacement de la pompe à eau.\",\n \"report_fr\": \"PANNE T-07 (Renault T 460, 487000 km): surchauffe moteur confirmée (P0217, liquide à 118°C), fuite de liquide de refroidissement, fumée blanche et bruit de roulement avant moteur. Diagnostic: pompe à eau HS (confiance 90%), pièce de sécurité critique à 194% de sa durée de vie (250000 km).\\nDÉCISION: remplacement complet (pas de réparation sur pièce usée). Fournisseur retenu: AutoPièces Atlas (SUP-ATLAS), 2450 MAD, livraison 6.4h, garantie 12 mois, ponctualité 92% — meilleur score (73.3).\\nDÉPÔT: Marrakech (atelier, 114 km) pour la réparation.\\nCHARGE: reprise par le camion T-03 (14 palettes libres, même destination Marrakech, 37 km) — le remplacement T-11 n'arrivait qu'en 137 min, hors SLA 90 min (pénalité 1175 MAD). La reprise évite le forfait 8000 MAD.\\nRISQUE: pénalité SLA maîtrisée via reprise de charge; coût pièce ~2450 MAD + 3h MO. Chauffeur consigné à l'arrêt immédiat et au transfert de charge vers T-03.\"}\n```"
+  "content": "```json\n{\"part_id\": \"P-WPUMP\", \"confidence\": 0.9, \"severity\": \"stop_now\",\n \"evidence\": [\"DTC P0217 (surchauffe moteur)\", \"Liquide de refroidissement à 118°C (aiguille zone rouge)\", \"Odeur de liquide de refroidissement + fumée blanche sous capot\", \"Bruit de roulement côté avant moteur (roulement de pompe à eau)\", \"487 000 km vs durée de vie typique 250 000 km (pièce en fin de vie)\", \"Pièce critique de sécurité (refroidissement)\"],\n \"action\": \"replace\",\n \"action_reason\": \"Pompe à eau à 487 000 km, soit ~2x sa durée de vie (250 000 km). Roulement et joint HS: une réparation (900 MAD, 4h) sur une pièce aussi usée n'est pas fiable et risque une casse moteur. Pièce critique de sécurité → remplacement par pompe neuve (main d'oeuvre 3h).\",\n \"urgency\": \"urgent\", \"chosen_supplier_id\": \"SUP-ATLAS\",\n \"supplier_reason\": \"Meilleur score global (73.3): livraison 6.4h, garantie 12 mois, ponctualité 92%, note 4.3. SUP-SAHARA légèrement moins cher/rapide mais ponctualité 88% et note 4.0. Pour un camion en mission urgente, Atlas offre le meilleur équilibre délai/fiabilité.\",\n \"depot_id\": \"DEP-MARRAKECH\", \"replacement_vehicle_id\": null,\n \"driver_message\": \"Mustapha, coupe le moteur et arrête-toi en sécurité immédiatement — ne roule plus, risque de casse moteur. La pompe à eau est HS (surchauffe + fuite + bruit de roulement). Un camion T-03 va reprendre tes 10 palettes vers Marrakech. Amène le T-07 au dépôt DEP-MARRAKECH (114 km, atelier) pour réparation.\",\n \"takeover_vehicle_id\": \"T-03\",\n \"penalty_reason\": \"Remplacement via DEP-CASA (seul dépôt avec camion dispo T-11) ETA 137 min > SLA 90 min → pénalité 1 175 MAD. Reprise de charge par T-03 (14 palettes libres pour 10, vers Marrakech, 36.7 km) évite le forfait 8 000 MAD d'absence de remplacement.\",\n \"mitigation\": \"Reprise de charge par T-03 (moins coûteuse que remplacement tardif: 1 175 MAD vs 8 000 MAD). Camion T-07 rapatrié à DEP-MARRAKECH pour remplacement pompe à eau (SUP-ATLAS, 6.4h).\",\n \"report_fr\": \"PANNE T-07 (Renault T 460, 487 000 km): pompe à eau défaillante — surchauffe moteur (118°C), fuite de liquide, fumée blanche et bruit de roulement avant moteur (DTC P0217). Confiance 90%, gravité STOP_NOW: véhicule immobilisé.\\nDÉCISION: REMPLACEMENT de la pompe (pièce à ~2x sa durée de vie, critique sécurité; réparation non fiable). Fournisseur retenu: AutoPièces Atlas (SUP-ATLAS) — meilleur score, livraison 6.4h, garantie 12 mois, ponctualité 92%.\\nDÉPÔT: DEP-MARRAKECH (114 km, atelier) — le chauffeur y amène le camion pour réparation.\\nCHARGE: reprise par T-03 (14 palettes libres pour 10, vers Marrakech, 36.7 km).\\nCOÛT: pompe ~2 450 MAD + main d'oeuvre 3h.\\nRISQUE PÉNALITÉ: remplacement via DEP-CASA ETA 137 min > SLA 90 min = 1 175 MAD; sans remplacement = forfait 8 000 MAD. La reprise par T-03 est la solution la moins coûteuse.\"}\n```"
  }
 ]

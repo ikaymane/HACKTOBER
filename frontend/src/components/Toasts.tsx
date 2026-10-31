@@ -15,27 +15,26 @@ export function Toasts() {
         {toasts.map((t) => (
           <motion.div
             key={t.id}
-            layout
-            initial={{ opacity: 0, y: -20, scale: 0.96, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, x: 40, filter: "blur(8px)" }}
+            initial={{ opacity: 0, y: -20, scale: 0.96 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 40 }}
             transition={{ duration: 0.7, ease: EXPO }}
-            className="pointer-events-auto relative overflow-hidden rounded-xl border border-fail/40 bg-panel/95 shadow-2xl shadow-fail/10 backdrop-blur"
+            className="pointer-events-auto relative overflow-hidden rounded-xl border border-line bg-panel shadow-2xl"
           >
             <button
               className="flex w-full items-start gap-3 p-3.5 text-left"
               onClick={() => { const inc = incidents[t.id]; if (inc) open(inc.vehicle_id); dismiss(t.id); }}
             >
-              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-fail/15 text-fail">
+              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-accent/15 text-accent">
                 <AlertTriangle size={15} />
               </span>
               <span className="flex-1">
                 <span className="block text-[13px] font-medium text-ink">{t.title}</span>
-                <span className="mt-0.5 block text-[11.5px] text-muted">{t.sub} · cliquer pour inspecter</span>
+                <span className="mt-0.5 block text-[11.5px] text-muted">{t.sub}</span>
               </span>
             </button>
             <button onClick={() => dismiss(t.id)} className="absolute right-2 top-2 text-dim hover:text-ink"><X size={13} /></button>
-            <motion.div className="h-[2px] bg-fail" initial={{ width: "100%" }} animate={{ width: "0%" }} transition={{ duration: 6.5, ease: "linear" }} />
+            <motion.div className="h-[2px] bg-accent" initial={{ width: "100%" }} animate={{ width: "0%" }} transition={{ duration: 6.5, ease: "linear" }} />
           </motion.div>
         ))}
       </AnimatePresence>

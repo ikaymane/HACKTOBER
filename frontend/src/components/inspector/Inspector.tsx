@@ -75,11 +75,11 @@ export default function Inspector() {
 
   return (
     <motion.div
-      className="fixed inset-0 z-40 flex flex-col bg-bg/95 backdrop-blur-md"
+      className="fixed inset-0 z-40 flex flex-col bg-bg"
       initial={{ clipPath: "inset(50% 0% 50% 0%)", opacity: 0.4 }}
       animate={{ clipPath: "inset(0% 0% 0% 0%)", opacity: 1 }}
       exit={{ clipPath: "inset(50% 0% 50% 0%)", opacity: 0 }}
-      transition={{ duration: 0.9, ease: EXPO }}
+      transition={{ duration: 0.55, ease: EXPO }}
     >
       {/* Header */}
       <header className="relative z-30 flex h-[72px] shrink-0 items-center gap-4 border-b border-line px-5">
@@ -98,9 +98,9 @@ export default function Inspector() {
             <motion.div
               key={vehicle.id}
               custom={dir}
-              initial={{ y: dir * 24, opacity: 0, filter: "blur(6px)" }}
-              animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-              exit={{ y: -dir * 24, opacity: 0, filter: "blur(6px)" }}
+              initial={{ y: dir * 24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -dir * 24, opacity: 0 }}
               transition={{ duration: 0.6, ease: EXPO }}
               className="flex items-center gap-3 whitespace-nowrap text-[14px]"
             >
@@ -149,27 +149,14 @@ export default function Inspector() {
             type={vehicle.type}
             health={health}
             failedPartId={incident?.diagnosis.part_id ?? null}
+            failedPartName={incident?.diagnosis.part_name ?? null}
+            insetX={(picked ? (incident && incident.diagnosis.zone === picked.zone ? 210 : 170) : 0) - (fuelOpen ? 210 : 0)}
             exploded={exploded}
             selected={picked}
             onPick={setPicked}
             vehicleKey={vehicle.id}
           />
         </div>
-
-        {/* Big ghost id, terminal-industries style */}
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={vehicle.id}
-            className="num pointer-events-none absolute bottom-16 right-8 select-none text-[160px] font-semibold leading-none tracking-tighter text-ink/[0.035]"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 1, ease: EXPO }}
-            style={{ right: fuelOpen ? 452 : 32 }}
-          >
-            {vehicle.id}
-          </motion.div>
-        </AnimatePresence>
 
         <AnimatePresence>
           {picked && (
@@ -189,7 +176,7 @@ export default function Inspector() {
 
         {/* Zone legend */}
         <motion.div
-          className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-bg/75 p-1 backdrop-blur"
+          className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1 rounded-full border border-line bg-bg/90 p-1"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.9, ease: EXPO, delay: 0.5 }}

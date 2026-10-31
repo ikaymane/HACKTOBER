@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
+import { useMemo } from "react";
 import { Ambulance, Truck } from "lucide-react";
 import { useStore } from "@/store";
 import { cityName } from "@/lib/geo";
-import { EXPO, StatusChip, Tag } from "./ui";
+import { EXPO, StatusChip } from "./ui";
 
 export function FleetList() {
   const vehicles = useStore((s) => s.vehicles);
@@ -13,19 +14,28 @@ export function FleetList() {
   const open = useStore((s) => s.openInspector);
   const setHover = useStore((s) => s.setHover);
 
+  const sorted = useMemo(() => {
+    const rank = (id: string, status: string) => {
+      if (status === "breakdown") return 0;
+      const zones = Object.values(health[id]?.zones ?? {});
+      return zones.some((z) => z.status === "fail") ? 1 : zones.some((z) => z.status === "warn") ? 2 : 3;
+    };
+    return vehicles.map((v, i) => ({ v, i, r: rank(v.id, v.status) })).sort((a, b) => a.r - b.r || a.i - b.i).map((x) => x.v);
+  }, [vehicles, health]);
+
   return (
     <motion.aside
-      className="ticks flex w-[280px] shrink-0 flex-col border-r border-line bg-bg"
-      initial={{ x: -40, opacity: 0, filter: "blur(8px)" }}
-      animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 1.1, ease: EXPO, delay: 0.15 }}
+      className="flex w-[280px] shrink-0 flex-col border-r border-line bg-bg"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, ease: EXPO }}
     >
       <div className="flex items-center justify-between border-b border-line px-5 py-3">
-        <Tag n="A">Flotte</Tag>
+        <span className="text-[13px] font-medium">Flotte</span>
         <span className="num text-[11px] text-dim">{vehicles.length} unités</span>
       </div>
       <ul className="flex-1 overflow-y-auto py-1">
-        {vehicles.map((v, i) => {
+        {sorted.map((v) => {
           const m = v.mission_id ? missions[v.mission_id] : undefined;
           const zones = health[v.id]?.zones;
           const alert = zones && Object.values(zones).some((z) => z.status === "fail")
@@ -35,10 +45,8 @@ export function FleetList() {
           return (
             <motion.li
               key={v.id}
-              layout
-              initial={{ opacity: 0, x: -16 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, ease: EXPO, delay: 0.35 + i * 0.03 }}
+              layout="position"
+              transition={{ duration: 0.35, ease: EXPO }}
             >
               <button
                 onClick={() => open(v.id)}

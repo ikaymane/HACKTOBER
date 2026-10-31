@@ -1,6 +1,6 @@
 import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef, type ReactNode } from "react";
-import type { VehicleStatus } from "@shared/types";
+import type { Severity, VehicleStatus } from "@shared/types";
 import type { ZoneStatus } from "@/api";
 
 export const EXPO = [0.16, 1, 0.3, 1] as const;
@@ -29,8 +29,8 @@ export function Reveal({ text, delay = 0, className = "", stagger = 0.045 }: { t
         <span key={i} className="overflow-hidden inline-block pb-[0.08em] -mb-[0.08em]" aria-hidden>
           <motion.span
             className="inline-block"
-            initial={{ y: "110%", filter: "blur(6px)" }}
-            animate={inView ? { y: "0%", filter: "blur(0px)" } : undefined}
+            initial={{ y: "110%" }}
+            animate={inView ? { y: "0%" } : undefined}
             transition={{ duration: 0.9, ease: EXPO, delay: delay + i * stagger }}
           >
             {w}&nbsp;
@@ -112,5 +112,12 @@ export function Bar({ value, color = "var(--color-accent)", delay = 0 }: { value
     </div>
   );
 }
+
+export const SEVERITY: Record<Severity, { label: string; cls: string }> = {
+  ok: { label: "OK", cls: "border-ok/40 bg-ok/10 text-ok" },
+  monitor: { label: "Surveiller", cls: "border-warn/40 bg-warn/10 text-warn" },
+  drive_to_depot: { label: "Rouler au dépôt", cls: "border-warn/50 bg-warn/15 text-warn" },
+  stop_now: { label: "Arrêt immédiat", cls: "border-fail/50 bg-fail/15 text-fail" },
+};
 
 export const mad = (n: number) => `${Math.round(n).toLocaleString("fr-FR")} MAD`;

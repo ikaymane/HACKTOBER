@@ -14,8 +14,8 @@ const ANOMALY_FR: Record<string, string> = {
 };
 
 const item = {
-  hidden: { opacity: 0, x: 20, filter: "blur(4px)" },
-  show: { opacity: 1, x: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EXPO } },
+  hidden: { opacity: 0, x: 20 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.7, ease: EXPO } },
 };
 
 export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: Vehicle; mission: Mission | undefined; onClose: () => void; onReport?: (r: FuelReport) => void }) {
@@ -43,7 +43,7 @@ export function FuelDrawer({ vehicle, mission, onClose, onReport }: { vehicle: V
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ duration: 0.85, ease: EXPO }}
-      className="absolute bottom-0 right-0 top-0 z-20 flex w-[420px] flex-col border-l border-line bg-panel/95 backdrop-blur-xl"
+      className="absolute bottom-0 right-0 top-0 z-20 flex w-[420px] flex-col border-l border-line bg-panel/95"
     >
       <div className="flex items-center gap-2 border-b border-line px-5 py-4">
         <Fuel size={15} className="text-accent" />

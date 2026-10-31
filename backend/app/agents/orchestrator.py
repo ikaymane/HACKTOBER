@@ -5,6 +5,7 @@ yet, the orchestrator skips them and says so on the timeline.
 """
 from __future__ import annotations
 
+import asyncio
 import importlib
 import json
 
@@ -33,7 +34,11 @@ async def _call_optional(name: str, event: dict, state: State, vid: str) -> bool
         state.emit("orchestrator", "message", f"Agent {name} non branché", "En attente du merge Dev B.", vehicle_id=vid)
         return False
     state.emit("orchestrator", "handoff", f"→ agent {name}", json.dumps(event, ensure_ascii=False), vehicle_id=vid)
-    await mod.run(event, state)
+    try:
+        await mod.run(event, state)
+    except Exception as e:  # a side agent failing must not cost the fleet manager the final decision
+        state.emit("orchestrator", "message", f"Agent {name} indisponible", f"{type(e).__name__}: {e}", vehicle_id=vid)
+        return False
     return True
 
 
@@ -74,11 +79,14 @@ async def handle_scenario(sc: dict, state: State) -> None:
     inc = await maintenance.run({"vehicle_id": vid, "driver_report": sc["driver_report"], "tag": f"{tag}-maintenance"}, state)
     apply_incident(state, inc)
 
+    # Delay and fuel don't depend on each other: run them side by side to cut the wait for the decision.
+    side = []
     if inc.mission_id:
-        await _call_optional("delay", {"mission_id": inc.mission_id, "incident_id": inc.id, "vehicle_id": vid,
-                                       "tag": f"{tag}-delay"}, state, vid)
+        side.append(_call_optional("delay", {"mission_id": inc.mission_id, "incident_id": inc.id, "vehicle_id": vid,
+                                             "tag": f"{tag}-delay"}, state, vid))
     if not fuel_ran:
-        await _call_optional("fuel", {"vehicle_id": vid, "incident_id": inc.id, "tag": f"{tag}-fuel"}, state, vid)
+        side.append(_call_optional("fuel", {"vehicle_id": vid, "incident_id": inc.id, "tag": f"{tag}-fuel"}, state, vid))
+    await asyncio.gather(*side)
 
     timeline = [f"[{e.agent}] {e.title}: {e.detail[:200]}" for e in state.audit
                 if e.vehicle_id in (vid, None) and e.kind in ("decision", "alert", "handoff")][-15:]

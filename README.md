@@ -15,7 +15,7 @@
   <img alt="three.js" src="https://img.shields.io/badge/three.js-3D%20inspector-000000?logo=threedotjs&logoColor=white">
   <img alt="deck.gl + MapLibre" src="https://img.shields.io/badge/deck.gl-MapLibre-396CB2">
   <img alt="Blender" src="https://img.shields.io/badge/Blender-vehicle%20models-E87D0D?logo=blender&logoColor=white">
-  <img alt="21 tests" src="https://img.shields.io/badge/tests-21%20passing-22C55E">
+  <img alt="21 tests" src="https://img.shields.io/badge/tests-29%20passing-22C55E">
 </p>
 
 <p align="center">
@@ -39,7 +39,7 @@ A truck breaks down on the motorway. The driver sends a panicked message in Dari
 | **Problem** · clear and meaningful | [1 · The problem](#1--the-problem) |
 | **Usefulness** · practical value | [2 · Who uses it](#2--who-uses-it-and-why-it-pays) · [three real decisions](#three-breakdowns-three-decisions) |
 | **AI + approach** · meaningful and appropriate | [3 · AI + approach](#3--ai--approach): the open model, what we diagnose from, KPIs, tools, guardrails |
-| **Implementation** · working and verifiable | [4 · Implementation](#4--implementation): screenshots, recorded runs, 21 tests, [run it in 3 commands](#run-it) |
+| **Implementation** · working and verifiable | [4 · Implementation](#4--implementation): screenshots, recorded runs, 29 tests, [run it in one command](#run-it) |
 | **Originality** · growth potential | [5 · What's original](#5--whats-original) · [roadmap](#whats-next) |
 
 ---
@@ -115,7 +115,7 @@ What a rollout looks like for them:
 - **Reading drivers.** *"sda3 bhal roulement l9eddam"* becomes "bearing noise at the front of the engine, a typical water-pump symptom", and that becomes a search term for `lookup_parts`.
 - **Weighing trade-offs.** Repairing the A-03 alternator costs 1,200 MAD but takes 3 h with a patient on board, and the part is at 268,000 km against a 200,000 km life. The agent replaces it.
 - **Planning.** In scenario 2 the agent makes 9 tool calls on its own: no spare truck inside the SLA, so it prices the penalty, looks for a takeover, compares both, then picks a supplier and a depot **with a workshop** (Marrakech, not the closer Settat).
-- **Linking silos.** The fuel agent sees +22% consumption on T-12, reads 84% brake wear and a brake code, labels the cause *mechanical*, and the orchestrator hands it to Maintenance.
+- **Linking silos.** The fuel agent sees +21% consumption on T-12, reads 84% brake wear and a brake code, labels the cause *mechanical*, and the orchestrator hands it to Maintenance.
 
 ### What we diagnose from, and what we diagnose on
 
@@ -162,7 +162,7 @@ T-07: the nearest spare truck arrives in 137 min against a 90-min SLA, so 1,175 
 
 **Fuel** · [`tools/fuel_stats.py`](backend/app/tools/fuel_stats.py). L/100 km over 7 days against the vehicle's baseline (anomaly above +15%), fills larger than the tank, fills with under 20 km driven, idling above 25%. Routes are priced as fuel + tolls (×truck multiplier) + driver time on the road graph.
 
-**Fleet KPIs on the dashboard.** Vehicles on mission, open incidents, penalties at risk vs. avoided (MAD), and today's fuel cost update live as the agents act.
+**Fleet KPIs on the dashboard.** Vehicles on mission, plans waiting for approval, penalties avoided (MAD), and fuel spend, overspend and alerts over the last 7 days, computed from the fill-up logs.
 
 ### The tools
 
@@ -198,7 +198,7 @@ Tools never crash the agent: an error goes back to the model as `{"error": ...}`
 
 - **Numbers are recomputed.** `build_incident()` rebuilds the incident from the model's *choices*: cost, downtime, ETA and penalty all come from tools again.
 - **Impossible choices are corrected.** "Repair" on a non-repairable part becomes "replace". A replacement vehicle that isn't at the chosen depot is swapped for one that is.
-- **People decide.** The output is a proposal with evidence; the dispatcher gives the order.
+- **People decide.** The output is a proposal with evidence; nothing counts until the manager clicks *Approuver le plan*, and that goes on the record too.
 - **Everything is on the record.** Each thought, tool call and result streams over SSE into the audit feed.
 
 ```mermaid
@@ -236,7 +236,7 @@ sequenceDiagram
 It runs end to end: Python agents, a live dashboard, and real recorded DeepSeek runs you can replay offline.
 
 <p align="center"><img src="docs/readme/screens/fleet-map.jpg" alt="Operations map of Morocco: 16 vehicles on their routes, KPI bar with vehicles on mission, open incidents, penalties at risk and fuel cost" width="100%"></p>
-<p align="center"><b>The ops room.</b> 16 trucks and ambulances on a 3D map of Morocco, live KPIs on top, the agents' audit feed on the right. Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to trigger a breakdown.</p>
+<p align="center"><b>The ops room.</b> 16 trucks and ambulances on a 3D map of Morocco, live KPIs on top, and a decision card for each breakdown with one button to approve the plan. The full audit log opens on demand. Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> to trigger a breakdown.</p>
 
 <table>
   <tr>
@@ -249,8 +249,8 @@ It runs end to end: Python agents, a live dashboard, and real recorded DeepSeek 
   </tr>
 </table>
 
-<p align="center"><img src="docs/readme/screens/inspector-t12.jpg" alt="Exploded 3D view of truck T-12 with the fuel drawer open: 39.3 L/100 km against 32 expected (+22.8%), overconsumption flagged with a mechanical cause, and three route options from Casablanca to Fès" width="100%"></p>
-<p align="center"><b>T-12 · the fuel bill that was really a brake.</b> Exploded view plus the fuel drawer: +22.8% consumption. The fuel agent finds 84% brake wear and a brake fault code, labels the cause <i>mechanical</i> and hands the case to Maintenance.</p>
+<p align="center"><img src="docs/readme/screens/inspector-t12.jpg" alt="Exploded 3D view of truck T-12 with the fuel drawer open: 38.7 L/100 km against 32 expected (+20.9%), overconsumption flagged with a mechanical cause, and three route options from Casablanca to Fès" width="100%"></p>
+<p align="center"><b>T-12 · the fuel bill that was really a brake.</b> Exploded view plus the fuel drawer: +20.9% consumption. The fuel agent finds 84% brake wear and a brake fault code, labels the cause <i>mechanical</i> and hands the case to Maintenance.</p>
 
 ### Three breakdowns, three decisions
 
@@ -258,14 +258,14 @@ Seeded scenarios on a simulated Moroccan fleet: 12 trucks, 4 ambulances, 6 depot
 
 | | **1 · Ambulance A-03** | **2 · Truck T-07** | **3 · Truck T-12** |
 |---|---|---|---|
-| **Signal** | P0562 + P0620, battery 11.2 V, heart monitor on backup | P0217, coolant 118 °C, driver message in Darija | Fuel +22%, C0040, brake wear 84% |
+| **Signal** | P0562 + P0620, battery 11.2 V, heart monitor on backup | P0217, coolant 118 °C, driver message in Darija | Fuel +21%, C0040, brake wear 84% |
 | **Diagnosis** | Alternator · 90% | Water pump · 90% · *stop now* | Front-right brake caliper · 88% |
 | **Decision** | Replace (268k km vs 200k life; repair = 3 h with a patient on board) | Replace (194% of rated life, safety-critical) | Replace (433k vs 300k km life, and faster than repair) |
 | **Supplier** | Medi-Fleet Équipement · 4,400 MAD · 2.6 h | AutoPièces Atlas · 2,450 MAD · 6.4 h | AutoPièces Atlas · 3,100 MAD · 5.2 h |
 | **Fleet move** | Spare ambulance **A-04** from Settat, ETA 46 min | **T-03 takes the load** (no spare inside SLA) | Spare truck **T-10** at Rabat, ETA 80 min |
 | **SLA** | 60 min · met | 90 min · would be missed | 90 min · met |
 | **Penalty** | **0 MAD** | **8,000 MAD avoided** | **0 MAD** |
-| **Tool calls** | 7 | 9 | 7 |
+| **Tool calls** | 6 | 9 | 8 |
 
 **Read these honestly.** The fleet, telemetry, suppliers and penalties are simulated, and we wrote the three scenarios. They show the agents reason correctly on cases we designed; they are not a benchmark. The tests in [`backend/tests/`](backend/tests/) pin each scenario's expected outcome so a prompt change can't silently break one.
 
@@ -311,6 +311,7 @@ One FastAPI process holds the fleet in memory and streams every agent event over
 | `POST` | `/route/compare` | Shortest, cheapest and fastest route options |
 | `GET` | `/missions/{id}/path` · `/missions/{id}/eta` | Road path, progress, ETA per stop |
 | `GET` | `/audit` | The full event log |
+| `POST` | `/incidents/{id}/approve` | The manager signs off the plan; goes on the audit trail |
 | `POST` | `/reset` | Reload the seed data |
 
 Contract: [`shared/contracts.md`](shared/contracts.md). Models: [`backend/app/schemas.py`](backend/app/schemas.py), mirrored in [`shared/types.ts`](shared/types.ts).
@@ -326,7 +327,7 @@ Contract: [`shared/contracts.md`](shared/contracts.md). Models: [`backend/app/sc
 | **Frontend** | React 19 · TypeScript · Vite · Tailwind 4 · Zustand · Framer Motion · Recharts |
 | **Map** | MapLibre GL · deck.gl (paths, 3D vehicle meshes, depots) |
 | **3D** | three.js · React Three Fiber · drei · Blender-built `.glb` twins, one clickable node per part |
-| **Quality** | pytest (21 tests) · oxlint |
+| **Quality** | pytest (29 tests) · oxlint |
 </details>
 
 <details>
@@ -371,36 +372,29 @@ The pilot needs no new AI: the same client points at a self-hosted DeepSeek with
 
 ## Run it
 
-**Backend** (Python 3.11+):
-
 ```bash
-cd backend
-python -m venv .venv
-.venv/Scripts/activate              # macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-cp ../.env.example ../.env          # add DEEPSEEK_API_KEY
-uvicorn app.main:app --reload --port 8000
+python run.py
 ```
 
-**Frontend** (Node 20+), in a second terminal:
+That's all (Python 3.11+, plus Node 20+ for the first build). It installs what's missing, builds the frontend, serves everything on one port and opens <http://127.0.0.1:8000>. On Windows you can double-click `FleetSense.bat`. No API key needed: this is the offline demo, recorded DeepSeek runs driving the live tools. The map tiles and fonts still come from the internet.
 
-```bash
-cd frontend
-npm ci
-npm run dev
-```
+Press <kbd>1</kbd>, <kbd>2</kbd> or <kbd>3</kbd> to trigger a breakdown, <kbd>R</kbd> to reset. Click a vehicle to open the 3D inspector: <kbd>E</kbd> explodes it, <kbd>F</kbd> opens the fuel drawer, <kbd>←</kbd> <kbd>→</kbd> switch vehicles.
 
-Open <http://localhost:5173>, wait for the intro, then press <kbd>1</kbd>, <kbd>2</kbd> or <kbd>3</kbd>. Click a vehicle to open the 3D inspector: <kbd>E</kbd> explodes it, <kbd>F</kbd> opens the fuel drawer, <kbd>←</kbd> <kbd>→</kbd> switch vehicles.
+| Command | What runs |
+|---|---|
+| `python run.py` | Offline demo: recorded model messages, live tools, no cost |
+| `python run.py --live` | The real model, about 30 s per scenario (copy `.env.example` to `.env` and add `DEEPSEEK_API_KEY`) |
+| `python run.py --build` | Rebuild the frontend first (it also rebuilds by itself when sources change) |
 
 <details>
-<summary><b>No API key?</b></summary>
+<summary><b>Working on the code</b></summary>
 
-| Mode | Command | What runs |
-|---|---|---|
-| Replay | `REPLAY=1 uvicorn app.main:app --port 8000` | Recorded DeepSeek messages, live tools |
-| Mock | `MOCK=1 uvicorn app.main:app --port 8000` | A scripted event stream, no model (for UI work) |
+```bash
+python -m uvicorn --app-dir backend app.main:app --reload --port 8000   # REPLAY=1 for the recorded runs, MOCK=1 for scripted events
+npm --prefix frontend run dev                                           # http://127.0.0.1:5173
+```
 
-PowerShell: `$env:REPLAY="1"; uvicorn app.main:app --port 8000`.
+Use `127.0.0.1`, not `localhost`: on Windows `localhost` tries IPv6 first and loses 200 ms on every connection.
 </details>
 
 <details>
@@ -408,7 +402,7 @@ PowerShell: `$env:REPLAY="1"; uvicorn app.main:app --port 8000`.
 
 ```bash
 cd backend
-python -m pytest -q        # 21 tests: tools, the three scenarios end to end on replays, fuel and delay
+python -m pytest -q        # 29 tests: tools, the three scenarios end to end on the recorded runs, fuel and delay
 ```
 
 | Variable | Default | What it does |
@@ -416,7 +410,8 @@ python -m pytest -q        # 21 tests: tools, the three scenarios end to end on 
 | `DEEPSEEK_API_KEY` | (empty) | API key |
 | `DEEPSEEK_BASE_URL` | `https://api.deepseek.com` | Any OpenAI-compatible endpoint, including your own vLLM |
 | `DEEPSEEK_MODEL` | `deepseek-chat` | Model name |
-| `REPLAY` | `0` | `1` = replay recorded model messages |
+| `REPLAY` | `0` | `1` = replay recorded model messages (`run.py` sets it) |
+| `REPLAY_STEP_SEC` | `0` | Pause between replayed model steps; `run.py` uses `1.1` so the feed builds up like a live run |
 | `MOCK` | `0` | `1` = scripted events, no model |
 </details>
 

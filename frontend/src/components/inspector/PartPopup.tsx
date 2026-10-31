@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, MapPin, ShieldAlert, ShieldCheck, Truck, X } from "lucide-react";
 import type { ReactNode } from "react";
-import type { Incident, Severity, SupplierScore } from "@shared/types";
+import type { Incident, SupplierScore } from "@shared/types";
 import type { ZoneHealth } from "@/api";
-import { Bar, EXPO, mad } from "../ui";
+import { Bar, EXPO, SEVERITY, mad } from "../ui";
 import type { PickedPart } from "./Vehicle3D";
 
 const ZONE_FR: Record<string, string> = {
@@ -11,16 +11,9 @@ const ZONE_FR: Record<string, string> = {
   transmission: "Transmission", tires: "Pneumatiques", fuel: "Carburant",
 };
 
-const SEVERITY: Record<Severity, { label: string; cls: string }> = {
-  ok: { label: "OK", cls: "border-ok/40 bg-ok/10 text-ok" },
-  monitor: { label: "Surveiller", cls: "border-warn/40 bg-warn/10 text-warn" },
-  drive_to_depot: { label: "Rouler au dépôt", cls: "border-warn/50 bg-warn/15 text-warn" },
-  stop_now: { label: "Arrêt immédiat", cls: "border-fail/50 bg-fail/15 text-fail" },
-};
-
 const item = {
-  hidden: { opacity: 0, y: 14, filter: "blur(4px)" },
-  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.7, ease: EXPO } },
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EXPO } },
 };
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
@@ -79,11 +72,11 @@ export function PartPopup({ part, zone, incident, onClose }: { part: PickedPart;
 
   return (
     <motion.div
-      initial={{ x: -40, opacity: 0, filter: "blur(10px)" }}
-      animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
-      exit={{ x: -30, opacity: 0, filter: "blur(10px)" }}
+      initial={{ x: -40, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: -30, opacity: 0 }}
       transition={{ duration: 0.75, ease: EXPO }}
-      className={`ticks absolute left-5 top-5 z-20 flex max-h-[calc(100%-40px)] flex-col overflow-hidden rounded-2xl border border-line bg-panel/95 shadow-2xl backdrop-blur-xl ${hasIncident ? "w-[400px]" : "w-[320px]"}`}
+      className={`ticks absolute left-5 top-5 z-20 flex max-h-[calc(100%-40px)] flex-col overflow-hidden rounded-2xl border border-line bg-panel/95 shadow-2xl ${hasIncident ? "w-[400px]" : "w-[320px]"}`}
     >
       <motion.div className="overflow-y-auto" variants={{ show: { transition: { staggerChildren: 0.06, delayChildren: 0.15 } } }} initial="hidden" animate="show">
         <motion.header variants={item} className="relative px-5 pb-4 pt-5">
@@ -162,17 +155,17 @@ export function PartPopup({ part, zone, incident, onClose }: { part: PickedPart;
             )}
 
             <Section title="Pénalité SLA">
-              <div className={`flex items-start gap-3 rounded-lg border p-3 ${incident.penalty.at_risk ? (incident.penalty.mitigation ? "border-ok/40 bg-ok/[0.06]" : "border-warn/40 bg-warn/[0.06]") : "border-line"}`}>
-                {incident.penalty.at_risk && !incident.penalty.mitigation ? <ShieldAlert size={16} className="text-warn" /> : <ShieldCheck size={16} className="text-ok" />}
+              <div className={`flex items-start gap-3 rounded-lg border p-3 ${incident.penalty.avoided_mad > 0 ? "border-ok/40 bg-ok/[0.06]" : incident.penalty.at_risk ? "border-warn/40 bg-warn/[0.06]" : "border-line"}`}>
+                {incident.penalty.at_risk ? <ShieldAlert size={16} className="text-warn" /> : <ShieldCheck size={16} className="text-ok" />}
                 <div className="flex-1 text-[12.5px]">
                   <div className="flex items-baseline justify-between">
                     <span className="font-medium">
-                      {!incident.penalty.at_risk ? "Aucune pénalité" : incident.penalty.mitigation ? "Pénalité évitée" : "Pénalité à risque"}
+                      {incident.penalty.avoided_mad > 0 ? "Pénalité évitée" : incident.penalty.at_risk ? "Pénalité à risque" : "Aucune pénalité"}
                     </span>
-                    <span className={`num ${!incident.penalty.at_risk ? "text-muted" : incident.penalty.mitigation ? "text-ok line-through decoration-ok/60" : "text-warn"}`}>{mad(incident.penalty.amount_mad)}</span>
+                    <span className={`num ${incident.penalty.avoided_mad > 0 ? "text-ok line-through decoration-ok/60" : incident.penalty.at_risk ? "text-warn" : "text-muted"}`}>{mad(incident.penalty.avoided_mad || incident.penalty.amount_mad)}</span>
                   </div>
-                  {incident.penalty.mitigation && (
-                    <div className="mt-1 flex items-center gap-1.5 text-ok"><Truck size={13} /> pénalité évitée grâce à <span className="num">{incident.penalty.mitigation}</span></div>
+                  {incident.penalty.avoided_mad > 0 && incident.penalty.mitigation && (
+                    <div className="mt-1 flex items-center gap-1.5 text-ok"><Truck size={13} /> <span>{incident.penalty.mitigation}</span></div>
                   )}
                   <p className="mt-1 text-muted">{incident.penalty.reason}</p>
                 </div>

@@ -77,3 +77,23 @@ def fuel_stats(state: State, vehicle_id: str) -> dict:
     return {"vehicle_id": vehicle_id, "expected_l_100km": v.base_l_100km, "actual_l_100km": actual,
             "delta_pct": delta, "logs": [{k: x for k, x in f.items() if k != "km_since_prev"} for f in logs],
             "anomalies": anomalies}
+
+
+def fleet_fuel_kpi(state: State) -> dict:
+    """Fleet totals over the window, from the fill-up logs only: they change when a fill-up does, not with time."""
+    since = _iso(NOW - timedelta(days=WINDOW_DAYS))
+    spend = overspend = 0.0
+    flags: list[dict] = []
+    for vid, v in state.vehicles.items():
+        stats = fuel_stats(state, vid)
+        flags += [{"vehicle_id": vid, "kind": a.kind} for a in stats["anomalies"]]
+        logs = [f for f in vehicle_logs(state, vid) if f["ts"] >= since]
+        spend += sum(f["cost_mad"] for f in logs)
+        if (stats["delta_pct"] or 0) > 5:  # past normal variation: the extra litres cost real money
+            used = [f for f in logs if f["km_since_prev"] and f["km_since_prev"] > 0 and not _is_suspect(f, v.tank_l)]
+            km = sum(f["km_since_prev"] for f in used)
+            litres = sum(f["litres"] for f in used)
+            if litres:
+                price = sum(f["cost_mad"] for f in used) / litres
+                overspend += max(0.0, litres - km * v.base_l_100km / 100) * price
+    return {"window_days": WINDOW_DAYS, "spend_mad": round(spend), "overspend_mad": round(overspend), "anomalies": len(flags), "flags": flags}

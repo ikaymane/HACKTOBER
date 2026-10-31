@@ -1,0 +1,42 @@
+[
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_fD96zSJp2AnfmhyPTITM7463",
+    "type": "function",
+    "function": {
+     "name": "get_mission",
+     "arguments": "{\"mission_id\": \"M-112\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_lASgAszDPNY3j0B29wQo0749",
+    "type": "function",
+    "function": {
+     "name": "simulate_order",
+     "arguments": "{\"order\": [\"meknes\", \"fes\"]}"
+    }
+   },
+   {
+    "id": "call_01_ndhaGc4VCPHQpYomZAWo6315",
+    "type": "function",
+    "function": {
+     "name": "simulate_order",
+     "arguments": "{\"order\": [\"fes\", \"meknes\"]}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "{\"stop_order\": [\"meknes\", \"fes\"], \"client_message_fr\": \"Bonjour, suite au remplacement de notre véhicule, votre livraison de rouleaux de tissu est reprise par le véhicule T-10. Arrivée prévue à Meknès vers 09h20, puis à Fès vers 10h02. Aucun retard n'est à signaler, les deux arrêts sont dans les délais prévus. Nous restons à votre disposition.\", \"summary_fr\": \"Mission M-112 reprise par T-10 (départ retardé de 80 min). Ordre conservé meknès → fès : ETA 09h20 et 10h02, 0 min de retard sur les deux arrêts (l'ordre inverse donne le même retard total, donc ordre initial maintenu). Aucune pénalité.\"}"
+ }
+]

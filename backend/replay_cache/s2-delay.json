@@ -1,0 +1,34 @@
+[
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_WktuglVZu4OAd4f1wbug7318",
+    "type": "function",
+    "function": {
+     "name": "get_mission",
+     "arguments": "{\"mission_id\": \"M-107\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "Un seul arrêt : aucun réordonnancement possible.",
+  "tool_calls": [
+   {
+    "id": "call_00_Ok3vwqDA7TcRyJP9k76e0872",
+    "type": "function",
+    "function": {
+     "name": "simulate_order",
+     "arguments": "{\"order\": [\"marrakech\"]}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "{\"stop_order\": [\"marrakech\"], \"client_message_fr\": \"Bonjour Pharma Sud Marrakech, suite à une panne du véhicule initialement prévu, votre livraison de 10 palettes (chaîne du froid) est reprise par le véhicule T-03. L'arrivée est prévue à 09h50, dans votre fenêtre horaire, sans retard. Nous restons à votre disposition pour toute précision.\", \"summary_fr\": \"Mission M-107 à arrêt unique (Marrakech) : ordre inchangé. ETA 09h50, retard 0 min malgré le départ décalé de 61 min (transfert des palettes vers T-03). Aucun réordonnancement pertinent.\"}"
+ }
+]

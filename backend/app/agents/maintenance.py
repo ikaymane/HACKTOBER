@@ -128,10 +128,12 @@ def build_incident(state: State, vid: str, out: dict) -> Incident:
     takeover = out.get("takeover_vehicle_id")
     if takeover and not repl:  # another truck absorbs the load: penalty avoided
         avoided = compute_penalty(state, v.mission_id, None)["amount_mad"]
-        pen = {"at_risk": False, "amount_mad": 0,
+        pen = {"at_risk": False, "amount_mad": 0, "avoided_mad": avoided,
                "reason": f"Pénalité évitée ({avoided} MAD) grâce à la reprise de charge par {takeover}."}
     else:
         pen = compute_penalty(state, v.mission_id, d["eta_min"] if (d and repl) else None)
+    if takeover and repl:  # the model named both: the replacement wins, so no takeover to claim
+        takeover = None
 
     return Incident(
         id=f"INC-{len(state.incidents) + 1:03d}", vehicle_id=vid, mission_id=v.mission_id,
@@ -144,7 +146,7 @@ def build_incident(state: State, vid: str, out: dict) -> Incident:
         suppliers=suppliers, chosen_supplier_id=chosen.supplier_id if chosen else None,
         supplier_reason=out.get("supplier_reason"), driver_instruction=instruction,
         takeover_vehicle_id=takeover if (takeover and not repl and takeover in state.vehicles) else None,
-        penalty=PenaltyRisk(at_risk=pen["at_risk"], amount_mad=pen["amount_mad"],
+        penalty=PenaltyRisk(at_risk=pen["at_risk"], amount_mad=pen["amount_mad"], avoided_mad=pen.get("avoided_mad", 0),
                             reason=out.get("penalty_reason") or pen["reason"],
                             mitigation=out.get("mitigation") or (f"Reprise de la charge par {takeover}" if takeover else None)),
         report_fr=out.get("report_fr", ""),

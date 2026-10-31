@@ -9,6 +9,7 @@ export type ZoneStatus = "ok" | "warn" | "fail";
 export interface ZoneHealth { status: ZoneStatus; reasons: string[]; part_id: string | null; incident_id: string | null }
 export interface VehicleHealth { vehicle_id: string; type: Vehicle["type"]; zones: Record<Zone, ZoneHealth> }
 
+export interface FuelKpi { window_days: number; spend_mad: number; overspend_mad: number; anomalies: number; flags: { vehicle_id: string; kind: string }[] }
 export interface FuelLog { ts: string; litres: number; odometer_km: number; l_100km: number; station_city: string; cost_mad: number }
 export interface FuelReport {
   vehicle_id: string; expected_l_100km: number; actual_l_100km: number; delta_pct: number;
@@ -59,6 +60,7 @@ export const api = {
   incident: (id: string) => get<Incident>(`/incidents/${id}`),
   health: (vid: string) => get<VehicleHealth>(`/vehicles/${vid}/health`),
   audit: () => get<AgentEvent[]>("/audit"),
+  approve: (id: string) => post<Incident>(`/incidents/${id}/approve`),
   runScenario: (id: number) => post<{ started: number }>(`/scenario/${id}`),
   reset: () => post<{ ok: boolean }>("/reset"),
 
@@ -73,6 +75,7 @@ export const api = {
       }),
     ),
 
+  fuelKpi: () => get<FuelKpi>("/fuel/kpi"),
   fuel: (v: Vehicle) => withFallback(() => get<FuelReport>(`/fuel/${v.id}`), () => mockFuel(v)),
 
   compareRoutes: (from: string, to: string, v: Vehicle) =>
@@ -85,7 +88,7 @@ export const api = {
 /** Server-sent agent events. Returns a disposer. */
 export function subscribeEvents(onEvent: (ev: AgentEvent) => void, onStatus: (live: boolean) => void) {
   // The Vite dev proxy holds back SSE headers, so the stream goes straight to the backend (CORS is open).
-  const url = import.meta.env.VITE_EVENTS_URL ?? (import.meta.env.DEV ? `http://${location.hostname}:8000/events` : `${BASE}/events`);
+  const url = import.meta.env.VITE_EVENTS_URL ?? (import.meta.env.DEV ? "http://127.0.0.1:8000/events" : `${BASE}/events`);
   const es = new EventSource(url);
   es.onopen = () => onStatus(true);
   es.onerror = () => onStatus(false);

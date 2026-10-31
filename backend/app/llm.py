@@ -8,6 +8,7 @@ reads those instead of calling the API (tools still execute live), so the demo w
 """
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import re
@@ -64,6 +65,8 @@ class _Replayer:
                 raise RuntimeError(f"replay cache {self.path.name} exhausted at step {self.i}")
             msg = self.recorded[self.i]
             self.i += 1
+            # Yield to the event loop so SSE flushes; REPLAY_STEP_SEC paces replays like a live model.
+            await asyncio.sleep(float(os.getenv("REPLAY_STEP_SEC", "0")))
             return msg
         resp = await client.chat.completions.create(**kw)
         m = resp.choices[0].message

@@ -1,4 +1,4 @@
-import DeckGL from "@deck.gl/react";
+import DeckGL, { type DeckGLRef } from "@deck.gl/react";
 import { FlyToInterpolator, type MapViewState, type PickingInfo } from "@deck.gl/core";
 import { ColumnLayer, PathLayer, ScatterplotLayer, TextLayer } from "@deck.gl/layers";
 import { ScenegraphLayer } from "@deck.gl/mesh-layers";
@@ -18,52 +18,78 @@ const CYAN: [number, number, number] = [34, 211, 238];
 const RED: [number, number, number] = [239, 68, 68];
 const AMBER: [number, number, number] = [245, 158, 11];
 
+const FRAME_MS = 1000 / 30; // the trails and pulse rings don't need more
+const TICK_SEC = 1; // trucks move well under a pixel per second at these zooms
+
 interface Placed { v: Vehicle; pos: LngLat; heading: number; alert: "fail" | "warn" | null }
+interface RouteDatum { v: Vehicle; path: LngLat[]; timestamps: number[]; km: number; broken: boolean }
+
+function trailLayer(data: RouteDatum[], time: number) {
+  return new TripsLayer<RouteDatum>({
+    id: "trails",
+    data,
+    getPath: (d) => d.path,
+    getTimestamps: (d) => d.timestamps,
+    getColor: [180, 245, 255],
+    widthMinPixels: 2.2,
+    trailLength: 70,
+    currentTime: (time * 90) % 700,
+    fadeTrail: true,
+    capRounded: true,
+    jointRounded: true,
+  });
+}
+
+function pulseLayer(data: Placed[], time: number) {
+  const pulse = (time % 1.6) / 1.6;
+  return new ScatterplotLayer<Placed>({
+    id: "pulse",
+    data,
+    getPosition: (p) => p.pos,
+    getRadius: (p) => (p.alert === "fail" ? 6 + pulse * 30 : 14),
+    radiusUnits: "pixels",
+    stroked: true,
+    filled: true,
+    getFillColor: (p) => (p.alert === "fail" ? [...RED, Math.round(90 * (1 - pulse))] : [...CYAN, 30]),
+    getLineColor: (p) => (p.alert === "fail" ? [...RED, Math.round(255 * (1 - pulse))] : [...CYAN, 200]),
+    lineWidthMinPixels: 1.2,
+    updateTriggers: { getRadius: [pulse], getFillColor: [pulse], getLineColor: [pulse] },
+  });
+}
 
 export function FleetMap() {
   const vehicles = useStore((s) => s.vehicles);
   const depots = useStore((s) => s.depots);
   const routes = useStore((s) => s.routes);
+  const tracks = useStore((s) => s.tracks);
   const progress = useStore((s) => s.progress);
   const health = useStore((s) => s.health);
   const hoverId = useStore((s) => s.hoverId);
   const selectedId = useStore((s) => s.selectedId);
-  const events = useStore((s) => s.events);
+  const lastAlert = useStore((s) => s.lastAlert);
+  const inspectorOpen = useStore((s) => s.inspectorOpen);
   const open = useStore((s) => s.openInspector);
   const setHover = useStore((s) => s.setHover);
   const tick = useStore((s) => s.tick);
 
-  const [view, setView] = useState<MapViewState>(START);
-  const [time, setTime] = useState(0);
+  // deck.gl owns the camera, so moving it never re-renders React: new values here only start a flight.
+  const [camera, setCamera] = useState<MapViewState>(START);
+  const [zoomStep, setZoomStep] = useState(Math.round(START.zoom * 10));
   const [models, setModels] = useState(true);
+  const deckRef = useRef<DeckGLRef>(null);
+  const clock = useRef(0);
 
   // Cinematic fly-in once the map is up.
   useEffect(() => {
     const t = setTimeout(() => {
-      setView({ ...HOME, transitionDuration: 3200, transitionInterpolator: new FlyToInterpolator({ speed: 0.9 }) });
+      setCamera({ ...HOME, transitionDuration: 3200, transitionInterpolator: new FlyToInterpolator({ speed: 0.9 }) });
     }, 500);
     return () => clearTimeout(t);
   }, []);
 
-  // Animation clock: drives the light trails and pulse rings; vehicles advance 4× / s.
-  useEffect(() => {
-    let raf = 0;
-    let last = performance.now();
-    let acc = 0;
-    const loop = (now: number) => {
-      const dt = (now - last) / 1000;
-      last = now;
-      acc += dt;
-      setTime((t) => t + dt);
-      if (acc > 0.25) { tick(acc); acc = 0; }
-      raf = requestAnimationFrame(loop);
-    };
-    raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
-  }, [tick]);
-
   const placed: Placed[] = useMemo(() => vehicles.map((v) => {
-    const r = v.mission_id ? routes[v.mission_id] : undefined;
+    const missionId = v.mission_id ?? tracks[v.id];
+    const r = missionId ? routes[missionId] : undefined;
     const zones = health[v.id]?.zones;
     const alert = v.status === "breakdown" || (zones && Object.values(zones).some((z) => z.status === "fail")) ? "fail"
       : zones && Object.values(zones).some((z) => z.status === "warn") ? "warn" : null;
@@ -72,30 +98,30 @@ export function FleetMap() {
       return { v, pos, heading, alert };
     }
     return { v, pos: [v.position.lng, v.position.lat] as LngLat, heading: 0, alert };
-  }), [vehicles, routes, progress, health]);
+  }), [vehicles, routes, tracks, progress, health]);
 
   // Fly to the vehicle a scenario just broke.
-  const lastAlert = useRef<string | null>(null);
+  const placedRef = useRef(placed);
+  placedRef.current = placed;
   useEffect(() => {
-    const ev = [...events].reverse().find((e) => e.agent === "system" && e.kind === "alert" && e.vehicle_id);
-    if (!ev || ev.id === lastAlert.current) return;
-    lastAlert.current = ev.id;
-    const p = placed.find((x) => x.v.id === ev.vehicle_id);
-    if (p) setView({ longitude: p.pos[0], latitude: p.pos[1] - 0.25, zoom: 7.6, pitch: 58, bearing: -20, transitionDuration: 2200, transitionInterpolator: new FlyToInterpolator({ speed: 1.1 }) });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [events]);
+    if (!lastAlert) return;
+    const p = placedRef.current.find((x) => x.v.id === lastAlert.vehicle_id);
+    if (p) setCamera({ longitude: p.pos[0], latitude: p.pos[1] - 0.25, zoom: 7.6, pitch: 58, bearing: -20, transitionDuration: 2200, transitionInterpolator: new FlyToInterpolator({ speed: 1.1 }) });
+  }, [lastAlert]);
 
-  const routeData = useMemo(() => vehicles.flatMap((v) => {
-    const r = v.mission_id ? routes[v.mission_id] : undefined;
+  const routeData: RouteDatum[] = useMemo(() => vehicles.flatMap((v) => {
+    const missionId = v.mission_id ?? tracks[v.id];
+    const r = missionId ? routes[missionId] : undefined;
     if (!r) return [];
     return [{ v, path: r.coords, timestamps: r.cum, km: r.km, broken: v.status === "breakdown" }];
-  }), [vehicles, routes]);
+  }), [vehicles, routes, tracks]);
 
-  const pulse = (time % 1.6) / 1.6;
   const focus = hoverId ?? selectedId;
+  const trailData = useMemo(() => routeData.filter((d) => !d.broken), [routeData]);
+  const pulseData = useMemo(() => placed.filter((p) => p.alert === "fail" || p.v.id === focus), [placed, focus]);
 
-  const layers = [
-    new PathLayer({
+  const under = useMemo(() => [
+    new PathLayer<RouteDatum>({
       id: "roads-glow",
       data: routeData,
       getPath: (d) => d.path,
@@ -105,7 +131,7 @@ export function FleetMap() {
       capRounded: true,
       jointRounded: true,
     }),
-    new PathLayer({
+    new PathLayer<RouteDatum>({
       id: "roads",
       data: routeData,
       getPath: (d) => d.path,
@@ -116,19 +142,9 @@ export function FleetMap() {
       jointRounded: true,
       updateTriggers: { getColor: [focus], getWidth: [focus] },
     }),
-    new TripsLayer({
-      id: "trails",
-      data: routeData.filter((d) => !d.broken),
-      getPath: (d) => d.path,
-      getTimestamps: (d) => d.timestamps,
-      getColor: [180, 245, 255],
-      widthMinPixels: 2.2,
-      trailLength: 70,
-      currentTime: (time * 90) % 700,
-      fadeTrail: true,
-      capRounded: true,
-      jointRounded: true,
-    }),
+  ], [routeData, focus]);
+
+  const depotLayers = useMemo(() => [
     new ColumnLayer({
       id: "depots",
       data: depots,
@@ -153,19 +169,9 @@ export function FleetMap() {
       getPixelOffset: [0, -8],
       billboard: true,
     }),
-    new ScatterplotLayer<Placed>({
-      id: "pulse",
-      data: placed.filter((p) => p.alert === "fail" || p.v.id === focus),
-      getPosition: (p) => p.pos,
-      getRadius: (p) => (p.alert === "fail" ? 6 + pulse * 30 : 14),
-      radiusUnits: "pixels",
-      stroked: true,
-      filled: true,
-      getFillColor: (p) => (p.alert === "fail" ? [...RED, Math.round(90 * (1 - pulse))] : [...CYAN, 30]),
-      getLineColor: (p) => (p.alert === "fail" ? [...RED, Math.round(255 * (1 - pulse))] : [...CYAN, 200]),
-      lineWidthMinPixels: 1.2,
-      updateTriggers: { getRadius: [pulse, focus], getFillColor: [pulse, focus], getLineColor: [pulse, focus] },
-    }),
+  ], [depots]);
+
+  const over = useMemo(() => [
     new ScatterplotLayer<Placed>({
       id: "markers",
       data: placed,
@@ -186,14 +192,11 @@ export function FleetMap() {
           new ScenegraphLayer<Placed>({
             id: `models-${type}`,
             data: placed.filter((p) => p.v.type === type),
-            scenegraph: `/models/${type}.glb`,
+            scenegraph: `/models/${type}-map.glb`, // body + wheels only: see assets/blender/make_map_models.mjs
             getPosition: (p) => p.pos,
             getOrientation: (p) => [0, 90 - p.heading, 90],
-            sizeScale: (type === "truck" ? 2600 : 2800) * Math.min(1, Math.pow(2, 6.2 - view.zoom) * 1.6),
+            sizeScale: (type === "truck" ? 2600 : 2800) * Math.min(1, Math.pow(2, 6.2 - zoomStep / 10) * 1.6),
             sizeMinPixels: 0,
-            // luma.gl autoplays every clip in the GLB: stop all ("*" applies first), then roll the wheels only.
-            // "explode" belongs to the inspector, never the map.
-            _animations: { "*": { playing: false }, drive: { playing: true, speed: 1 } },
             _lighting: "pbr",
             getColor: (p) => (p.alert === "fail" ? [255, 120, 120, 255] : [255, 255, 255, 255]),
             pickable: true,
@@ -202,7 +205,41 @@ export function FleetMap() {
           }),
         )
       : []),
+  ], [placed, focus, models, zoomStep, health]);
+
+  const buildLayers = () => [
+    ...under,
+    trailLayer(trailData, clock.current),
+    ...depotLayers,
+    pulseLayer(pulseData, clock.current),
+    ...over,
   ];
+
+  // Animation clock, outside React: only the trail and pulse layers change per frame. Paused under the inspector.
+  const buildRef = useRef(buildLayers);
+  buildRef.current = buildLayers;
+  useEffect(() => {
+    if (inspectorOpen) return;
+    let raf = 0;
+    let last = performance.now();
+    let frameAcc = 0;
+    let tickAcc = 0;
+    const loop = (now: number) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      clock.current += dt;
+      frameAcc += dt * 1000;
+      tickAcc += dt;
+      if (tickAcc >= TICK_SEC) { tick(tickAcc); tickAcc = 0; }
+      if (frameAcc >= FRAME_MS) {
+        frameAcc = 0;
+        deckRef.current?.deck?.setProps({ layers: buildRef.current() });
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [tick, inspectorOpen]);
 
   const onClick = (info: PickingInfo) => {
     const p = info.object as Placed | undefined;
@@ -213,13 +250,20 @@ export function FleetMap() {
     setHover(p?.v?.id ?? null);
   };
 
+  const basemap = useMemo(() => <Map mapStyle={STYLE} reuseMaps attributionControl={{ compact: true }} />, []);
+
   return (
     <div className="relative h-full w-full">
       <DeckGL
-        viewState={view}
-        onViewStateChange={({ viewState }) => setView(viewState as MapViewState)}
+        ref={deckRef}
+        initialViewState={camera}
+        onViewStateChange={({ viewState }) => {
+          const v = viewState as MapViewState;
+          setZoomStep(Math.round(v.zoom * 10));
+        }}
+        useDevicePixels={Math.min(window.devicePixelRatio, 1.5)}
         controller={{ dragRotate: true, touchRotate: true }}
-        layers={layers}
+        layers={buildLayers()}
         onClick={onClick}
         onHover={onHover}
         getCursor={({ isHovering }) => (isHovering ? "pointer" : "grab")}
@@ -236,23 +280,17 @@ export function FleetMap() {
           return null;
         }}
       >
-        <Map mapStyle={STYLE} reuseMaps attributionControl={{ compact: true }} />
+        {basemap}
       </DeckGL>
 
       {/* Vignette + HUD overlays */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(11,15,20,0.85)_100%)]" />
-      <div className="pointer-events-none absolute left-4 top-4 flex flex-col gap-1">
-        <span className="tag"><span className="text-accent/80">[B]</span> Carte opérationnelle</span>
-        <span className="num text-[10.5px] text-dim">
-          {view.latitude.toFixed(3)}°N {Math.abs(view.longitude).toFixed(3)}°W · z{view.zoom.toFixed(1)} · {Math.round(view.pitch ?? 0)}°
-        </span>
-      </div>
-      <div className="absolute bottom-4 left-4 flex items-center gap-4 rounded-full border border-line bg-bg/70 px-4 py-2 text-[11px] text-muted backdrop-blur">
+      <div className="absolute bottom-4 left-4 flex items-center gap-4 rounded-full border border-line bg-bg/90 px-4 py-2 text-[11px] text-muted">
         <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent" />Camion</span>
         <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-slate-100" />Ambulance</span>
         <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-fail" />Panne</span>
         <span className="flex items-center gap-1.5"><span className="h-2 w-2 bg-slate-400" />Dépôt</span>
-        <button onClick={() => setView({ ...HOME, transitionDuration: 1600, transitionInterpolator: new FlyToInterpolator() })} className="ml-2 border-l border-line pl-3 text-ink hover:text-accent">Recentrer</button>
+        <button onClick={() => setCamera({ ...HOME, transitionDuration: 1600, transitionInterpolator: new FlyToInterpolator() })} className="ml-2 border-l border-line pl-3 text-ink hover:text-accent">Recentrer</button>
       </div>
     </div>
   );

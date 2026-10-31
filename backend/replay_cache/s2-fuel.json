@@ -1,0 +1,40 @@
+[
+ {
+  "role": "assistant",
+  "content": "I'll pull the stats and telemetry for T-07, and compare routes for the detour.",
+  "tool_calls": [
+   {
+    "id": "call_00_B24nOE85cvsvfbjM80RA2019",
+    "type": "function",
+    "function": {
+     "name": "get_fuel_stats",
+     "arguments": "{\"vehicle_id\": \"T-07\"}"
+    }
+   },
+   {
+    "id": "call_01_KJWNmggAE8QZURxEMab52037",
+    "type": "function",
+    "function": {
+     "name": "get_vehicle",
+     "arguments": "{\"vehicle_id\": \"T-07\"}"
+    }
+   },
+   {
+    "id": "call_02_HFrUhOHSlWlf7X4dtDij1941",
+    "type": "function",
+    "function": {
+     "name": "compare_routes",
+     "arguments": "{\"from_city\": \"benguerir\", \"to_city\": \"marrakech\", \"vehicle_id\": \"T-07\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "{\"anomalies\": [{\"kind\": \"consommation\", \"probable_cause\": \"unknown\", \"note\": \"Aucune anomalie carburant: consommation réelle 31.6 L/100km vs 32.0 attendue (-1.2%), tous les pleins cohérents (max 368.0 L < capacité 400 L) et kilométrages en progression. Pas de surconsommation à expliquer.\"}, {\"kind\": \"panne / immobilisation\", \"probable_cause\": \"mechanical\", \"note\": \"Statut 'breakdown' (INC-001) avec code défaut P0217 (surchauffe moteur) et liquide de refroidissement à 118 °C: panne mécanique confirmée, véhicule à 40 km/h. Freins à 50% et ralenti 7.5% normaux, donc pas de cause comportementale ni de fraude.\"}], \"route_advice\": \"Trajet benguerir → marrakech: 70 km, ~0.82 h, 22.4 L (260 MAD) + 54 MAD de péage, soit 363 MAD au total. Les itinéraires plus court, moins cher et plus rapide sont identiques: aucun détour alternatif à comparer, prendre l'axe direct. Véhicule en surchauffe (P0217, 118 °C): ne pas rouler à charge, limiter la vitesse, surveiller la température et privilégier un remorquage ou un dépannage sur place avant de rejoindre le dépôt de Marrakech.\"} , \"manager_note_fr\": \"T-07: aucune anomalie carburant (31.6 vs 32.0 L/100km, pleins conformes à la capacité de 400 L). Le seul point est mécanique: panne INC-001 avec code P0217 et liquide de refroidissement à 118 °C. Action recommandée: immobiliser le véhicule, faire remorquer ou réparer avant le trajet de 70 km vers Marrakech (coût estimé 363 MAD), et planifier l'entretien (dernier service à 469 597 km).\"}"
+ },
+ {
+  "role": "assistant",
+  "content": "{\"anomalies\": [{\"kind\": \"consommation\", \"probable_cause\": \"unknown\", \"note\": \"Aucune anomalie carburant: consommation réelle 31.6 L/100km vs 32.0 attendue (-1.2%), tous les pleins cohérents (max 368.0 L < capacité 400 L) et kilométrages en progression. Pas de surconsommation à expliquer.\"}, {\"kind\": \"panne / immobilisation\", \"probable_cause\": \"mechanical\", \"note\": \"Statut 'breakdown' (INC-001) avec code défaut P0217 (surchauffe moteur) et liquide de refroidissement à 118 °C: panne mécanique confirmée, véhicule à 40 km/h. Freins à 50% et ralenti 7.5% normaux, donc pas de cause comportementale ni de fraude.\"}], \"route_advice\": \"Trajet benguerir → marrakech: 70 km, ~0.82 h, 22.4 L (260 MAD) + 54 MAD de péage, soit 363 MAD au total. Les itinéraires plus court, moins cher et plus rapide sont identiques: aucun détour alternatif à comparer, prendre l'axe direct. Véhicule en surchauffe (P0217, 118 °C): ne pas rouler à charge, limiter la vitesse, surveiller la température et privilégier un remorquage ou un dépannage sur place avant de rejoindre le dépôt de Marrakech.\", \"manager_note_fr\": \"T-07: aucune anomalie carburant (31.6 vs 32.0 L/100km, pleins conformes à la capacité de 400 L). Le seul point est mécanique: panne INC-001 avec code P0217 et liquide de refroidissement à 118 °C. Action recommandée: immobiliser le véhicule, faire remorquer ou réparer avant le trajet de 70 km vers Marrakech (coût estimé 363 MAD), et planifier l'entretien (dernier service à 469 597 km).\"}"
+ }
+]

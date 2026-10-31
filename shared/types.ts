@@ -98,7 +98,7 @@ export interface DriverInstruction {
   message: string;
 }
 
-export interface PenaltyRisk { at_risk: boolean; amount_mad: number; reason: string; mitigation: string | null }
+export interface PenaltyRisk { at_risk: boolean; amount_mad: number; avoided_mad: number; reason: string; mitigation: string | null }
 
 export interface Incident {
   id: string;
@@ -114,6 +114,7 @@ export interface Incident {
   takeover_vehicle_id: string | null;
   penalty: PenaltyRisk;
   report_fr: string;
+  approved: boolean;
 }
 
 export interface FuelAnomaly {

@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from .agents.delay import compute_etas
 from .state import state
-from .tools.fuel_stats import fuel_stats
+from .tools.fuel_stats import fleet_fuel_kpi, fuel_stats
 from .tools.routing import compare_routes, mission_path
 
 router = APIRouter()
@@ -41,6 +41,11 @@ def fuel_summary():
         s = fuel_stats(state, vid)
         out.append({k: s[k] for k in ("vehicle_id", "expected_l_100km", "actual_l_100km", "delta_pct", "anomalies")})
     return out
+
+
+@router.get("/fuel/kpi")  # declared before /fuel/{vehicle_id}
+def fuel_kpi():
+    return fleet_fuel_kpi(state)
 
 
 @router.get("/fuel/{vehicle_id}")

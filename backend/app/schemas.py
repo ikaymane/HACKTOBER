@@ -159,6 +159,7 @@ class PenaltyRisk(BaseModel):
     amount_mad: int
     reason: str
     mitigation: Optional[str] = None
+    avoided_mad: float = 0  # penalty the fleet move saved (load takeover)
 
 
 class Incident(BaseModel):
@@ -175,6 +176,7 @@ class Incident(BaseModel):
     takeover_vehicle_id: Optional[str] = None  # truck on the road that absorbs the load
     penalty: PenaltyRisk
     report_fr: str  # text sent to the company
+    approved: bool = False  # set by the fleet manager, never by an agent
 
 
 class FuelAnomaly(BaseModel):

@@ -1,0 +1,34 @@
+[
+ {
+  "role": "assistant",
+  "content": "",
+  "tool_calls": [
+   {
+    "id": "call_00_yRQWq7PbjxpRMI2BrFDQ5819",
+    "type": "function",
+    "function": {
+     "name": "get_mission",
+     "arguments": "{\"mission_id\": \"M-203\"}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "Un seul arrêt : aucun changement d'ordre possible.",
+  "tool_calls": [
+   {
+    "id": "call_00_pfrkWSn1eoJK0irkq6Aw5786",
+    "type": "function",
+    "function": {
+     "name": "simulate_order",
+     "arguments": "{\"order\": [\"casablanca\"]}"
+    }
+   }
+  ]
+ },
+ {
+  "role": "assistant",
+  "content": "{\"stop_order\": [\"casablanca\"], \"client_message_fr\": \"Bonjour, suite au remplacement du véhicule A-03 par le véhicule A-04, le transfert du patient (CHU Mohammed VI → CHU Ibn Rochd) est maintenu. Malgré un départ retardé de 46 minutes, l'arrivée à Casablanca est prévue à 10h19, dans la fenêtre horaire convenue (10h15–10h30). Aucun retard n'est à signaler. Cordialement.\", \"summary_fr\": \"Mission M-203 à arrêt unique (Casablanca) : ordre inchangé. ETA 10:19, retard 0 min malgré le départ différé de 46 min (remplacement A-04 depuis Settat). Aucune pénalité.\"}"
+ }
+]

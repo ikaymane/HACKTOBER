@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import mimetypes
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -40,7 +41,7 @@ class ApiGateway:
             await self.inner(scope, receive, send)
             return
         if scope["path"].startswith("/api/"):
-            scope = {**scope, "path": scope["path"][4:]}
+            scope = {**scope, "path": scope["path"][4:], "raw_path": None}
         await (self.inner if scope["path"] == "/events" else self.gzip)(scope, receive, send)
 
 
@@ -169,5 +170,6 @@ async def events():
     return EventSourceResponse(gen())
 
 
+mimetypes.add_type("text/javascript", ".mjs")  # maplibre's worker; module workers need a JS type
 if DIST.is_dir():  # after every API route: serves the production build, see run.py
     app.mount("/", CachedStatic(directory=DIST, html=True), name="frontend")
